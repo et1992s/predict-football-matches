@@ -381,7 +381,7 @@ if "2025_2026" in selected_league:
                     dy=-15,
                     fontSize=14,
                     fontWeight='bold',
-                    color='#606060'
+                    color='#C0C0C0'
                 ).encode(
                     x=alt.X('Team:N', sort=[home_team, 'Draw', away_team]),
                     y=alt.Y('Probability (%):Q'),
