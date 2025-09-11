@@ -348,51 +348,26 @@ if "2025_2026" in selected_league:
                 """, unsafe_allow_html=True)
                 st.markdown(f"**Total Goals:** {predictions['goals']}")
 
-                # --- Probabilities bar chart cu gradient individual pe fiecare bară ---
+                # --- Soluție simplă cu mark_bar() ---
                 outcome_idx, probs = predictions["outcome"]
                 prob_df = pd.DataFrame({
                     "Team": [home_team, "Draw", away_team],
                     "Probability (%)": [probs[1] * 100, probs[0] * 100, probs[2] * 100]
                 })
 
-                # Creăm date pentru gradientul fiecărei bare
-                gradient_data = []
-                teams = [home_team, "Draw", away_team]
-                probabilities = [probs[1] * 100, probs[0] * 100, probs[2] * 100]
-
-                for i, team in enumerate(teams):
-                    prob = probabilities[i]
-                    # Creăm puncte pentru gradient (mai puține pentru performanță)
-                    steps = 20  # Număr de trepte pentru gradient
-                    for j in range(steps + 1):
-                        value = (prob / steps) * j
-                        gradient_data.append({
-                            "Team": team,
-                            "Step": j,
-                            "Value": value,
-                            "FullProbability": prob
-                        })
-
-                gradient_df = pd.DataFrame(gradient_data)
-
-                # Creăm graficul cu gradient
-                base = alt.Chart(gradient_df).encode(
+                # Creăm graficul simplu cu bare colorate individual
+                chart = alt.Chart(prob_df).mark_bar(size=50).encode(
                     x=alt.X('Team:N', sort=[home_team, 'Draw', away_team], title=None),
-                    y=alt.Y('Value:Q', title='Probability (%)'),
-                    y2=alt.Y2('Value:Q')  # Pentru a crea segmentele de gradient
-                )
-
-                # Adăugăm barele cu gradient
-                chart = base.mark_rect().encode(
+                    y=alt.Y('Probability (%):Q', title='Probability (%)'),
                     color=alt.Color(
-                        'Step:Q',
+                        'Probability (%):Q',
                         scale=alt.Scale(
-                            domain=[0, 20],
-                            range=['#FFFFCC', '#FF0000']  # Gradient de la galben la roșu
+                            domain=[prob_df['Probability (%)'].min(), prob_df['Probability (%)'].max()],
+                            range=['#FFFFCC', '#FF0000']  # Gradient între valorile min și max
                         ),
                         legend=None
                     ),
-                    tooltip=['Team', 'FullProbability']
+                    tooltip=['Team', 'Probability (%)']
                 ).properties(
                     width=100,
                     height=400,
