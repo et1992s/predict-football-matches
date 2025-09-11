@@ -349,24 +349,24 @@ if "2025_2026" in selected_league:
                 """, unsafe_allow_html=True)
                 st.markdown(f"**Total Goals:** {predictions['goals']}")
 
-                # --- Probabilities bar chart cu ordine Home - Draw - Away ---
+                # --- Probabilities bar chart cu gradient corect ---
                 outcome_idx, probs = predictions["outcome"]
                 prob_df = pd.DataFrame({
                     "Team": [home_team, "Draw", away_team],
                     "Probability (%)": [probs[1] * 100, probs[0] * 100, probs[2] * 100]
                 })
 
-                # --- Parametri pentru gradient simulare ---
-                n_steps = 100  # numărul de segmente pe bară
+                # --- Parametri gradient ---
+                n_steps = 100  # număr de segmente pe bară
                 colors = alt.Scale(
                     domain=[0, n_steps - 1],
-                    range=['#FF0000', '#FF9933', '#FFB266', '#FFFF99']  # galben -> roșu
+                    range=['#FFFFCC', '#FFFF99', '#FFB266', '#FF9933', '#FF6600', '#FF0000']  # galben -> roșu
                 )
 
-                # --- Creăm un DataFrame pentru fiecare segment ---
+                # --- Creăm DataFrame pentru fiecare segment ---
                 gradient_df = pd.DataFrame()
                 for i, row in prob_df.iterrows():
-                    steps = np.linspace(0, row['Probability (%)'], n_steps)
+                    steps = np.linspace(0, row['Probability (%)'], n_steps)  # valori de jos în sus
                     temp = pd.DataFrame({
                         'Team': row['Team'],
                         'Step': np.arange(n_steps),
@@ -374,7 +374,7 @@ if "2025_2026" in selected_league:
                     })
                     gradient_df = pd.concat([gradient_df, temp], ignore_index=True)
 
-                # --- Chart cu Altair ---
+                # --- Chart Altair ---
                 chart = alt.Chart(gradient_df).mark_bar(size=20).encode(
                     x=alt.X('Team', sort=[home_team, 'Draw', away_team]),
                     y='Height',
