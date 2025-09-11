@@ -348,31 +348,74 @@ if "2025_2026" in selected_league:
                 """, unsafe_allow_html=True)
                 st.markdown(f"**Total Goals:** {predictions['goals']}")
 
-                # --- Probabilities bar chart cu gradient individual pentru fiecare bară ---
+                # --- Probabilities bar chart cu gradient individual pe fiecare bară ---
                 outcome_idx, probs = predictions["outcome"]
                 prob_df = pd.DataFrame({
                     "Team": [home_team, "Draw", away_team],
                     "Probability (%)": [probs[1] * 100, probs[0] * 100, probs[2] * 100]
                 })
 
-                # Creăm un gradient individual pentru fiecare bară bazat pe valoarea sa
-                chart = alt.Chart(prob_df).mark_bar().encode(
-                    x=alt.X('Team', sort=[home_team, 'Draw', away_team]),
-                    y='Probability (%)',
+                # Creăm date pentru gradientul fiecărei bare
+                gradient_data = []
+                teams = [home_team, "Draw", away_team]
+                probabilities = [probs[1] * 100, probs[0] * 100, probs[2] * 100]
+
+                for i, team in enumerate(teams):
+                    prob = probabilities[i]
+                    # Creăm 100 de puncte pentru gradient
+                    for value in range(0, 101):
+                        gradient_data.append({
+                            "Team": team,
+                            "Value": value,
+                            "Probability": prob if value <= prob else 0
+                        })
+
+                gradient_df = pd.DataFrame(gradient_data)
+
+                # Creăm graficul cu gradient
+                chart = alt.Chart(gradient_df).mark_bar(
+                    cornerRadiusTop=5  # Colțuri rotunjite pentru estetică
+                ).encode(
+                    x=alt.X('Team:N', sort=[home_team, 'Draw', away_team], title=None),
+                    y=alt.Y('Value:Q', title='Probability (%)'),
                     color=alt.Color(
-                        'Probability (%)',
+                        'Value:Q',
                         scale=alt.Scale(
-                            domain=[0, 100],  # Domeniul complet al probabilităților (0-100%)
+                            domain=[0, 100],
                             range=['#FFFFCC', '#FF0000']  # Gradient de la galben la roșu
                         ),
-                        legend=None  # Ascundem legendă pentru un aspect mai curat
-                    )
+                        legend=None
+                    ),
+                    tooltip=['Team', 'Probability']
                 ).properties(
-                    width=50,
-                    height=600
+                    width=100,  # Lățime mai mare pentru bare
+                    height=400,
+                    title='Match Outcome Probabilities'
+                ).configure_axis(
+                    grid=False
+                ).configure_view(
+                    strokeWidth=0
                 )
 
                 st.altair_chart(chart, use_container_width=True)
+
+                # Adăugăm etichete cu valorile exacte
+                text_chart = alt.Chart(prob_df).mark_text(
+                    align='center',
+                    baseline='middle',
+                    dy=-20,  # Poziționat deasupra barei
+                    fontSize=14,
+                    fontWeight='bold',
+                    color='black'
+                ).encode(
+                    x=alt.X('Team:N', sort=[home_team, 'Draw', away_team]),
+                    y=alt.Y('Probability (%):Q'),
+                    text=alt.Text('Probability (%):Q', format='.1f')
+                )
+
+                # Combinăm graficele
+                final_chart = chart + text_chart
+                st.altair_chart(final_chart, use_container_width=True)
 
                 # --- Stats table ---
                 stats = predictions["stats"]
