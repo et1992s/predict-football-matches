@@ -348,29 +348,35 @@ if "2025_2026" in selected_league:
                 """, unsafe_allow_html=True)
                 st.markdown(f"**Total Goals:** {predictions['goals']}")
 
-                # --- Probabilities bar chart cu ordine Home - Draw - Away ---
                 outcome_idx, probs = predictions["outcome"]
                 prob_df = pd.DataFrame({
                     "Team": [home_team, "Draw", away_team],
                     "Probability (%)": [probs[1] * 100, probs[0] * 100, probs[2] * 100]
                 })
 
-                # Determinăm min și max din valorile reale pentru gradient
-                min_prob = prob_df['Probability (%)'].min()
-                max_prob = prob_df['Probability (%)'].max()
+                # Parametri gradient
+                n_steps = 100  # număr de segmente pe bară
+                colors = alt.Scale(
+                    domain=[0, n_steps - 1],
+                    range=['#FFFFCC', '#FFFF99', '#FFB266', '#FF9933', '#FF6600', '#FF0000']  # galben -> roșu
+                )
 
-                # Chart cu gradient de la galben (low) la roșu (high)
-                chart = alt.Chart(prob_df).mark_bar().encode(
+                # Creăm DataFrame pentru fiecare segment
+                gradient_df = pd.DataFrame()
+                for i, row in prob_df.iterrows():
+                    steps = np.linspace(0, row['Probability (%)'] / 100, n_steps)
+                    temp = pd.DataFrame({
+                        'Team': row['Team'],
+                        'Step': np.arange(n_steps),
+                        'Height': steps
+                    })
+                    gradient_df = pd.concat([gradient_df, temp], ignore_index=True)
+
+                # Chart cu gradient real
+                chart = alt.Chart(gradient_df).mark_bar(size=50).encode(
                     x=alt.X('Team', sort=[home_team, 'Draw', away_team]),
-                    y='Probability (%)',
-                    color=alt.Color(
-                        'Probability (%)',
-                        scale=alt.Scale(
-                            domain=[min_prob, max_prob],  # procentaj minim și maxim
-                            scheme='reds'  # galben -> roșu
-                        ),
-                        legend=alt.Legend(title="Probability (%)")
-                    )
+                    y=alt.Y('Height', scale=alt.Scale(domain=[0, 1])),
+                    color=alt.Color('Step', scale=colors, legend=None)
                 ).properties(
                     width=50,
                     height=600
