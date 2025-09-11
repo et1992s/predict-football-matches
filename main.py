@@ -96,9 +96,9 @@ def main():
     for league, (standings_url, results_url, fixtures_url) in leagues.items():
         print(f"\n=== PIPELINE {league.upper()} ===")
 
-        standings_file = f"processed/standings_{league}.json"
-        matches_file = f"processed/all_matches_{league}.json"
-        fixtures_file = f"processed/fixtures_{league}.json"
+        standings_file = f"processed/standings-{league}.json"
+        matches_file = f"processed/all-matches-{league}.json"
+        fixtures_file = f"processed/fixtures-{league}.json"
 
         # 1. Scrape standings dacă nu există deja
         if not os.path.exists(standings_file):
@@ -115,7 +115,7 @@ def main():
         # 2. Flatten + clean
         processor = StandingsProcessor(standings_file, matches_file)
         processor.flatten_to_long().clean_eda()
-        cleaned_csv = f"processed/standings_with_matches_{league}_clean.csv"
+        cleaned_csv = f"processed/standings-with-matches-{league}-clean.csv"
         processor.save_csv(cleaned_csv)
 
         # 3. Preprocess
@@ -126,14 +126,14 @@ def main():
             .split_goals_column() \
             .drop_zero_heavy_columns() \
             .normalize_large_stats() \
-            .save_csv(f"processed/standings_with_matches_{league}_cleaned.csv")
-        preprocessed_csv = f"processed/standings_with_matches_{league}_clean.csv"
+            .save_csv(f"processed/standings-with-matches-{league}-cleaned.csv")
+        preprocessed_csv = f"processed/standings-with-matches-{league}-clean.csv"
 
         # 4. Winrate features
         ff = FootballWinRateFeatures(preprocessed_csv)
         ff.encode_columns().create_winrate_features(N_recent=10) \
-            .save_csv(f"processed/standings_with_winrate_features_{league}.csv")
-        winrate_files.append(f"processed/standings_with_winrate_features_{league}.csv")
+            .save_csv(f"processed/standings-with-winrate-features-{league}.csv")
+        winrate_files.append(f"processed/standings-with-winrate-features-{league}.csv")
 
     # 5. Train modele
     predictor = FootballMatchPredictor(winrate_files)
@@ -145,7 +145,7 @@ def main():
     print(f"\nCSV-ul cu predicții vs ground truth a fost salvat aici: {csv_test_path}")
 
     # 7. Interactive prediction doar pentru sezonul curent 2025-2026
-    current_season = "romania_superliga_2025_2026"
+    current_season = "romania-superliga-2025-2026"
     print("\n=== PREDICȚIE MECI VIITOR - SEZON 2025-2026 ===")
     while True:
         date = input("Data (YYYY-MM-DD): ").strip()

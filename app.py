@@ -109,10 +109,10 @@ league_info = leagues[selected_league]
 st.title(f"{league_info['name']}")
 
 # --- Paths ---
-standings_file_json = f"processed/standings_{selected_league}.json"
-matches_file_json = f"processed/all_matches_{selected_league}.json"
-fixtures_file_json = f"processed/fixtures_{selected_league}.json"
-winrate_file_csv = f"processed/standings_with_winrate_features_{selected_league}.csv"
+standings_file_json = f"processed/standings-{selected_league}.json"
+matches_file_json = f"processed/all-matches-{selected_league}.json"
+fixtures_file_json = f"processed/fixtures-{selected_league}.json"
+winrate_file_csv = f"processed/standings-with-winrate-features-{selected_league}.csv"
 
 # --- Download data if not exists ---
 if not os.path.exists(standings_file_json):
@@ -132,7 +132,7 @@ if not os.path.exists(winrate_file_csv):
     st.info("Processing data and creating winrate features...")
     processor = StandingsProcessor(standings_file_json, matches_file_json)
     processor.flatten_to_long().clean_eda()
-    cleaned_csv = f"processed/standings_with_matches_{selected_league}_clean.csv"
+    cleaned_csv = f"processed/standings-with-matches-{selected_league}-clean.csv"
     processor.save_csv(cleaned_csv)
 
     preprocessor = MatchPreprocessor(cleaned_csv)
@@ -142,8 +142,8 @@ if not os.path.exists(winrate_file_csv):
         .split_goals_column() \
         .drop_zero_heavy_columns() \
         .normalize_large_stats() \
-        .save_csv(f"processed/standings_with_matches_{selected_league}_cleaned.csv")
-    preprocessed_csv = f"processed/standings_with_matches_{selected_league}_clean.csv"
+        .save_csv(f"processed/standings-with-matches-{selected_league}-cleaned.csv")
+    preprocessed_csv = f"processed/standings-with-matches-{selected_league}-clean.csv"
 
     ff = FootballWinRateFeatures(preprocessed_csv)
     ff.encode_columns().create_winrate_features(N_recent=10).save_csv(winrate_file_csv)
@@ -184,7 +184,7 @@ elif not df_fixtures.empty:
     future_matches = df_fixtures
 
 # --- Predict Future Match doar pentru sezonul curent 2025-2026 ---
-if "2025_2026" in selected_league:
+if "2025-2026" in selected_league:
     st.subheader("⚽ Predict Future Match")
     if not future_matches.empty:
         future_matches["match_str"] = future_matches.apply(
