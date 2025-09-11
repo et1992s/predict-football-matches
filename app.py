@@ -363,7 +363,7 @@ if "2025_2026" in selected_league:
                         'Probability (%):Q',
                         scale=alt.Scale(
                             domain=[prob_df['Probability (%)'].min(), prob_df['Probability (%)'].max()],
-                            range=['#FFFFCC', '#FF0000']  # Gradient între valorile min și max
+                            range=['#FFFFCC', '#FFFF99', '#FFB266', '#FF9933', '#FF0000', '#CC0000']  # Gradient între valorile min și max
                         ),
                         legend=None
                     ),
@@ -381,7 +381,7 @@ if "2025_2026" in selected_league:
                     dy=-15,
                     fontSize=14,
                     fontWeight='bold',
-                    color='black'
+                    color='#606060'
                 ).encode(
                     x=alt.X('Team:N', sort=[home_team, 'Draw', away_team]),
                     y=alt.Y('Probability (%):Q'),
