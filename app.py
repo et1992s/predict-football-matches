@@ -368,7 +368,7 @@ if "2025_2026" in selected_league:
                         legend=alt.Legend(title="Probability (%)")
                     )
                 ).properties(
-                    width=200,
+                    width=50,
                     height=600
                 )
 
