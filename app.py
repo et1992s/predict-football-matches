@@ -372,7 +372,6 @@ if "2025_2026" in selected_league:
                     width=100,
                     height=400,
                     title='Match Outcome Probabilities',
-                    color='#A0A0A0',
                 )
 
                 # Adăugăm etichete cu valorile exacte
