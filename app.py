@@ -360,7 +360,7 @@ if "2025_2026" in selected_league:
                 n_steps = 100  # numărul de segmente pe bară
                 colors = alt.Scale(
                     domain=[0, n_steps - 1],
-                    range=['#FFFFCC', '#FFFF99', '#FFB266', '#FF9933', '#FF0000', '#CC0000']  # galben -> roșu
+                    range=['#CC0000', '#FF0000', '#FF9933', '#FFB266', '#FFFF99', '#FFFFCC']  # galben -> roșu
                 )
 
                 # --- Creăm un DataFrame pentru fiecare segment ---
