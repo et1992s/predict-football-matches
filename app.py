@@ -46,67 +46,113 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 
-# --- CSS culori fotbal reci ---
+# --- CSS GLOBAL unificat ---
 st.markdown("""
     <style>
-    /* === METRICS (Predicted Future Match) === */
-    div[data-testid="stMetricValue"] {
-        color: #E6DFB2 !important;  /* auriu în loc de verde */
-        font-weight: bold !important;
-        font-size: 22px !important;
-    }
-
-    div[data-testid="stMetric"] {
-        background: rgba(30, 60, 114, 0.7) !important; /* fundal albastru translucid */
-        border: 2px solid #E6DFB2 !important;          /* chenar auriu */
-        border-radius: 12px !important;
-        padding: 12px !important;
-        color: #E0F7FA !important;
-    }
-
-    /* Loading spinner */
-    .stSpinner > div {
-        text-align: center;
-        color: #E6DFB2 !important;
-        font-size: 18px !important;
-        font-weight: bold !important;
-    }
-
-    /* Background general */
+    /* FUNDAL GENERAL */
     .stApp { 
-        background: linear-gradient(to bottom right, #1E3C72, #2A5298); /* albastru închis spre albastru deschis */
-        color: #E0F7FA; /* text alb-verzui deschis */
+        background: linear-gradient(to bottom right, #1E3C72, #2A5298); 
+        color: #E0F7FA; 
     }
 
-    /* Carduri / containere */
+    /* CARDURI / CONTAINERE */
     .css-1d391kg { 
-        background-color: #8BB28B;  /* verde închis pentru carduri */
+        background-color: #0B3D0B;  
         color: #E0F7FA;
         border-radius: 12px;
         padding: 10px;
     }
 
-    /* Selectbox și inputuri */
-    .stSelectbox, .stButton {
-        background-color: #2A52AA; /* albastru deschis */
-        color: #E0F7FA;
-    }
-
-    /* Headings */
+    /* HEADINGS */
     .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-        color: #A8D5BA; /* verde deschis */
+        color: #A8D5BA; 
     }
 
-    /* Dataframe table headers */
+    /* TABEL */
     .stDataFrame th {
-        background-color: #1E3C72; /* albastru închis */
+        background-color: #1E3C72; 
+        color: #E0F7FA;
+    }
+    .stDataFrame td {
+        background-color: #0B3D0B; 
         color: #E0F7FA;
     }
 
-    /* Dataframe table cells */
-    .stDataFrame td {
-        background-color: #8BB28B; /* verde închis */
-        color: #E0F7FA;
+    /* SELECTBOX & DROPDOWN */
+    div.stSelectbox {
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+    div.stSelectbox label {
+        background: transparent !important;
+        color: #E0F7FA !important;
+        margin-bottom: 6px !important;
+        font-weight: bold !important;
+    }
+    div.stSelectbox > div {
+        width: auto !important;
+        min-width: 340px;
+        max-width: 350px;
+        margin: 0;
+        background: transparent !important;
+    }
+    div[data-baseweb="select"] > div {
+        background: rgba(30, 60, 114, 0.65) !important;
+        border: 1px solid #2A5298 !important;
+        border-radius: 10px !important;
+        padding: 12px 16px !important;
+        min-height: 50px !important;
+        display: flex;
+        align-items: center;
+        color: #E0F7FA !important;
+        font-size: 16px !important;
+        line-height: 1.6em !important;
+    }
+    div[data-baseweb="select"] ul {
+        background: rgba(30, 60, 114, 0.95) !important;
+        color: #E0F7FA !important;
+    }
+    div[data-baseweb="select"] li:hover {
+        background: #2A5298 !important;
+        color: #FFFFFF !important;
+    }
+
+    /* BUTTON */
+    div.stButton > button {
+        background: linear-gradient(to bottom right, #1E3C72, #2A5298) !important;
+        color: #E0F7FA !important;
+        border: 1px solid #2A5298 !important;
+        border-radius: 10px !important;
+        padding: 10px 20px !important;
+        font-size: 16px !important;
+        font-weight: bold !important;
+    }
+    div.stButton > button:hover {
+        background: linear-gradient(to bottom right, #2A5298, #1E3C72) !important;
+        color: #FFFFFF !important;
+        border: 1px solid #FFFFFF !important;
+    }
+
+    /* METRICS */
+    div[data-testid="stMetricValue"] {
+        color: #E6DFB2 !important;
+        font-weight: bold !important;
+        font-size: 22px !important;
+    }
+    div[data-testid="stMetric"] {
+        background: rgba(30, 60, 114, 0.7) !important;
+        border: 2px solid #E6DFB2 !important;
+        border-radius: 12px !important;
+        padding: 12px !important;
+        color: #E0F7FA !important;
+    }
+
+    /* SPINNER */
+    .stSpinner > div {
+        text-align: center;
+        color: #E6DFB2 !important;
+        font-size: 18px !important;
+        font-weight: bold !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -149,7 +195,7 @@ leagues = {
 }
 
 # --- Sezon curent selectat implicit ---
-selected_league = st.selectbox("Select League/Season", list(leagues.keys()), index=1)
+selected_league = st.selectbox("Select League/Season", list(leagues.keys()), index=5)
 league_info = leagues[selected_league]
 st.title(f"{league_info['name']}")
 
@@ -242,111 +288,6 @@ if "2025-2026" in selected_league:
             future_matches["match_str"],
             key="match_select"
         )
-
-        # CSS pentru dropdown și buton
-        st.markdown("""
-            <style>
-            /* === FUNDAL GENERAL === */
-            .stApp { 
-                background: linear-gradient(to bottom right, #1E3C72, #2A5298); 
-                color: #E0F7FA; 
-            }
-
-            /* === CARDURI / CONTAINERE === */
-            .css-1d391kg { 
-                background-color: #0B3D0B;  
-                color: #E0F7FA;
-                border-radius: 12px;
-                padding: 10px;
-            }
-
-            /* === HEADINGS === */
-            .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-                color: #A8D5BA; 
-            }
-
-            /* === TABELE === */
-            .stDataFrame th {
-                background-color: #1E3C72; 
-                color: #E0F7FA;
-            }
-            .stDataFrame td {
-                background-color: #0B3D0B; 
-                color: #E0F7FA;
-            }
-
-            /* === SELECTBOX === */
-            div.stSelectbox {
-                background: transparent !important;    /* eliminăm pătratul deschis */
-                box-shadow: none !important;
-            }
-
-            /* Label-ul ("Select League/Season", "Select a match") */
-            div.stSelectbox label {
-                background: transparent !important;
-                color: #E0F7FA !important;
-                margin-bottom: 6px !important;  /* spațiu între label și câmp */
-                font-weight: bold !important;
-            }
-
-            /* Container dropdown */
-            div.stSelectbox > div {
-                width: auto !important;       
-                min-width: 340px;             
-                max-width: 500px;             
-                margin: 0;
-                background: transparent !important;
-            }
-
-            /* Zona vizibilă cu text selectat */
-            div[data-baseweb="select"] > div {
-                background: rgba(30, 60, 114, 0.65) !important;
-                border: 1px solid #2A5298 !important;
-                border-radius: 10px !important;
-                padding: 12px 16px !important;   /* mai mult spațiu sus-jos */
-                min-height: 50px !important;     /* suficient să nu taie textul */
-                display: flex;
-                align-items: center;             /* text centrat pe verticală */
-                color: #E0F7FA !important;
-                font-size: 16px !important;
-                line-height: 1.6em !important;
-            }
-
-            /* Dropdown-ul de opțiuni */
-            div[data-baseweb="select"] ul {
-                background: rgba(30, 60, 114, 0.95) !important;
-                color: #E0F7FA !important;
-            }
-
-            /* Hover pe opțiuni */
-            div[data-baseweb="select"] li:hover {
-                background: #2A5298 !important;
-                color: #FFFFFF !important;
-            }
-
-            /* === BUTON (Predict) === */
-            div.stButton {
-                background: transparent !important;   /* eliminăm fundalul gri */
-                box-shadow: none !important;
-            }
-
-            div.stButton > button {
-                background: linear-gradient(to bottom right, #1E3C72, #2A5298) !important;
-                color: #E0F7FA !important;
-                border: 1px solid #2A5298 !important;
-                border-radius: 10px !important;
-                padding: 10px 20px !important;
-                font-size: 16px !important;
-                font-weight: bold !important;
-            }
-
-            div.stButton > button:hover {
-                background: linear-gradient(to bottom right, #2A5298, #1E3C72) !important;
-                color: #FFFFFF !important;
-                border: 1px solid #FFFFFF !important;
-            }
-            </style>
-        """, unsafe_allow_html=True)
 
         if st.button("Predict"):
             # Show loading spinner with message
