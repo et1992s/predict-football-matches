@@ -367,7 +367,7 @@ if "2025_2026" in selected_league:
                         'Probability (%)',
                         scale=alt.Scale(
                             domain=[min_prob, max_prob],  # procentaj minim și maxim
-                            range=['#FFFFCC', '#FFFF99', '#FFB266', '#FF9933', '#FF0000', '#CC0000']  # galben -> roșu
+                            range=['#FFFFCC', '#CC0000']  # galben -> roșu
                         ),
                         legend=alt.Legend(title="Probability (%)")
                     )
