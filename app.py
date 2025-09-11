@@ -80,6 +80,17 @@ leagues = {
         "standings_url": "https://www.flashscore.com/football/romania/superliga/standings/#/02YI7tIj/standings/overall/",
         "results_url": "https://www.flashscore.com/football/romania/superliga/results/",
         "fixtures_url": "https://www.flashscore.com/football/romania/superliga/fixtures/"
+    },
+    "la_liga": {
+        "name": "La Liga 2024-2025",
+        "standings_url": "https://www.flashscore.com/football/spain/laliga-2024-2025/standings/#/dINOZk9Q/standings/overall/",
+        "results_url": "https://www.flashscore.com/football/spain/laliga-2024-2025/results/",
+    },
+    "la_liga_2025_2026": {
+        "name": "La Liga 2025-2026",
+        "standings_url": "https://www.flashscore.com/football/spain/laliga/standings/#/vcm2MhGk/",
+        "results_url": "https://www.flashscore.com/football/spain/laliga/results/",
+        "fixtures_url": "https://www.flashscore.com/football/spain/laliga/fixtures/"
     }
 }
 

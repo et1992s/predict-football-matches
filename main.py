@@ -83,6 +83,11 @@ def main():
             "https://www.flashscore.com/football/spain/laliga-2024-2025/results/",
             None
         ),
+        "la_liga_2025_2026": (
+            "https://www.flashscore.com/football/spain/laliga/standings/#/vcm2MhGk/standings/overall/",
+            "https://www.flashscore.com/football/spain/laliga/results/",
+            "https://www.flashscore.com/football/spain/laliga/fixtures/"
+        )
         # poți adăuga și alte campionate aici
     }
 
