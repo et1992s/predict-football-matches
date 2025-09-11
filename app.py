@@ -352,13 +352,26 @@ if "2025_2026" in selected_league:
                 outcome_idx, probs = predictions["outcome"]
                 prob_df = pd.DataFrame({
                     "Team": [home_team, "Draw", away_team],
-                    "Probability (%)": [probs[1]*100, probs[0]*100, probs[2]*100]
+                    "Probability (%)": [probs[1] * 100, probs[0] * 100, probs[2] * 100]
                 })
+
+                # Chart cu gradient de la galben (low) la roșu (high)
                 chart = alt.Chart(prob_df).mark_bar().encode(
                     x=alt.X('Team', sort=[home_team, 'Draw', away_team]),
                     y='Probability (%)',
-                    color=alt.Color('Team', scale=alt.Scale(range=['#7D899C', '#B2C4E2', '#7D899C']))
+                    color=alt.Color(
+                        'Probability (%)',
+                        scale=alt.Scale(
+                            domain=[0, 100],  # procentaj minim și maxim
+                            range=['#FFD700', '#FF4500']  # galben -> roșu
+                        ),
+                        legend=alt.Legend(title="Probability (%)")
+                    )
+                ).properties(
+                    width=400,
+                    height=300
                 )
+
                 st.altair_chart(chart, use_container_width=True)
 
                 # --- Stats table ---
