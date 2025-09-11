@@ -79,23 +79,23 @@ st.markdown("""
 
 # --- Liga și sezoane ---
 leagues = {
-    "romania_superliga": {
+    "romania-superliga-2024-2025": {
         "name": "Romania Superliga 2024-2025",
         "standings_url": "https://www.flashscore.com/football/romania/superliga-2024-2025/standings/#/QkBSrPPD/standings/overall/",
         "results_url": "https://www.flashscore.com/football/romania/superliga-2024-2025/results/"
     },
-    "romania_superliga_2025_2026": {
+    "romania-superliga-2025-2026": {
         "name": "Romania Superliga 2025-2026",
         "standings_url": "https://www.flashscore.com/football/romania/superliga/standings/#/02YI7tIj/standings/overall/",
         "results_url": "https://www.flashscore.com/football/romania/superliga/results/",
         "fixtures_url": "https://www.flashscore.com/football/romania/superliga/fixtures/"
     },
-    "la_liga": {
+    "la-liga-2024-2025": {
         "name": "La Liga 2024-2025",
         "standings_url": "https://www.flashscore.com/football/spain/laliga-2024-2025/standings/#/dINOZk9Q/standings/overall/",
         "results_url": "https://www.flashscore.com/football/spain/laliga-2024-2025/results/",
     },
-    "la_liga_2025_2026": {
+    "la-liga-2025-2026": {
         "name": "La Liga 2025-2026",
         "standings_url": "https://www.flashscore.com/football/spain/laliga/standings/#/vcm2MhGk/",
         "results_url": "https://www.flashscore.com/football/spain/laliga/results/",

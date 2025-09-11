@@ -68,22 +68,22 @@ def scrape_and_save_fixtures(fixtures_url, filename):
 def main():
     # Campionate: {"nume": (standings_url, results_url, fixtures_url)}
     leagues = {
-        "romania_superliga": (
+        "romania-superliga-2024-2025": (
             "https://www.flashscore.com/football/romania/superliga-2024-2025/standings/#/QkBSrPPD/standings/overall/",
             "https://www.flashscore.com/football/romania/superliga-2024-2025/results/",
             None  # nu există fixtures pentru sezonul trecut
         ),
-        "romania_superliga_2025_2026": (
+        "romania-superliga-2025-2026": (
             "https://www.flashscore.com/football/romania/superliga/standings/#/02YI7tIj/standings/overall/",
             "https://www.flashscore.com/football/romania/superliga/results/",
             "https://www.flashscore.com/football/romania/superliga/fixtures/"
         ),
-        "la_liga": (
+        "la-liga-2024-2025": (
             "https://www.flashscore.com/football/spain/laliga-2024-2025/standings/#/dINOZk9Q/standings/overall/",
             "https://www.flashscore.com/football/spain/laliga-2024-2025/results/",
             None
         ),
-        "la_liga_2025_2026": (
+        "la-liga-2025-2026": (
             "https://www.flashscore.com/football/spain/laliga/standings/#/vcm2MhGk/standings/overall/",
             "https://www.flashscore.com/football/spain/laliga/results/",
             "https://www.flashscore.com/football/spain/laliga/fixtures/"
