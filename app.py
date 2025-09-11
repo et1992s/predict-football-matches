@@ -355,6 +355,10 @@ if "2025_2026" in selected_league:
                     "Probability (%)": [probs[1] * 100, probs[0] * 100, probs[2] * 100]
                 })
 
+                # Determinăm min și max din valorile reale pentru gradient
+                min_prob = prob_df['Probability (%)'].min()
+                max_prob = prob_df['Probability (%)'].max()
+
                 # Chart cu gradient de la galben (low) la roșu (high)
                 chart = alt.Chart(prob_df).mark_bar().encode(
                     x=alt.X('Team', sort=[home_team, 'Draw', away_team]),
@@ -362,8 +366,8 @@ if "2025_2026" in selected_league:
                     color=alt.Color(
                         'Probability (%)',
                         scale=alt.Scale(
-                            domain=[0, 100],  # procentaj minim și maxim
-                            range=['#FFFFCC', '#CC0000']  # galben -> roșu
+                            domain=[min_prob, max_prob],  # procentaj minim și maxim
+                            range=['#FFFFCC', '#FFFF99', '#FFB266', '#FF9933', '#FF0000', '#CC0000']  # galben -> roșu
                         ),
                         legend=alt.Legend(title="Probability (%)")
                     )
