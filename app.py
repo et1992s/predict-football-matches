@@ -1,3 +1,4 @@
+import numpy as np
 import streamlit as st
 import pandas as pd
 import os
@@ -355,25 +356,32 @@ if "2025_2026" in selected_league:
                     "Probability (%)": [probs[1] * 100, probs[0] * 100, probs[2] * 100]
                 })
 
-                # Determinăm min și max din valorile reale pentru gradient
-                min_prob = prob_df['Probability (%)'].min()
-                max_prob = prob_df['Probability (%)'].max()
+                # --- Parametri pentru gradient simulare ---
+                n_steps = 100  # numărul de segmente pe bară
+                colors = alt.Scale(
+                    domain=[0, n_steps - 1],
+                    range=['#FFFFCC', '#FFFF99', '#FFB266', '#FF9933', '#FF6600', '#FF0000']  # galben -> roșu
+                )
 
-                # Chart cu gradient de la galben (low) la roșu (high)
-                chart = alt.Chart(prob_df).mark_bar().encode(
+                # --- Creăm un DataFrame pentru fiecare segment ---
+                gradient_df = pd.DataFrame()
+                for i, row in prob_df.iterrows():
+                    steps = np.linspace(0, row['Probability (%)'], n_steps)
+                    temp = pd.DataFrame({
+                        'Team': row['Team'],
+                        'Step': np.arange(n_steps),
+                        'Height': steps / n_steps
+                    })
+                    gradient_df = pd.concat([gradient_df, temp], ignore_index=True)
+
+                # --- Chart cu Altair ---
+                chart = alt.Chart(gradient_df).mark_bar(size=20).encode(
                     x=alt.X('Team', sort=[home_team, 'Draw', away_team]),
-                    y='Probability (%)',
-                    color=alt.Color(
-                        'Probability (%)',
-                        scale=alt.Scale(
-                            domain=[min_prob, max_prob],  # procentaj minim și maxim
-                            scheme='reds'  # galben -> roșu
-                        ),
-                        legend=alt.Legend(title="Probability (%)")
-                    )
+                    y='Height',
+                    color=alt.Color('Step', scale=colors, legend=None)
                 ).properties(
                     width=50,
-                    height=600
+                    height=400
                 )
 
                 st.altair_chart(chart, use_container_width=True)
