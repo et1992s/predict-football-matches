@@ -7,6 +7,7 @@ import altair as alt
 from match_predictor import FootballMatchPredictor
 from main import scrape_and_save_standings, scrape_and_save_matches, scrape_and_save_fixtures, StandingsProcessor, \
     MatchPreprocessor, FootballWinRateFeatures
+import time  # Added for potential delay simulation
 
 # --- Config Streamlit ---
 st.set_page_config(page_title="Football Predictor MVP", layout="wide")
@@ -28,7 +29,15 @@ st.markdown("""
         padding: 12px !important;
         color: #E0F7FA !important;
     }
-    
+
+    /* Loading spinner */
+    .stSpinner > div {
+        text-align: center;
+        color: #E6DFB2 !important;
+        font-size: 18px !important;
+        font-weight: bold !important;
+    }
+
     /* Background general */
     .stApp { 
         background: linear-gradient(to bottom right, #1E3C72, #2A5298); /* albastru închis spre albastru deschis */
@@ -295,23 +304,25 @@ if "2025_2026" in selected_league:
         """, unsafe_allow_html=True)
 
         if st.button("Predict"):
-            predictor = FootballMatchPredictor([winrate_file_csv])
-            predictor.train_models()
+            # Show loading spinner with message
+            with st.spinner("Generating predictions... This may take a few moments."):
+                predictor = FootballMatchPredictor([winrate_file_csv])
+                predictor.train_models()
 
-            home_team, away_team = selected_match.split(" vs ")[0], selected_match.split(" vs ")[1].split(" on ")[0]
+                home_team, away_team = selected_match.split(" vs ")[0], selected_match.split(" vs ")[1].split(" on ")[0]
 
-            date_time_str = selected_match.split(" on ")[1].strip()
-            parts = date_time_str.split()
-            date_obj = datetime.strptime(parts[0], "%d.%m.%Y")
-            date_formatted = date_obj.strftime("%Y-%m-%d")
-            time_part = parts[1] if len(parts) > 1 else "00:00"
+                date_time_str = selected_match.split(" on ")[1].strip()
+                parts = date_time_str.split()
+                date_obj = datetime.strptime(parts[0], "%d.%m.%Y")
+                date_formatted = date_obj.strftime("%Y-%m-%d")
+                time_part = parts[1] if len(parts) > 1 else "00:00"
 
-            predictions = predictor.predict_future_match(
-                date=date_formatted,
-                time=time_part,
-                home_team=home_team,
-                away_team=away_team
-            )
+                predictions = predictor.predict_future_match(
+                    date=date_formatted,
+                    time=time_part,
+                    home_team=home_team,
+                    away_team=away_team
+                )
 
             st.markdown(f"### Predictions: {home_team} vs {away_team} ({date_time_str})")
             if predictions:
@@ -363,7 +374,8 @@ if "2025_2026" in selected_league:
                         'Probability (%):Q',
                         scale=alt.Scale(
                             domain=[prob_df['Probability (%)'].min(), prob_df['Probability (%)'].max()],
-                            range=['#FFFFCC', '#FFFF99', '#FFB266', '#FF9933', '#FF0000', '#CC0000']  # Gradient între valorile min și max
+                            range=['#FFFFCC', '#FFFF99', '#FFB266', '#FF9933', '#FF0000', '#CC0000']
+                            # Gradient între valorile min și max
                         ),
                         legend=None
                     ),
