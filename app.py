@@ -362,48 +362,48 @@ if "2025_2026" in selected_league:
 
                 for i, team in enumerate(teams):
                     prob = probabilities[i]
-                    # Creăm 100 de puncte pentru gradient
-                    for value in range(0, 101):
+                    # Creăm puncte pentru gradient (mai puține pentru performanță)
+                    steps = 20  # Număr de trepte pentru gradient
+                    for j in range(steps + 1):
+                        value = (prob / steps) * j
                         gradient_data.append({
                             "Team": team,
+                            "Step": j,
                             "Value": value,
-                            "Probability": prob if value <= prob else 0
+                            "FullProbability": prob
                         })
 
                 gradient_df = pd.DataFrame(gradient_data)
 
                 # Creăm graficul cu gradient
-                chart = alt.Chart(gradient_df).mark_bar(
-                    cornerRadiusTop=5  # Colțuri rotunjite pentru estetică
-                ).encode(
+                base = alt.Chart(gradient_df).encode(
                     x=alt.X('Team:N', sort=[home_team, 'Draw', away_team], title=None),
                     y=alt.Y('Value:Q', title='Probability (%)'),
+                    y2=alt.Y2('Value:Q')  # Pentru a crea segmentele de gradient
+                )
+
+                # Adăugăm barele cu gradient
+                chart = base.mark_rect().encode(
                     color=alt.Color(
-                        'Value:Q',
+                        'Step:Q',
                         scale=alt.Scale(
-                            domain=[0, 100],
+                            domain=[0, 20],
                             range=['#FFFFCC', '#FF0000']  # Gradient de la galben la roșu
                         ),
                         legend=None
                     ),
-                    tooltip=['Team', 'Probability']
+                    tooltip=['Team', 'FullProbability']
                 ).properties(
-                    width=100,  # Lățime mai mare pentru bare
+                    width=100,
                     height=400,
                     title='Match Outcome Probabilities'
-                ).configure_axis(
-                    grid=False
-                ).configure_view(
-                    strokeWidth=0
                 )
 
-                st.altair_chart(chart, use_container_width=True)
-
                 # Adăugăm etichete cu valorile exacte
-                text_chart = alt.Chart(prob_df).mark_text(
+                text = alt.Chart(prob_df).mark_text(
                     align='center',
                     baseline='middle',
-                    dy=-20,  # Poziționat deasupra barei
+                    dy=-15,
                     fontSize=14,
                     fontWeight='bold',
                     color='black'
@@ -414,7 +414,8 @@ if "2025_2026" in selected_league:
                 )
 
                 # Combinăm graficele
-                final_chart = chart + text_chart
+                final_chart = chart + text
+
                 st.altair_chart(final_chart, use_container_width=True)
 
                 # --- Stats table ---
