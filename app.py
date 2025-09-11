@@ -349,32 +349,35 @@ if "2025_2026" in selected_league:
                 """, unsafe_allow_html=True)
                 st.markdown(f"**Total Goals:** {predictions['goals']}")
 
-                # --- Probabilities bar chart cu gradient corect și axa Y normală ---
+                # --- Probabilities bar chart cu ordine Home - Draw - Away ---
                 outcome_idx, probs = predictions["outcome"]
                 prob_df = pd.DataFrame({
                     "Team": [home_team, "Draw", away_team],
                     "Probability (%)": [probs[1] * 100, probs[0] * 100, probs[2] * 100]
                 })
 
-                n_steps = 100  # număr de segmente pe bară
+                # --- Parametri pentru gradient simulare ---
+                n_steps = 100  # numărul de segmente pe bară
                 colors = alt.Scale(
                     domain=[0, n_steps - 1],
-                    range=['#FFFFCC', '#FFFF99', '#FFB266', '#FF9933', '#FF6600', '#FF0000']
+                    range=['#FF0000', '#FF9933', '#FFB266', '#FFFF99', '#FFFFCC']  # galben -> roșu
                 )
 
+                # --- Creăm un DataFrame pentru fiecare segment ---
                 gradient_df = pd.DataFrame()
                 for i, row in prob_df.iterrows():
-                    steps = np.linspace(0, row['Probability (%)'] / 100, n_steps)  # normalizat la 0-1
+                    steps = np.linspace(0, row['Probability (%)'], n_steps)
                     temp = pd.DataFrame({
                         'Team': row['Team'],
                         'Step': np.arange(n_steps),
-                        'Height': steps
+                        'Height': steps / n_steps
                     })
                     gradient_df = pd.concat([gradient_df, temp], ignore_index=True)
 
+                # --- Chart cu Altair ---
                 chart = alt.Chart(gradient_df).mark_bar(size=20).encode(
                     x=alt.X('Team', sort=[home_team, 'Draw', away_team]),
-                    y=alt.Y('Height', scale=alt.Scale(domain=[0, 1])),  # 0 jos, 100% sus
+                    y='Height',
                     color=alt.Color('Step', scale=colors, legend=None)
                 ).properties(
                     width=50,
