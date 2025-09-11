@@ -4,34 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1d783be-35d3-40be-957c-233e03c3179c" name="Changes" comment="New commit: Added a loading message when clicking the predict button">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/all_matches_la_liga.json" beforeDir="false" afterPath="$PROJECT_DIR$/processed/all-matches-la-liga-2024-2025.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/all_matches_la_liga_2025_2026.json" beforeDir="false" afterPath="$PROJECT_DIR$/processed/all-matches-la-liga-2025-2026.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/all_matches_romania_superliga.json" beforeDir="false" afterPath="$PROJECT_DIR$/processed/all-matches-romania-superliga-2024-2025.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/all_matches_romania_superliga_2025_2026.json" beforeDir="false" afterPath="$PROJECT_DIR$/processed/all-matches-romania-superliga-2025-2026.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/fixtures_la_liga_2025_2026.json" beforeDir="false" afterPath="$PROJECT_DIR$/processed/fixtures-la-liga-2025-2026.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/fixtures_romania_superliga_2025_2026.json" beforeDir="false" afterPath="$PROJECT_DIR$/processed/fixtures-romania-superliga-2025-2026.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings_la_liga.json" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-la-liga-2024-2025.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings_la_liga_2025_2026.json" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-la-liga-2025-2026.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings_romania_superliga.json" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-romania-superliga-2024-2025.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings_romania_superliga_2024_2025.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings_romania_superliga_2025_2026.json" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-romania-superliga-2025-2026.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings_with_matches_la_liga_2025_2026_clean.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-matches-la-liga-2025-2026-clean.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings_with_matches_la_liga_2025_2026_cleaned.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-matches-la-liga-2025-2026-cleaned.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings_with_matches_la_liga_clean.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-matches-la-liga-2024-2025-clean.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings_with_matches_la_liga_cleaned.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-matches-la-liga-2024-2025-cleaned.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings_with_matches_romania_superliga_2025_2026_clean.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-matches-romania-superliga-2025-2026-clean.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings_with_matches_romania_superliga_2025_2026_cleaned.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-matches-romania-superliga-2025-2026-cleaned.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings_with_matches_romania_superliga_clean.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-matches-romania-superliga-2024-2025-clean.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings_with_matches_romania_superliga_cleaned.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-matches-romania-superliga-2024-2025-cleaned.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings_with_winrate_features_la_liga.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-la-liga-2024-2025.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings_with_winrate_features_la_liga_2025_2026.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-la-liga-2025-2026.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings_with_winrate_features_romania_superliga.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-romania-superliga-2024-2025.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings_with_winrate_features_romania_superliga_2025_2026.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-romania-superliga-2025-2026.csv" afterDir="false" />
-    </list>
+    <list default="true" id="a1d783be-35d3-40be-957c-233e03c3179c" name="Changes" comment="New commit: Fixed the conventional naming of the JSON and CSV files" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -126,7 +99,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1757587934563</updated>
-      <workItem from="1757587935617" duration="18445000" />
+      <workItem from="1757587935617" duration="19312000" />
     </task>
     <task id="LOCAL-00001" summary="Second commit: Requirements file was added including all the">
       <option name="closed" value="true" />
@@ -408,7 +381,23 @@
       <option name="project" value="LOCAL" />
       <updated>1757613886811</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="New commit: Fixed the conventional naming of the JSON and CSV files">
+      <option name="closed" value="true" />
+      <created>1757618913583</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1757618913583</updated>
+    </task>
+    <task id="LOCAL-00037" summary="New commit: Fixed the conventional naming of the JSON and CSV files">
+      <option name="closed" value="true" />
+      <created>1757618975340</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1757618975340</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -429,7 +418,8 @@
     <MESSAGE value="Second commit: Requirements file was added including all the" />
     <MESSAGE value="Lost the track of the commits: Colour changed for Match Outcome Probabilities" />
     <MESSAGE value="New commit: Added a loading message when clicking the predict button" />
-    <option name="LAST_COMMIT_MESSAGE" value="New commit: Added a loading message when clicking the predict button" />
+    <MESSAGE value="New commit: Fixed the conventional naming of the JSON and CSV files" />
+    <option name="LAST_COMMIT_MESSAGE" value="New commit: Fixed the conventional naming of the JSON and CSV files" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/predict_football_matches$main.coverage" NAME="main Coverage Results" MODIFIED="1757616695315" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

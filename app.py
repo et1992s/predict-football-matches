@@ -100,6 +100,17 @@ leagues = {
         "standings_url": "https://www.flashscore.com/football/spain/laliga/standings/#/vcm2MhGk/",
         "results_url": "https://www.flashscore.com/football/spain/laliga/results/",
         "fixtures_url": "https://www.flashscore.com/football/spain/laliga/fixtures/"
+    },
+    "premier-league-2024-2025": {
+        "name": "Premier League 2024-2025",
+        "standings_url": "https://www.flashscore.com/football/england/premier-league-2024-2025/standings/#/lAkHuyP3/standings/overall/",
+        "results_url": "https://www.flashscore.com/football/england/premier-league-2024-2025/results/"
+    },
+    "premier-league-2025-2026": {
+        "name": "Premier League 2025-2026",
+        "standings_url": "https://www.flashscore.com/football/england/premier-league/standings/#/OEEq9Yvp/standings/overall/",
+        "results_url": "https://www.flashscore.com/football/england/premier-league/results/",
+        "fixtures_url": "https://www.flashscore.com/football/england/premier-league/fixtures/"
     }
 }
 
