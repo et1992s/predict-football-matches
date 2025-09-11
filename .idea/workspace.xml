@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1d783be-35d3-40be-957c-233e03c3179c" name="Changes" comment="New commit: Fixed the conventional naming of the JSON and CSV files" />
+    <list default="true" id="a1d783be-35d3-40be-957c-233e03c3179c" name="Changes" comment="New commit: Fixed the conventional naming of the JSON and CSV files">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,7 +42,7 @@
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/S3B1TZ4/PycharmProjects/predict-football-matches",
+    "last_opened_file_path": "C:/Users/S3B1TZ4/PycharmProjects/predict-football-matches/processed",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -50,6 +53,10 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\S3B1TZ4\PycharmProjects\predict-football-matches\processed" />
+      <recent name="C:\Users\S3B1TZ4\PycharmProjects\predict-football-matches" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\S3B1TZ4\PycharmProjects\predict-football-matches" />
     </key>
   </component>
@@ -99,7 +106,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1757587934563</updated>
-      <workItem from="1757587935617" duration="19312000" />
+      <workItem from="1757587935617" duration="23138000" />
     </task>
     <task id="LOCAL-00001" summary="Second commit: Requirements file was added including all the">
       <option name="closed" value="true" />
@@ -397,7 +404,15 @@
       <option name="project" value="LOCAL" />
       <updated>1757618975340</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="New commit: Fixed the conventional naming of the JSON and CSV files">
+      <option name="closed" value="true" />
+      <created>1757625151311</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1757625151311</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -422,6 +437,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="New commit: Fixed the conventional naming of the JSON and CSV files" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/predict_football_matches$main.coverage" NAME="main Coverage Results" MODIFIED="1757616695315" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/predict_football_matches$main.coverage" NAME="main Coverage Results" MODIFIED="1757623002657" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

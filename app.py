@@ -1,3 +1,5 @@
+import base64
+
 import streamlit as st
 import pandas as pd
 import os
@@ -10,7 +12,39 @@ from main import scrape_and_save_standings, scrape_and_save_matches, scrape_and_
 import time  # Added for potential delay simulation
 
 # --- Config Streamlit ---
-st.set_page_config(page_title="Football Predictor MVP", layout="wide")
+st.set_page_config(page_title="FootballX", layout="wide")
+
+# --- Logo în colțul din dreapta sus ---
+logo_path = "footballXlogo.png"
+with open(logo_path, "rb") as f:
+    logo_base64 = base64.b64encode(f.read()).decode()
+
+st.markdown(f"""
+    <style>
+    .header-container {{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 15px;
+        padding: 10px 0;
+    }}
+    .header-logo {{
+        width: 80px;  /* dimensiunea logo-ului */
+        height: auto;
+    }}
+    .header-title {{
+        font-size: 42px;   /* dimensiunea titlului */
+        font-weight: bold;
+        color: #E6DFB2;    /* auriu */
+        margin: 0;
+    }}
+    </style>
+    <div class="header-container">
+        <img src="data:image/png;base64,{logo_base64}" class="header-logo">
+        <h1 class="header-title">FootballX</h1>
+    </div>
+""", unsafe_allow_html=True)
+
 
 # --- CSS culori fotbal reci ---
 st.markdown("""
