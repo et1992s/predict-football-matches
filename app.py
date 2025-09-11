@@ -374,10 +374,10 @@ if "2025_2026" in selected_league:
                     })
                     gradient_df = pd.concat([gradient_df, temp], ignore_index=True)
 
-                # --- Chart Altair ---
+                # --- Chart Altair cu axa y inversată pentru gradient corect ---
                 chart = alt.Chart(gradient_df).mark_bar(size=20).encode(
                     x=alt.X('Team', sort=[home_team, 'Draw', away_team]),
-                    y='Height',
+                    y=alt.Y('Height', scale=alt.Scale(reverse=True)),  # 0% jos, 100% sus
                     color=alt.Color('Step', scale=colors, legend=None)
                 ).properties(
                     width=50,
