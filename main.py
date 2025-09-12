@@ -97,6 +97,16 @@ def main():
             "https://www.flashscore.com/football/england/premier-league/standings/#/OEEq9Yvp/standings/overall/",
             "https://www.flashscore.com/football/england/premier-league/results/",
             "https://www.flashscore.com/football/england/premier-league/fixtures/"
+        ),
+        "bundesliga-2024-2025": (
+            "https://www.flashscore.com/football/germany/bundesliga-2024-2025/standings/#/8l1ZdrsC/standings/overall/",
+            "https://www.flashscore.com/football/germany/bundesliga-2024-2025/results/",
+            None
+        ),
+        "bundesliga-2025-2026": (
+            "https://www.flashscore.com/football/germany/bundesliga/standings/#/8l1ZdrsC/standings/overall/",
+            "https://www.flashscore.com/football/germany/bundesliga/results/",
+            "https://www.flashscore.com/football/germany/bundesliga/fixtures/"
         )
         # poți adăuga și alte campionate aici
     }

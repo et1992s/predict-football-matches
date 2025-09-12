@@ -191,6 +191,17 @@ leagues = {
         "standings_url": "https://www.flashscore.com/football/england/premier-league/standings/#/OEEq9Yvp/standings/overall/",
         "results_url": "https://www.flashscore.com/football/england/premier-league/results/",
         "fixtures_url": "https://www.flashscore.com/football/england/premier-league/fixtures/"
+    },
+    "bundesliga-2024-2025": {
+        "name": "Bundesliga 2024-2025",
+        "standings_url": "https://www.flashscore.com/football/germany/bundesliga-2024-2025/standings/#/8l1ZdrsC/standings/overall/",
+        "results_url": "https://www.flashscore.com/football/germany/bundesliga-2024-2025/results/"
+    },
+    "bundesliga-2025-2026": {
+        "name": "Bundesliga 2025-2026",
+        "standings_url": "https://www.flashscore.com/football/germany/bundesliga/standings/#/8l1ZdrsC/standings/overall/",
+        "results_url": "https://www.flashscore.com/football/germany/bundesliga/results/",
+        "fixtures_url": "https://www.flashscore.com/football/germany/bundesliga/fixtures/"
     }
 }
 
