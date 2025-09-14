@@ -565,7 +565,7 @@ class FootballXApp:
             </style>
         """, unsafe_allow_html=True)
 
-        selected_league = st.session_state.get('selected_league', list(self.leagues.keys())[5])
+        selected_league = st.session_state.get('selected_league', list(self.leagues.keys())[3])
 
         # Folosim expander pentru dropdown effect
         with st.expander(f"🌍 Select League/Season ▼", expanded=False):

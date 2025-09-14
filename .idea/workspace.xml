@@ -5,11 +5,61 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1d783be-35d3-40be-957c-233e03c3179c" name="Changes" comment="New commit: Safe API Key">
+      <change afterPath="$PROJECT_DIR$/flags/belgium.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flags/italy.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flags/netherlands.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flags/portugal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/all-matches-italy-serie-a-2024-2025.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/all-matches-italy-serie-a-2025-2026.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/all-matches-jupiler-pro-league-2024-2025.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/all-matches-jupiler-pro-league-2025-2026.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/all-matches-liga-portugal-2024-2025.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/all-matches-liga-portugal-2025-2026.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/all-matches-netherlands-eredivisie-2024-2025.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/all-matches-netherlands-eredivisie-2025-2026.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/fixtures-italy-serie-a-2025-2026.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/fixtures-jupiler-pro-league-2025-2026.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/fixtures-liga-portugal-2025-2026.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/fixtures-netherlands-eredivisie-2025-2026.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-champions-league-2025-2026.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-italy-serie-a-2024-2025.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-italy-serie-a-2025-2026.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-jupiler-pro-league-2024-2025.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-jupiler-pro-league-2025-2026.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-liga-portugal-2024-2025.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-liga-portugal-2025-2026.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-netherlands-eredivisie-2024-2025.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-netherlands-eredivisie-2025-2026.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-champions-league-2025-2026-clean.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-champions-league-2025-2026-cleaned.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-italy-serie-a-2024-2025-clean.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-italy-serie-a-2024-2025-cleaned.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-italy-serie-a-2025-2026-clean.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-italy-serie-a-2025-2026-cleaned.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-jupiler-pro-league-2024-2025-clean.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-jupiler-pro-league-2024-2025-cleaned.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-jupiler-pro-league-2025-2026-clean.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-jupiler-pro-league-2025-2026-cleaned.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-liga-portugal-2024-2025-clean.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-liga-portugal-2024-2025-cleaned.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-liga-portugal-2025-2026-clean.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-liga-portugal-2025-2026-cleaned.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-netherlands-eredivisie-2024-2025-clean.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-netherlands-eredivisie-2024-2025-cleaned.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-netherlands-eredivisie-2025-2026-clean.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-matches-netherlands-eredivisie-2025-2026-cleaned.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-italy-serie-a-2024-2025.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-italy-serie-a-2025-2026.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-jupiler-pro-league-2024-2025.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-jupiler-pro-league-2025-2026.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-liga-portugal-2024-2025.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-liga-portugal-2025-2026.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-netherlands-eredivisie-2024-2025.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-netherlands-eredivisie-2025-2026.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/predictions_log.csv" beforeDir="false" afterPath="$PROJECT_DIR$/predictions_log.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/all-matches-champions-league-2025-2026.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/processed/all_predictions.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/all_predictions.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/processed/standings-with-winrate-features-champions-league-2024-2025.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-champions-league-2024-2025.csv" afterDir="false" />
     </list>
@@ -173,7 +223,7 @@
       <option name="presentableId" value="Default" />
       <updated>1757587934563</updated>
       <workItem from="1757587935617" duration="31987000" />
-      <workItem from="1757717387636" duration="80827000" />
+      <workItem from="1757717387636" duration="81163000" />
     </task>
     <task id="LOCAL-00001" summary="Second commit: Requirements file was added including all the">
       <option name="closed" value="true" />
@@ -551,7 +601,15 @@
       <option name="project" value="LOCAL" />
       <updated>1757858208659</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="New commit: Safe API Key">
+      <option name="closed" value="true" />
+      <created>1757893881578</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1757893881578</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
