@@ -499,6 +499,7 @@ class FootballXApp:
                 margin: 5px 0;
                 border-radius: 6px;
                 cursor: pointer;
+                color: black
             }
             .league-option:hover {
                 background: rgba(30, 60, 114, 0.3);

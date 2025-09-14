@@ -5,18 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1d783be-35d3-40be-957c-233e03c3179c" name="Changes" comment="New commit: Styling modified a bit">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/match_predictor.py" beforeDir="false" afterPath="$PROJECT_DIR$/match_predictor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/predictions_log.csv" beforeDir="false" afterPath="$PROJECT_DIR$/predictions_log.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/all_predictions.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/all_predictions.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings-with-winrate-features-bundesliga-2024-2025.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-bundesliga-2024-2025.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings-with-winrate-features-france-ligue-1-2024-2025.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-france-ligue-1-2024-2025.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings-with-winrate-features-la-liga-2024-2025.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-la-liga-2024-2025.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings-with-winrate-features-premier-league-2024-2025.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-premier-league-2024-2025.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings-with-winrate-features-romania-superliga-2024-2025.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-romania-superliga-2024-2025.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed/standings-with-winrate-features-romania-superliga-2025-2026.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-romania-superliga-2025-2026.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/live_score.py" beforeDir="false" afterPath="$PROJECT_DIR$/live_score.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +170,7 @@
       <option name="presentableId" value="Default" />
       <updated>1757587934563</updated>
       <workItem from="1757587935617" duration="31987000" />
-      <workItem from="1757717387636" duration="45202000" />
+      <workItem from="1757717387636" duration="48144000" />
     </task>
     <task id="LOCAL-00001" summary="Second commit: Requirements file was added including all the">
       <option name="closed" value="true" />
@@ -524,7 +516,15 @@
       <option name="project" value="LOCAL" />
       <updated>1757780949294</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="New commit: Styling modified a bit">
+      <option name="closed" value="true" />
+      <created>1757849485701</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1757849485701</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -1,11 +1,13 @@
 from datetime import datetime
-
 import requests
+import os
+from dotenv import load_dotenv
 
+load_dotenv()  # încarcă variabilele din .env
 
 class LiveScoreService:
     def __init__(self):
-        self.api_key = "9ef1b326c5c0ebc5fd15519e5db22759"  # 👈 Înlocuiește aici!
+        self.api_key = os.getenv("API_FOOTBALL_KEY")  # citește cheia din .env
         self.base_url = "https://v3.football.api-sports.io"
 
     def get_today_live_matches(self):
@@ -26,7 +28,7 @@ class LiveScoreService:
 
             data = response.json()
 
-            # Doar ligile principale din fiecare țară
+            # Ligile principale
             main_leagues = {
                 'England': 'Premier League',
                 'Spain': 'La Liga',
@@ -52,10 +54,7 @@ class LiveScoreService:
                 'Poland': 'Ekstraklasa'
             }
 
-            # + Competițiile UEFA
-            uefa_competitions = {
-                'Champions League', 'Europa League', 'Europa Conference League'
-            }
+            uefa_competitions = {'Champions League', 'Europa League', 'Europa Conference League'}
 
             live_matches = []
             for fixture in data.get('response', []):
@@ -63,7 +62,6 @@ class LiveScoreService:
                 country = league_data['country']
                 league_name = league_data['name']
 
-                # Verifică dacă este liga principală a țării sau competiție UEFA
                 is_main_league = (country in main_leagues and league_name == main_leagues[country])
                 is_uefa_competition = (league_name in uefa_competitions)
 
@@ -87,9 +85,7 @@ class LiveScoreService:
                     }
                     live_matches.append(match_info)
 
-            # Sortează după țară
             live_matches.sort(key=lambda x: x['country'])
-
             return live_matches
 
         except Exception as e:
