@@ -117,6 +117,16 @@ def main():
             "https://www.flashscore.com/football/france/ligue-1/standings/#/j9QeTLPP/standings/overall/",
             "https://www.flashscore.com/football/france/ligue-1/results/",
             "https://www.flashscore.com/football/france/ligue-1/fixtures/"
+        ),
+        "champions-league-2024-2025": (
+            "https://www.flashscore.com/football/europe/champions-league-2024-2025/standings/#/2oN82Fw5/standings/overall/",
+            "https://www.flashscore.com/football/europe/champions-league-2024-2025/results/",
+            None
+        ),
+        "champions-league-2025-2026": (
+            None,
+            None,
+            "https://www.flashscore.com/football/europe/champions-league/fixtures/"
         )
         # poți adăuga și alte campionate aici
     }
@@ -129,6 +139,15 @@ def main():
         standings_file = f"processed/standings-{league}.json"
         matches_file = f"processed/all-matches-{league}.json"
         fixtures_file = f"processed/fixtures-{league}.json"
+
+        if "champions-league-2025-2026" in league:
+            print(f"skipping standings and matches for {league}")
+
+            if fixtures_url and not os.path.exists(fixtures_file):
+                scrape_and_save_fixtures(fixtures_url, fixtures_file)
+                print(f"Fixtures saved to {fixtures_file}")
+
+            continue
 
         # 1. Scrape standings dacă nu există deja
         if not os.path.exists(standings_file):
@@ -161,7 +180,7 @@ def main():
 
         # 4. Winrate features
         ff = FootballWinRateFeatures(preprocessed_csv)
-        ff.encode_columns().create_winrate_features(N_recent=10) \
+        ff.encode_columns().create_winrate_features(N_recent=5) \
             .save_csv(f"processed/standings-with-winrate-features-{league}.csv")
         winrate_files.append(f"processed/standings-with-winrate-features-{league}.csv")
 

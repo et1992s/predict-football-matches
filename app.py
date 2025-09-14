@@ -1,5 +1,6 @@
 import base64
 import streamlit as st
+import requests
 import pandas as pd
 import os
 import base64
@@ -7,6 +8,7 @@ import json
 from datetime import datetime
 import altair as alt
 from match_predictor import FootballMatchPredictor
+from live_score import  LiveScoreService
 from main import scrape_and_save_standings, scrape_and_save_matches, scrape_and_save_fixtures, StandingsProcessor, \
     MatchPreprocessor, FootballWinRateFeatures
 
@@ -79,6 +81,19 @@ class FootballXApp:
                 "results_url": "https://www.flashscore.com/football/france/ligue-1/results/",
                 "fixtures_url": "https://www.flashscore.com/football/france/ligue-1/fixtures/"
             },
+            "champions-league-2024-2025": {
+                "name": "Champions League 2024/2025",
+                "flag": "flags/europe.png",
+                "standings_url": "https://www.flashscore.com/football/europe/champions-league-2024-2025/standings/#/2oN82Fw5/",
+                "results_url": "https://www.flashscore.com/football/europe/champions-league-2024-2025/results/"
+            },
+            "champions-league-2025-2026": {
+                "name": "Champions League 2025/2026",
+                "flag": "flags/europe.png",
+                "standings_url": None,
+                "results_url": None,
+                "fixtures_url": "https://www.flashscore.com/football/europe/champions-league/fixtures/"
+            }
         }
 
         self.setup_page_config()
@@ -273,12 +288,136 @@ class FootballXApp:
             </div>
         """, unsafe_allow_html=True)
 
+    def display_live_scores_from_api(self):
+        """Display live scores from API-Football"""
+        st.markdown(f'<div class="league-subheading">{"⚽ Live Scores Today"}</div>', unsafe_allow_html=True)
+
+        try:
+            # Inițializează serviciul
+            live_service = LiveScoreService()
+            live_matches = live_service.get_today_live_matches()
+
+            if not live_matches:
+                st.info("📺 No live matches at the moment")
+                return
+
+            # Grupează meciurile pe ligi
+            matches_by_league = {}
+            for match in live_matches:
+                league_name = f"{match['country']} - {match['league']}"
+                if league_name not in matches_by_league:
+                    matches_by_league[league_name] = []
+                matches_by_league[league_name].append(match)
+
+            # Afișează meciurile grupate pe ligi
+            for league_name, matches in matches_by_league.items():
+                with st.expander(f"🏆 {league_name} ({len(matches)} matches)", expanded=True):
+                    for match in matches:
+                        self._display_api_match(match)
+
+        except Exception as e:
+            st.error(f"❌ Error loading live scores: {e}")
+
+    def _display_api_match(self, match):
+        """Display a single match from API with mapped statuses"""
+        status = match['status']
+        home_goals = match['home_goals']
+        away_goals = match['away_goals']
+        fixture_time = match.get('time')
+        elapsed = match.get('elapsed')
+
+        # Gestionează scorurile None
+        if home_goals is None or away_goals is None:
+            score_display = "-"
+            score_style = "font-weight: bold; font-size: 16px; color: #95a5a6;"
+        else:
+            score_display = f"{home_goals} - {away_goals}"
+            score_style = "font-weight: bold; font-size: 18px; color: #FFFFFF;"
+
+        # Mapare statusuri API → text și stil
+        def map_status(status, elapsed, fixture_time):
+            if status in ("TBD", "NS"):
+                return f"{fixture_time}", "#3498db", "rgba(52, 152, 219, 0.1)"
+            elif status == "1H":
+                return f"LIVE {elapsed}'", "white", "linear-gradient(45deg, #ff6b6b, #ee5a24)"
+            elif status == "HT":
+                return "⏸HALF TIME", "white", "linear-gradient(45deg, #f39c12, #d35400)"
+            elif status == "2H":
+                return f"LIVE {elapsed}'", "white", "linear-gradient(45deg, #ff6b6b, #ee5a24)"
+            elif status == "ET":
+                return f"ET {elapsed}'", "white", "linear-gradient(45deg, #8e44ad, #9b59b6)"
+            elif status == "BT":
+                return "⏸BREAK", "#f39c12", "rgba(243, 156, 18, 0.2)"
+            elif status == "P":
+                return f"PEN {elapsed}'", "white", "linear-gradient(45deg, #2c3e50, #34495e)"
+            elif status == "FT":
+                return "FINAL", "#27ae60", "rgba(46, 204, 113, 0.15)"
+            elif status == "AET":
+                return "AET FINAL", "#27ae60", "rgba(46, 204, 113, 0.15)"
+            elif status == "PEN":
+                return "PEN FINAL", "#27ae60", "rgba(46, 204, 113, 0.15)"
+            elif status == "SUSP":
+                return "⏸SUSPENDED", "#7f8c8d", "rgba(149, 165, 166, 0.2)"
+            elif status == "INT":
+                return "⏸INTERRUPTED", "#7f8c8d", "rgba(149, 165, 166, 0.2)"
+            elif status == "PST":
+                return "POSTPONED", "#7f8c8d", "rgba(149, 165, 166, 0.2)"
+            elif status == "CANC":
+                return "CANCELED", "#7f8c8d", "rgba(149, 165, 166, 0.2)"
+            elif status == "ABD":
+                return "ABANDONED", "#7f8c8d", "rgba(149, 165, 166, 0.2)"
+            elif status == "AWD":
+                return "AWARDED", "#c0392b", "rgba(231, 76, 60, 0.2)"
+            elif status == "WO":
+                return "WALKOVER", "#c0392b", "rgba(231, 76, 60, 0.2)"
+            elif status == "LIVE":
+                return f"LIVE {elapsed}'", "white", "linear-gradient(45deg, #ff6b6b, #ee5a24)"
+            else:
+                return f"{fixture_time}", "#3498db", "rgba(52, 152, 219, 0.1)"
+
+        status_text, text_color, bg_color = map_status(status, elapsed, fixture_time)
+
+        team_style = "font-weight: bold; font-size: 13px;"
+
+        # Render în Streamlit
+        st.markdown(f"""
+            <div style="
+                background: {bg_color};
+                color: {text_color};
+                padding: 10px;
+                border-radius: 8px;
+                margin: 6px 0;
+                border-left: 4px solid {text_color};
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            ">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="flex: 2; {team_style}; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        {match['home']}
+                    </div>
+                    <div style="flex: 1; {score_style}; text-align: center; padding: 0 5px;">
+                        {score_display}
+                    </div>
+                    <div style="flex: 2; {team_style}; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        {match['away']}
+                    </div>
+                </div>
+                <div style="text-align: center; font-size: 11px; color: white; margin-top: 4px;">
+                    {status_text} • {match.get('round', '')}
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
     def get_todays_matches(self, league_key):
-        """Get today's matches for a league"""
+        """Get today's matches for a league with caching"""
+        today = datetime.now().strftime("%d.%m.%Y")
+        return self._get_matches_for_date(league_key, today)
+
+    @st.cache_data(ttl=300)  # Cache pentru 5 minute
+    def _get_matches_for_date(_self, league_key, date):
+        """Internal method with caching"""
         matches_file_json = f"processed/all-matches-{league_key}.json"
         fixtures_file_json = f"processed/fixtures-{league_key}.json"
 
-        today = datetime.now().strftime("%d.%m.%Y")
         matches_today = []
 
         # Check results
@@ -287,7 +426,7 @@ class FootballXApp:
                 matches_data = json.load(f)
             df_matches = pd.json_normalize(matches_data["matches"])
             if not df_matches.empty:
-                today_matches = df_matches[df_matches["date"] == today]
+                today_matches = df_matches[df_matches["date"] == date]
                 matches_today.extend(today_matches.to_dict('records'))
 
         # Check fixtures
@@ -296,7 +435,7 @@ class FootballXApp:
                 fixtures_data = json.load(f)
             df_fixtures = pd.json_normalize(fixtures_data["matches"])
             if not df_fixtures.empty:
-                today_fixtures = df_fixtures[df_fixtures["date"] == today]
+                today_fixtures = df_fixtures[df_fixtures["date"] == date]
                 matches_today.extend(today_fixtures.to_dict('records'))
 
         return matches_today
@@ -403,6 +542,17 @@ class FootballXApp:
         fixtures_file_json = f"processed/fixtures-{selected_league}.json"
         winrate_file_csv = f"processed/standings-with-winrate-features-{selected_league}.csv"
 
+        # SKIP COMPLET pentru Champions League 2025-2026 (doar fixtures)
+        if selected_league == "champions-league-2025-2026":
+
+            # Doar download fixtures dacă există URL și nu există fișier
+            if "fixtures_url" in league_info and league_info["fixtures_url"] and not os.path.exists(fixtures_file_json):
+                st.info("Downloading Champions League fixtures...")
+                scrape_and_save_fixtures(league_info["fixtures_url"], fixtures_file_json)
+
+            # Returnăm doar fixtures file, celelalte vor fi None
+            return None, None, fixtures_file_json, winrate_file_csv
+
         # Download standings if not exists
         if not os.path.exists(standings_file_json):
             st.info("Downloading standings...")
@@ -446,27 +596,33 @@ class FootballXApp:
         league_info = self.leagues[selected_league]
         st.markdown(f'<div class="league-title">{league_info["name"]}</div>', unsafe_allow_html=True)
 
-        # Standings section with dropdown
+        # Standings section with dropdown - doar dacă există date
         with st.expander("🏆 Standings", expanded=False):
-            if os.path.exists(standings_file_json):
+            if standings_file_json and os.path.exists(standings_file_json):
                 with open(standings_file_json, "r", encoding="utf-8") as f:
                     standings_data = json.load(f)
                 df_standings = pd.json_normalize(standings_data["standings"])
                 st.dataframe(df_standings)
+            else:
+                st.write("No standings data available for this season")
 
-        # Results section with dropdown
+        # Results section with dropdown - doar dacă există date
         with st.expander("📊 Results", expanded=False):
-            if os.path.exists(matches_file_json):
+            if matches_file_json and os.path.exists(matches_file_json):
                 with open(matches_file_json, "r", encoding="utf-8") as f:
                     matches_data = json.load(f)
                 df_results = pd.json_normalize(matches_data["matches"])
                 if not df_results.empty:
                     display_cols = ["date", "home", "away", "home_goals", "away_goals", "status"]
                     st.dataframe(df_results[display_cols])
+                else:
+                    st.write("No results data available")
+            else:
+                st.write("No results data available for this season")
 
         # Fixtures section with dropdown
         with st.expander("📅 Upcoming Fixtures", expanded=False):
-            if os.path.exists(fixtures_file_json):
+            if fixtures_file_json and os.path.exists(fixtures_file_json):
                 with open(fixtures_file_json, "r", encoding="utf-8") as f:
                     fixtures_data = json.load(f)
                 df_fixtures = pd.json_normalize(fixtures_data["matches"])
@@ -477,18 +633,22 @@ class FootballXApp:
                         if col not in df_display_fixtures.columns:
                             df_display_fixtures[col] = ""
                     st.dataframe(df_display_fixtures[display_cols])
+                else:
+                    st.write("No fixtures data available")
+            else:
+                st.write("No fixtures data available for this season")
 
     def get_future_matches(self, matches_file_json, fixtures_file_json):
         """Get future matches from results and fixtures"""
         df_results = pd.DataFrame()
         df_fixtures = pd.DataFrame()
 
-        if os.path.exists(matches_file_json):
+        if matches_file_json and os.path.exists(matches_file_json):
             with open(matches_file_json, "r", encoding="utf-8") as f:
                 matches_data = json.load(f)
             df_results = pd.json_normalize(matches_data["matches"])
 
-        if os.path.exists(fixtures_file_json):
+        if fixtures_file_json and os.path.exists(fixtures_file_json):
             with open(fixtures_file_json, "r", encoding="utf-8") as f:
                 fixtures_data = json.load(f)
             df_fixtures = pd.json_normalize(fixtures_data["matches"])
@@ -505,7 +665,7 @@ class FootballXApp:
 
     def display_prediction_section(self, selected_league, winrate_file_csv, future_matches):
         """Display prediction section with dropdown"""
-        if "2025-2026" in selected_league:
+        if "2024-2025" or "2025-2026" in selected_league:
             with st.expander("⚽ Predict Future Match", expanded=False):
                 if not future_matches.empty:
                     future_matches["match_str"] = future_matches.apply(
@@ -630,6 +790,8 @@ class FootballXApp:
         """Main method to run the app"""
         # Display today's matches
         self.display_todays_matches()
+        # Display live scores from API ⚡ - ADAUGĂ ASTA!
+        self.display_live_scores_from_api()
 
         # League selection
         selected_league, league_info = self.display_league_selection()

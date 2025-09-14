@@ -130,9 +130,9 @@ class FootballMatchPredictor:
         print("Antrenarea modelelor...")
 
         self.models = {
-            'outcome': RandomForestClassifier(n_estimators=200, random_state=42),
-            'goals': RandomForestClassifier(n_estimators=500, random_state=42),
-            'score': RandomForestClassifier(n_estimators=500, random_state=42),
+            'outcome': RandomForestClassifier(n_estimators=50, random_state=42),
+            'goals': RandomForestClassifier(n_estimators=50, random_state=42),
+            'score': RandomForestClassifier(n_estimators=50, random_state=42),
         }
 
         stat_targets = ['corners', 'shots_on_target', 'possession', 'yellow_cards',
@@ -141,7 +141,7 @@ class FootballMatchPredictor:
         for target in stat_targets:
             for team_type in ['home', 'away']:
                 model_key = f"{target}_{team_type}"
-                self.models[model_key] = RandomForestRegressor(n_estimators=200, random_state=42)
+                self.models[model_key] = RandomForestRegressor(n_estimators=50, random_state=42)
 
         results = {}
 
