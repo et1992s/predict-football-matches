@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1d783be-35d3-40be-957c-233e03c3179c" name="Changes" comment="New commit: Styling modified a bit">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="a1d783be-35d3-40be-957c-233e03c3179c" name="Changes" comment="New commit: Safe API Key">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live_score.py" beforeDir="false" afterPath="$PROJECT_DIR$/live_score.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/predictions_log.csv" beforeDir="false" afterPath="$PROJECT_DIR$/predictions_log.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +168,7 @@
       <option name="presentableId" value="Default" />
       <updated>1757587934563</updated>
       <workItem from="1757587935617" duration="31987000" />
-      <workItem from="1757717387636" duration="48144000" />
+      <workItem from="1757717387636" duration="53430000" />
     </task>
     <task id="LOCAL-00001" summary="Second commit: Requirements file was added including all the">
       <option name="closed" value="true" />
@@ -524,7 +522,15 @@
       <option name="project" value="LOCAL" />
       <updated>1757849485701</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="New commit: Safe API Key">
+      <option name="closed" value="true" />
+      <created>1757852791239</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1757852791240</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -547,7 +553,8 @@
     <MESSAGE value="New commit: Added a loading message when clicking the predict button" />
     <MESSAGE value="New commit: Fixed the conventional naming of the JSON and CSV files" />
     <MESSAGE value="New commit: Styling modified a bit" />
-    <option name="LAST_COMMIT_MESSAGE" value="New commit: Styling modified a bit" />
+    <MESSAGE value="New commit: Safe API Key" />
+    <option name="LAST_COMMIT_MESSAGE" value="New commit: Safe API Key" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/predict_football_matches$main.coverage" NAME="main Coverage Results" MODIFIED="1757804515973" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
