@@ -8,7 +8,7 @@ import json
 from datetime import datetime
 import altair as alt
 from match_predictor import FootballMatchPredictor
-from live_score import  LiveScoreService
+from live_score import LiveScoreService
 from main import scrape_and_save_standings, scrape_and_save_matches, scrape_and_save_fixtures, StandingsProcessor, \
     MatchPreprocessor, FootballWinRateFeatures
 
@@ -16,57 +16,31 @@ from main import scrape_and_save_standings, scrape_and_save_matches, scrape_and_
 class FootballXApp:
     def __init__(self):
         self.leagues = {
-            "romania-superliga-2024-2025": {
-                "name": "Romania Superliga 2024/2025",
-                "flag": "flags/romania.png",
-                "standings_url": "https://www.flashscore.com/football/romania/superliga-2024-2025/standings/#/QkBSrPPD/standings/overall/",
-                "results_url": "https://www.flashscore.com/football/romania/superliga-2024-2025/results/"
+            "jupiler-pro-league-2024-2025": {
+                "name": "Belgium Jupiler Pro League 2024/2025",
+                "flag": "flags/belgium.png",
+                "standings_url": "https://www.flashscore.com/football/belgium/jupiler-pro-league-2024-2025/standings/#/v7MrIGpM/standings/overall/",
+                "results_url": "https://www.flashscore.com/football/belgium/jupiler-pro-league-2024-2025/results/"
             },
-            "romania-superliga-2025-2026": {
-                "name": "Romania Superliga 2025/2026",
-                "flag": "flags/romania.png",
-                "standings_url": "https://www.flashscore.com/football/romania/superliga/standings/#/02YI7tIj/standings/overall/",
-                "results_url": "https://www.flashscore.com/football/romania/superliga/results/",
-                "fixtures_url": "https://www.flashscore.com/football/romania/superliga/fixtures/"
-            },
-            "la-liga-2024-2025": {
-                "name": "La Liga 2024/2025",
-                "flag": "flags/spain.png",
-                "standings_url": "https://www.flashscore.com/football/spain/laliga-2024-2025/standings/#/dINOZk9Q/standings/overall/",
-                "results_url": "https://www.flashscore.com/football/spain/laliga-2024-2025/results/",
-            },
-            "la-liga-2025-2026": {
-                "name": "La Liga 2025/2026",
-                "flag": "flags/spain.png",
-                "standings_url": "https://www.flashscore.com/football/spain/laliga/standings/#/vcm2MhGk/",
-                "results_url": "https://www.flashscore.com/football/spain/laliga/results/",
-                "fixtures_url": "https://www.flashscore.com/football/spain/laliga/fixtures/"
+            "jupiler-pro-league-2025-2026": {
+                "name": "Belgium Jupiler Pro League 2025/2026",
+                "flag": "flags/belgium.png",
+                "standings_url": "https://www.flashscore.com/football/belgium/jupiler-pro-league/standings/#/WbIIL8v0/live-standings/",
+                "results_url": "https://www.flashscore.com/football/belgium/jupiler-pro-league/results/",
+                "fixtures_url": "https://www.flashscore.com/football/belgium/jupiler-pro-league/fixtures/"
             },
             "premier-league-2024-2025": {
-                "name": "Premier League 2024/2025",
+                "name": "England Premier League 2024/2025",
                 "flag": "flags/england.png",
                 "standings_url": "https://www.flashscore.com/football/england/premier-league-2024-2025/standings/#/lAkHuyP3/standings/overall/",
                 "results_url": "https://www.flashscore.com/football/england/premier-league-2024-2025/results/"
             },
             "premier-league-2025-2026": {
-                "name": "Premier League 2025/2026",
+                "name": "England Premier League 2025/2026",
                 "flag": "flags/england.png",
                 "standings_url": "https://www.flashscore.com/football/england/premier-league/standings/#/OEEq9Yvp/standings/overall/",
                 "results_url": "https://www.flashscore.com/football/england/premier-league/results/",
                 "fixtures_url": "https://www.flashscore.com/football/england/premier-league/fixtures/"
-            },
-            "bundesliga-2024-2025": {
-                "name": "Bundesliga 2024/2025",
-                "flag": "flags/germany.png",
-                "standings_url": "https://www.flashscore.com/football/germany/bundesliga-2024-2025/standings/#/8l1ZdrsC/standings/overall/",
-                "results_url": "https://www.flashscore.com/football/germany/bundesliga-2024-2025/results/"
-            },
-            "bundesliga-2025-2026": {
-                "name": "Bundesliga 2025/2026",
-                "flag": "flags/germany.png",
-                "standings_url": "https://www.flashscore.com/football/germany/bundesliga/standings/#/8l1ZdrsC/standings/overall/",
-                "results_url": "https://www.flashscore.com/football/germany/bundesliga/results/",
-                "fixtures_url": "https://www.flashscore.com/football/germany/bundesliga/fixtures/"
             },
             "france-ligue-1-2024-2025": {
                 "name": "France Ligue 1 2024/2025",
@@ -81,6 +55,84 @@ class FootballXApp:
                 "results_url": "https://www.flashscore.com/football/france/ligue-1/results/",
                 "fixtures_url": "https://www.flashscore.com/football/france/ligue-1/fixtures/"
             },
+            "bundesliga-2024-2025": {
+                "name": "Germany Bundesliga 2024/2025",
+                "flag": "flags/germany.png",
+                "standings_url": "https://www.flashscore.com/football/germany/bundesliga-2024-2025/standings/#/8l1ZdrsC/standings/overall/",
+                "results_url": "https://www.flashscore.com/football/germany/bundesliga-2024-2025/results/"
+            },
+            "bundesliga-2025-2026": {
+                "name": "Germany Bundesliga 2025/2026",
+                "flag": "flags/germany.png",
+                "standings_url": "https://www.flashscore.com/football/germany/bundesliga/standings/#/8l1ZdrsC/standings/overall/",
+                "results_url": "https://www.flashscore.com/football/germany/bundesliga/results/",
+                "fixtures_url": "https://www.flashscore.com/football/germany/bundesliga/fixtures/"
+            },
+            "italy-serie-a-2024-2025": {
+                "name": "Italy Series A 2024/2025",
+                "flag": "flags/italy.png",
+                "standings_url": "https://www.flashscore.com/football/italy/serie-a-2024-2025/standings/#/zDpS37lb/standings/overall/",
+                "results_url": "https://www.flashscore.com/football/italy/serie-a-2024-2025/results/"
+            },
+            "italy-serie-a-2025-2026": {
+                "name": "Italy Series A 2025/2026",
+                "flag": "flags/italy.png",
+                "standings_url": "https://www.flashscore.com/football/italy/serie-a/standings/#/6PWwAsA7/live-standings/",
+                "results_url": "https://www.flashscore.com/football/italy/serie-a/results/",
+                "fixtures_url": "https://www.flashscore.com/football/italy/serie-a/fixtures/"
+            },
+            "liga-portugal-2024-2025": {
+                "name": "Liga Portugal 2024/2025",
+                "flag": "flags/portugal.png",
+                "standings_url": "https://www.flashscore.com/football/portugal/liga-portugal-2024-2025/standings/#/0d7EBBWo/standings/overall/",
+                "results_url": "https://www.flashscore.com/football/portugal/liga-portugal-2024-2025/results/"
+            },
+            "liga-portugal-2025-2026": {
+                "name": "Liga Portugal 2025/2026",
+                "flag": "flags/portugal.png",
+                "standings_url": "https://www.flashscore.com/football/portugal/liga-portugal-2024-2025/standings/#/0d7EBBWo/standings/overall/",
+                "results_url": "https://www.flashscore.com/football/portugal/liga-portugal/results/",
+                "fixtures_url": "https://www.flashscore.com/football/portugal/liga-portugal/fixtures/"
+            },
+            "netherlands-eredivisie-2024-2025": {
+                "name": "Netherlands Eredivisie 2024/2025",
+                "flag": "flags/netherlands.png",
+                "standings_url": "https://www.flashscore.com/football/netherlands/eredivisie-2024-2025/standings/#/KCMrEcSo/standings/overall/",
+                "results_url": "https://www.flashscore.com/football/netherlands/eredivisie-2024-2025/results/"
+            },
+            "netherlands-eredivisie-2025-2026": {
+                "name": "Netherlands Eredivisie 2025/2026",
+                "flag": "flags/netherlands.png",
+                "standings_url": "https://www.flashscore.com/football/netherlands/eredivisie/standings/#/dWKtjvdd/standings/overall/",
+                "results_url": "https://www.flashscore.com/football/netherlands/eredivisie/results/",
+                "fixtures_url": "https://www.flashscore.com/football/netherlands/eredivisie/fixtures/"
+            },
+            "romania-superliga-2024-2025": {
+                "name": "Romania Superliga 2024/2025",
+                "flag": "flags/romania.png",
+                "standings_url": "https://www.flashscore.com/football/romania/superliga-2024-2025/standings/#/QkBSrPPD/standings/overall/",
+                "results_url": "https://www.flashscore.com/football/romania/superliga-2024-2025/results/"
+            },
+            "romania-superliga-2025-2026": {
+                "name": "Romania Superliga 2025/2026",
+                "flag": "flags/romania.png",
+                "standings_url": "https://www.flashscore.com/football/romania/superliga/standings/#/02YI7tIj/standings/overall/",
+                "results_url": "https://www.flashscore.com/football/romania/superliga/results/",
+                "fixtures_url": "https://www.flashscore.com/football/romania/superliga/fixtures/"
+            },
+            "la-liga-2024-2025": {
+                "name": "Spain La Liga 2024/2025",
+                "flag": "flags/spain.png",
+                "standings_url": "https://www.flashscore.com/football/spain/laliga-2024-2025/standings/#/dINOZk9Q/standings/overall/",
+                "results_url": "https://www.flashscore.com/football/spain/laliga-2024-2025/results/",
+            },
+            "la-liga-2025-2026": {
+                "name": "Spain La Liga 2025/2026",
+                "flag": "flags/spain.png",
+                "standings_url": "https://www.flashscore.com/football/spain/laliga/standings/#/vcm2MhGk/",
+                "results_url": "https://www.flashscore.com/football/spain/laliga/results/",
+                "fixtures_url": "https://www.flashscore.com/football/spain/laliga/fixtures/"
+            },
             "champions-league-2024-2025": {
                 "name": "Champions League 2024/2025",
                 "flag": "flags/europe.png",
@@ -93,7 +145,7 @@ class FootballXApp:
                 "standings_url": None,
                 "results_url": None,
                 "fixtures_url": "https://www.flashscore.com/football/europe/champions-league/fixtures/"
-            }
+            },
         }
 
         self.setup_page_config()
@@ -124,7 +176,7 @@ class FootballXApp:
             .stMarkdown h1,  .stMarkdown h2, .stMarkdown h3 {
                 color: #A8D5BA; 
             }
-            
+
             /* Stil specific pentru titlul ligii */
             .league-title {
                 font-size: 24px !important;
@@ -218,7 +270,7 @@ class FootballXApp:
             /* SPINNER */
             .stSpinner > div {
                 text-align: center;
-                color: #E6DFB2 !important;
+                color: linear-gradient(45deg, #1E3C72, #2A5298) !important;
                 font-size: 18px !important;
                 font-weight: bold !important;
             }
@@ -227,7 +279,7 @@ class FootballXApp:
             .dropdown-header {
                 cursor: pointer;
                 padding: 10px;
-                background: rgba(30, 60, 114, 0.7);
+                background: linear-gradient(45deg, #1E3C72, #2A5298);
                 border-radius: 8px;
                 margin: 5px 0;
                 display: flex;
@@ -237,7 +289,7 @@ class FootballXApp:
 
             .dropdown-content {
                 padding: 10px;
-                background: rgba(30, 60, 114, 0.4);
+                background: linear-gradient(45deg, #1E3C72, #2A5298);
                 border-radius: 8px;
                 margin: 5px 0;
             }
@@ -536,6 +588,28 @@ class FootballXApp:
 
         return selected_league, self.leagues[selected_league]
 
+    def build_team_league_map(self):
+        """
+        Creează mapping automat echipă → ligă folosind fișierele -clean.csv din processed.
+        """
+        team_league_map = {}
+
+        for league_key, league_info in self.leagues.items():
+            clean_file = f"processed/standings-with-matches-{league_key}-clean.csv"
+            if os.path.exists(clean_file):
+                try:
+                    df = pd.read_csv(clean_file)
+                    if "home_team" in df.columns and "away_team" in df.columns:
+                        teams = set(df["home_team"]).union(set(df["away_team"]))
+                        for team in teams:
+                            # Dacă echipa nu e deja mapată, o adăugăm
+                            if team not in team_league_map:
+                                team_league_map[team] = league_key
+                except Exception as e:
+                    st.warning(f"Eroare la citirea {clean_file}: {e}")
+
+        return team_league_map
+
     def download_league_data(self, selected_league, league_info):
         """Download data for selected league if not exists"""
         standings_file_json = f"processed/standings-{selected_league}.json"
@@ -543,33 +617,101 @@ class FootballXApp:
         fixtures_file_json = f"processed/fixtures-{selected_league}.json"
         winrate_file_csv = f"processed/standings-with-winrate-features-{selected_league}.csv"
 
-        # SKIP COMPLET pentru Champions League 2025-2026 (doar fixtures)
-        if selected_league == "champions-league-2025-2026":
+        # === SPECIAL CASE: Champions League 2024-2025 ===
+        if selected_league == "champions-league-2024-2025":
+            cl_file = "processed/standings-with-winrate-features-champions-league-2024-2025.csv"
 
-            # Doar download fixtures dacă există URL și nu există fișier
+            if not os.path.exists(cl_file):
+                st.error("Fișierul Champions League 2024-2025 nu există. Rulează procesarea manuală din main.")
+                return None, None, None, None
+
+            cl_df = pd.read_csv(cl_file)
+
+            # Extragem echipele participante
+            teams = set(cl_df["home_team"]).union(set(cl_df["away_team"]))
+
+            # Construim automat mapping echipă → ligă
+            league_map = self.build_team_league_map()
+
+            # Încărcăm ligile echipelor participante
+            league_dfs = []
+            for team in teams:
+                league_name = league_map.get(team)
+                if league_name:
+                    path = f"processed/standings-with-winrate-features-{league_name}.csv"
+                    if os.path.exists(path):
+                        league_dfs.append(pd.read_csv(path))
+
+            # Combinăm Champions League + ligile naționale
+            if league_dfs:
+                all_data = pd.concat([cl_df] + league_dfs, ignore_index=True)
+            else:
+                all_data = cl_df
+
+            combined_file = "processed/champions-league-2024-2025-combined.csv"
+            all_data.to_csv(combined_file, index=False, encoding="utf-8-sig")
+
+            st.success("Datele pentru Champions League au fost combinate cu ligile echipelor participante.")
+            return None, None, None, combined_file
+
+        # === SPECIAL CASE: Champions League 2025-2026 - folosește sezonul anterior ===
+        if selected_league == "champions-league-2025-2026":
+            previous_season = "champions-league-2024-2025"
+            previous_winrate_file = f"processed/standings-with-winrate-features-{previous_season}.csv"
+
+            if not os.path.exists(previous_winrate_file):
+                st.warning(f"Need data from previous season ({previous_season}) for predictions")
+                previous_standings = f"processed/standings-{previous_season}.json"
+                previous_matches = f"processed/all-matches-{previous_season}.json"
+
+                if not os.path.exists(previous_standings):
+                    st.info(f"Downloading previous season standings: {previous_season}")
+                    if previous_season in self.leagues:
+                        scrape_and_save_standings(self.leagues[previous_season]["standings_url"], previous_standings)
+
+                if not os.path.exists(previous_matches):
+                    st.info(f"Downloading previous season matches: {previous_season}")
+                    if previous_season in self.leagues:
+                        scrape_and_save_matches(self.leagues[previous_season]["results_url"], previous_matches)
+
+                if os.path.exists(previous_standings) and os.path.exists(previous_matches):
+                    st.info("Processing previous season data...")
+                    processor = StandingsProcessor(previous_standings, previous_matches)
+                    processor.flatten_to_long().clean_eda()
+                    cleaned_csv = f"processed/standings-with-matches-{previous_season}-clean.csv"
+                    processor.save_csv(cleaned_csv)
+
+                    preprocessor = MatchPreprocessor(cleaned_csv)
+                    preprocessor.load_csv() \
+                        .fill_missing(0) \
+                        .convert_numeric_and_percentage() \
+                        .split_goals_column() \
+                        .drop_zero_heavy_columns() \
+                        .normalize_large_stats() \
+                        .save_csv(f"processed/standings-with-matches-{previous_season}-cleaned.csv")
+
+                    ff = FootballWinRateFeatures(cleaned_csv)
+                    ff.encode_columns().create_winrate_features(N_recent=10).save_csv(previous_winrate_file)
+
             if "fixtures_url" in league_info and league_info["fixtures_url"] and not os.path.exists(fixtures_file_json):
                 st.info("Downloading Champions League fixtures...")
                 scrape_and_save_fixtures(league_info["fixtures_url"], fixtures_file_json)
 
-            # Returnăm doar fixtures file, celelalte vor fi None
-            return None, None, fixtures_file_json, winrate_file_csv
+            return None, None, fixtures_file_json, previous_winrate_file
 
-        # Download standings if not exists
+        # === Normal flow pentru alte ligi ===
         if not os.path.exists(standings_file_json):
             st.info("Downloading standings...")
             scrape_and_save_standings(league_info["standings_url"], standings_file_json)
 
-        # Download results if not exists
         if not os.path.exists(matches_file_json):
             st.info("Downloading results...")
             scrape_and_save_matches(league_info["results_url"], matches_file_json)
 
-        # Download fixtures if available and not exists
         if "fixtures_url" in league_info and not os.path.exists(fixtures_file_json):
             st.info("Downloading fixtures...")
             scrape_and_save_fixtures(league_info["fixtures_url"], fixtures_file_json)
 
-        # Process data and create winrate features if not exists
         if not os.path.exists(winrate_file_csv):
             st.info("Processing data and creating winrate features...")
             processor = StandingsProcessor(standings_file_json, matches_file_json)
@@ -666,27 +808,36 @@ class FootballXApp:
 
     def display_prediction_section(self, selected_league, winrate_file_csv, future_matches):
         """Display prediction section with dropdown"""
-        if "2024-2025" or "2025-2026" in selected_league:
+        if "2024-2025" in selected_league or "2025-2026" in selected_league:
             with st.expander("⚽ Predict Future Match", expanded=False):
-                if not future_matches.empty:
-                    future_matches["match_str"] = future_matches.apply(
-                        lambda x: f"{x['home']} - {x['away']} on {x['date']} {x.get('time', '')}", axis=1
-                    )
 
-                    # Drop-down with integrated style
-                    selected_match = st.selectbox(
-                        "Select a match",
-                        future_matches["match_str"],
-                        key="match_select"
-                    )
+                # Verifică dacă fișierul winrate există
+                if not os.path.exists(winrate_file_csv):
+                    st.warning("Prediction data not available for this season. Please select another league.")
+                    return
 
-                    if st.button("Predict"):
-                        with st.spinner("Generating predictions... This may take a few moments."):
+                if future_matches is None or future_matches.empty:
+                    st.info("No future matches available for prediction.")
+                    return
+
+                future_matches["match_str"] = future_matches.apply(
+                    lambda x: f"{x['home']} - {x['away']} on {x['date']} {x.get('time', '')}", axis=1
+                )
+
+                selected_match = st.selectbox(
+                    "Select a match",
+                    future_matches["match_str"],
+                    key="match_select"
+                )
+
+                if st.button("Predict"):
+                    with st.spinner("Generating predictions... This may take a few moments."):
+                        try:
                             predictor = FootballMatchPredictor([winrate_file_csv])
                             predictor.train_models()
 
                             home_team, away_team = selected_match.split(" - ")[0], \
-                            selected_match.split(" - ")[1].split(" on ")[0]
+                                selected_match.split(" - ")[1].split(" on ")[0]
 
                             date_time_str = selected_match.split(" on ")[1].strip()
                             parts = date_time_str.split()
@@ -701,97 +852,98 @@ class FootballXApp:
                                 away_team=away_team
                             )
 
-                        st.markdown(f"### Predictions: {home_team} - {away_team} ({date_time_str})")
-                        if predictions:
-                            # Score columns
-                            col1, col2 = st.columns(2)
+                            # VERIFICĂ DACĂ PREDICȚIA A REUȘIT
+                            if not predictions or predictions.get('score') is None:
+                                st.error(
+                                    "Could not generate prediction for this match. The teams may not have sufficient historical data.")
+                                return
 
-                            metric_bg_color = "linear-gradient(to bottom right, #B2C4E2, #A0B0C0)"
-                            metric_text_color = "#FFFFFF"
+                        except Exception as e:
+                            st.error(f"Prediction failed: {str(e)}")
+                            return
 
-                            col1.markdown(f"""
-                                <div style="
-                                    background: {metric_bg_color};
-                                    color: {metric_text_color};
-                                    border-radius: 12px;
-                                    padding: 16px;
-                                    text-align: center;
-                                    font-size: 16px;
-                                    font-weight: bold;">
-                                    {home_team}<br>{predictions['score'].split(':')[0]}
+                    # Match result display (similar to live scores)
+                    st.markdown(f"""
+                        <div style="
+                            background: linear-gradient(45deg, #1E3C72, #2A5298);
+                            color: white;
+                            padding: 15px;
+                            border-radius: 12px;
+                            margin: 15px 0;
+                            border: 2px solid #E6DFB2;
+                            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+                        ">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="flex: 2; font-weight: bold; font-size: 18px; text-align: left;">
+                                    {home_team}
                                 </div>
-                            """, unsafe_allow_html=True)
-
-                            col2.markdown(f"""
-                                <div style="
-                                    background: {metric_bg_color};
-                                    color: {metric_text_color};
-                                    border-radius: 12px;
-                                    padding: 16px;
-                                    text-align: center;
-                                    font-size: 16px;
-                                    font-weight: bold;">
-                                    {away_team}<br>{predictions['score'].split(':')[1]}
+                                <div style="flex: 1; font-weight: bold; font-size: 24px; text-align: center; color: #E6DFB2;">
+                                    {predictions.get('score', '0:0').split(':')[0]} - {predictions.get('score', '0:0').split(':')[1]}
                                 </div>
-                            """, unsafe_allow_html=True)
-                            st.markdown(f"**Total Goals:** {predictions['goals']}")
+                                <div style="flex: 2; font-weight: bold; font-size: 18px; text-align: right;">
+                                    {away_team}
+                                </div>
+                            </div>
+                            <div style="text-align: center; font-size: 14px; color: #E6DFB2; margin-top: 8px;">
+                                {date_time_str} • Predicted Score
+                            </div>
+                        </div>
+                    """, unsafe_allow_html=True)
 
-                            # Outcome probabilities chart
-                            outcome_idx, probs = predictions["outcome"]
-                            prob_df = pd.DataFrame({
-                                "Team": [home_team, "Draw", away_team],
-                                "Probability (%)": [probs[1] * 100, probs[0] * 100, probs[2] * 100]
-                            })
+                    st.markdown(f"**Total Goals:** {predictions.get('goals', 0)}")
 
-                            chart = alt.Chart(prob_df).mark_bar(size=50).encode(
-                                x=alt.X('Team:N', sort=[home_team, 'Draw', away_team], title=None),
-                                y=alt.Y('Probability (%):Q', title='Probability (%)'),
-                                color=alt.Color(
-                                    'Probability (%):Q',
-                                    scale=alt.Scale(
-                                        domain=[prob_df['Probability (%)'].min(), prob_df['Probability (%)'].max()],
-                                        range=['#FFFFCC', '#FFFF99', '#FFB266', '#FF9933', '#FF0000', '#CC0000']
-                                    ),
-                                    legend=None
-                                ),
-                                tooltip=['Team', 'Probability (%)']
-                            ).properties(
-                                width=100,
-                                height=400,
-                                title='Match Outcome Probabilities',
-                            )
+                    # Outcome probabilities chart
+                    outcome_idx, probs = predictions.get("outcome", (0, [0.33, 0.34, 0.33]))
+                    prob_df = pd.DataFrame({
+                        "Team": [home_team, "Draw", away_team],
+                        "Probability (%)": [probs[1] * 100, probs[0] * 100, probs[2] * 100]
+                    })
 
-                            text = alt.Chart(prob_df).mark_text(
-                                align='center',
-                                baseline='middle',
-                                dy=-15,
-                                fontSize=14,
-                                fontWeight='bold',
-                                color='#A0A0A0'
-                            ).encode(
-                                x=alt.X('Team:N', sort=[home_team, 'Draw', away_team]),
-                                y=alt.Y('Probability (%):Q'),
-                                text=alt.Text('Probability (%):Q', format='.1f')
-                            )
+                    chart = alt.Chart(prob_df).mark_bar(size=50).encode(
+                        x=alt.X('Team:N', sort=[home_team, 'Draw', away_team], title=None),
+                        y=alt.Y('Probability (%):Q', title='Probability (%)'),
+                        color=alt.Color(
+                            'Probability (%):Q',
+                            scale=alt.Scale(
+                                domain=[prob_df['Probability (%)'].min(), prob_df['Probability (%)'].max()],
+                                range=['#FFFFCC', '#FFFF99', '#FFB266', '#FF9933', '#FF0000', '#CC0000']
+                            ),
+                            legend=None
+                        ),
+                        tooltip=['Team', 'Probability (%)']
+                    ).properties(
+                        width=100,
+                        height=400,
+                        title='Match Outcome Probabilities',
+                    )
 
-                            final_chart = chart + text
-                            st.altair_chart(final_chart, use_container_width=True)
+                    text = alt.Chart(prob_df).mark_text(
+                        align='center',
+                        baseline='middle',
+                        dy=-15,
+                        fontSize=14,
+                        fontWeight='bold',
+                        color='#A0A0A0'
+                    ).encode(
+                        x=alt.X('Team:N', sort=[home_team, 'Draw', away_team]),
+                        y=alt.Y('Probability (%):Q'),
+                        text=alt.Text('Probability (%):Q', format='.1f')
+                    )
 
-                            # Stats table
-                            stats = predictions["stats"]
-                            df_stats = pd.DataFrame(stats).T.rename(index={"home": home_team, "away": away_team})
-                            st.subheader("📈 Predicted Match Stats")
-                            st.dataframe(df_stats.style.format("{:.2f}").highlight_max(axis=1, color="#B2C4E2"))
-                        else:
-                            st.write("Predictions could not be generated for this match.")
-                else:
-                    st.write("No future matches available for the selected season.")
+                    final_chart = chart + text
+                    st.altair_chart(final_chart, use_container_width=True)
+
+                    # Stats table
+                    stats = predictions.get("stats", {})
+                    df_stats = pd.DataFrame(stats).T.rename(index={"home": home_team, "away": away_team})
+                    st.subheader("📈 Predicted Match Stats")
+                    st.dataframe(df_stats.style.format("{:.2f}").highlight_max(axis=1, color="#B2C4E2"))
 
     def run(self):
         """Main method to run the app"""
         # Display today's matches
         self.display_todays_matches()
-        # Display live scores from API ⚡ - ADAUGĂ ASTA!
+        # Display live scores from API
         self.display_live_scores_from_api()
 
         # League selection

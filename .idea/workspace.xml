@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="a1d783be-35d3-40be-957c-233e03c3179c" name="Changes" comment="New commit: Safe API Key">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/predictions_log.csv" beforeDir="false" afterPath="$PROJECT_DIR$/predictions_log.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/processed/all-matches-champions-league-2025-2026.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processed/all_predictions.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/all_predictions.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/processed/standings-with-winrate-features-champions-league-2024-2025.csv" beforeDir="false" afterPath="$PROJECT_DIR$/processed/standings-with-winrate-features-champions-league-2024-2025.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +78,7 @@
       <recent name="C:\Users\S3B1TZ4\PycharmProjects\predict-football-matches" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.app">
+  <component name="RunManager" selected="Python.main">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="predict-football-matches" />
       <option name="ENV_FILES" value="" />
@@ -145,8 +150,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.app" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.app" />
         <item itemvalue="Python.match_predictor" />
       </list>
     </recent_temporary>
@@ -168,7 +173,7 @@
       <option name="presentableId" value="Default" />
       <updated>1757587934563</updated>
       <workItem from="1757587935617" duration="31987000" />
-      <workItem from="1757717387636" duration="53774000" />
+      <workItem from="1757717387636" duration="80827000" />
     </task>
     <task id="LOCAL-00001" summary="Second commit: Requirements file was added including all the">
       <option name="closed" value="true" />
@@ -538,7 +543,15 @@
       <option name="project" value="LOCAL" />
       <updated>1757857873231</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="New commit: Safe API Key">
+      <option name="closed" value="true" />
+      <created>1757858208659</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1757858208659</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -565,7 +578,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="New commit: Safe API Key" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/predict_football_matches$main.coverage" NAME="main Coverage Results" MODIFIED="1757804515973" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/predict_football_matches$main.coverage" NAME="main Coverage Results" MODIFIED="1757889300114" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/predict_football_matches$app.coverage" NAME="app Coverage Results" MODIFIED="1757844086039" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/predict_football_matches$match_predictor.coverage" NAME="match_predictor Coverage Results" MODIFIED="1757782052862" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

@@ -124,9 +124,49 @@ def main():
             None
         ),
         "champions-league-2025-2026": (
-            None,
-            None,
+            "https://www.flashscore.com/football/europe/champions-league/standings/#/UiRZST3U/standings/overall/",
+            "https://www.flashscore.com/football/europe/champions-league/results/",
             "https://www.flashscore.com/football/europe/champions-league/fixtures/"
+        ),
+        "italy-serie-a-2024-2025": (
+            "https://www.flashscore.com/football/italy/serie-a-2024-2025/standings/#/zDpS37lb/standings/overall/",
+            "https://www.flashscore.com/football/italy/serie-a-2024-2025/results/",
+            None
+        ),
+        "italy-serie-a-2025-2026": (
+            "https://www.flashscore.com/football/italy/serie-a/standings/#/6PWwAsA7/live-standings/",
+            "https://www.flashscore.com/football/italy/serie-a/results/",
+            "https://www.flashscore.com/football/italy/serie-a/fixtures/"
+        ),
+        "netherlands-eredivisie-2024-2025": (
+            "https://www.flashscore.com/football/netherlands/eredivisie-2024-2025/standings/#/KCMrEcSo/standings/overall/",
+            "https://www.flashscore.com/football/netherlands/eredivisie-2024-2025/results/",
+            None
+        ),
+        "netherlands-eredivisie-2025-2026": (
+            "https://www.flashscore.com/football/netherlands/eredivisie/standings/#/dWKtjvdd/standings/overall/",
+            "https://www.flashscore.com/football/netherlands/eredivisie/results/",
+            "https://www.flashscore.com/football/netherlands/eredivisie/fixtures/"
+        ),
+        "liga-portugal-2024-2025": (
+            "https://www.flashscore.com/football/portugal/liga-portugal-2024-2025/standings/#/0d7EBBWo/standings/overall/",
+            "https://www.flashscore.com/football/portugal/liga-portugal-2024-2025/results/",
+            None
+        ),
+        "liga-portugal-2025-2026": (
+            "https://www.flashscore.com/football/portugal/liga-portugal/standings/#/IgF19YCc/live-standings/",
+            "https://www.flashscore.com/football/portugal/liga-portugal/results/",
+            "https://www.flashscore.com/football/portugal/liga-portugal/fixtures/"
+        ),
+        "jupiler-pro-league-2024-2025": (
+            "https://www.flashscore.com/football/belgium/jupiler-pro-league-2024-2025/standings/#/v7MrIGpM/standings/overall/",
+            "https://www.flashscore.com/football/belgium/jupiler-pro-league-2024-2025/results/",
+            None
+        ),
+        "jupiler-pro-league-2025-2026": (
+            "https://www.flashscore.com/football/belgium/jupiler-pro-league/standings/#/WbIIL8v0/live-standings/",
+            "https://www.flashscore.com/football/belgium/jupiler-pro-league/results/",
+            "https://www.flashscore.com/football/belgium/jupiler-pro-league/fixtures/"
         )
         # poți adăuga și alte campionate aici
     }
