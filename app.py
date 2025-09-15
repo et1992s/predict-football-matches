@@ -158,152 +158,172 @@ class FootballXApp:
     def setup_css(self):
         st.markdown("""
             <style>
-            /* FUNDAL GENERAL */
-            .stApp { 
-                background: linear-gradient(to bottom right, #1E3C72, #2A5298); 
-                color: #E0F7FA; 
+            /* ===== SYSTEM THEME AWARE STYLING ===== */
+            :root {
+                --bg-primary: var(--background-color);
+                --text-primary: var(--text-color);
+                --card-bg: color-mix(in srgb, var(--bg-primary) 85%, transparent);
+                --border-color: color-mix(in srgb, var(--text-primary) 20%, transparent);
+                --accent-color: #A8D5BA;
+                --highlight-color: #E6DFB2;
+                --success-color: #27ae60;
+                --warning-color: #f39c12;
+                --danger-color: #e74c3c;
             }
 
-            /* CARDURI / CONTAINERE */
-            .css-1d391kg { 
-                background-color: #0B3D0B;  
-                color: #E0F7FA;
-                border-radius: 12px;
-                padding: 10px;
+            /* ===== FUNDAL APP ===== */
+            .stApp, [data-testid="stAppViewContainer"] {
+                background: var(--bg-primary) !important;
+                color: var(--text-primary) !important;
             }
 
-            /* HEADINGS */
-            .stMarkdown h1,  .stMarkdown h2, .stMarkdown h3 {
-                color: #A8D5BA; 
+            /* ===== CARDURI / CONTAINERE ===== */
+            .css-1d391kg, div[data-testid="stMetric"] {
+                background: var(--card-bg) !important;
+                border: 1px solid var(--border-color) !important;
+                border-radius: 12px !important;
+                padding: 12px !important;
+                color: var(--text-primary) !important;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             }
 
-            /* Stil specific pentru titlul ligii */
-            .league-title {
-                font-size: 24px !important;
-                color: #A8D5BA !important;
-            }
-            /* Stil specific pentru subheading */
-            .league-subheading {
-                font-size: 24px !important;
-                color: #A8D5BA !important;
-            }
-
-            /* TABEL */
-            .stDataFrame th {
-                background-color: #1E3C72; 
-                color: #E0F7FA;
-            }
-            .stDataFrame td {
-                background-color: #0B3D0B; 
-                color: #E0F7FA;
-            }
-
-            /* SELECTBOX & DROPDOWN */
-            div.stSelectbox {
-                background: transparent !important;
-                box-shadow: none !important;
-            }
-            div.stSelectbox label {
-                background: transparent !important;
-                color: #E0F7FA !important;
-                margin-bottom: 6px !important;
+            /* ===== HEADINGS ===== */
+            .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
+                color: var(--accent-color) !important;
                 font-weight: bold !important;
             }
-            div.stSelectbox > div {
-                width: auto !important;
-                min-width: 340px;
-                max-width: 350px;
-                margin: 0;
+            .league-title, .league-subheading {
+                font-size: 24px !important;
+                color: var(--accent-color) !important;
+            }
+
+            /* ===== TABEL ===== */
+            .stDataFrame th {
+                background-color: var(--card-bg) !important;
+                color: var(--text-primary) !important;
+                font-weight: bold !important;
+            }
+            .stDataFrame td {
+                background-color: var(--card-bg) !important;
+                color: var(--text-primary) !important;
+            }
+
+            /* ===== DROPDOWN / SELECTBOX ===== */
+            div.stSelectbox {
                 background: transparent !important;
             }
+            div.stSelectbox label {
+                color: var(--text-primary) !important;
+                font-weight: bold !important;
+                margin-bottom: 6px !important;
+            }
             div[data-baseweb="select"] > div {
-                background: rgba(30, 60, 114, 0.65) !important;
-                border: 1px solid #2A5298 !important;
+                background: var(--card-bg) !important;
+                border: 1px solid var(--border-color) !important;
                 border-radius: 10px !important;
                 padding: 12px 16px !important;
                 min-height: 50px !important;
                 display: flex;
                 align-items: center;
-                color: #E0F7FA !important;
+                color: var(--text-primary) !important;
                 font-size: 16px !important;
-                line-height: 1.6em !important;
+                transition: all 0.3s ease !important;
+            }
+            div[data-baseweb="select"] > div:hover {
+                border: 1px solid var(--accent-color) !important;
+                background: color-mix(in srgb, var(--card-bg) 90%, black) !important;
+            }
+            div[data-baseweb="select"] > div:focus-within {
+                border: 2px solid var(--highlight-color) !important;
+                box-shadow: 0 0 8px color-mix(in srgb, var(--highlight-color) 40%, transparent) !important;
             }
             div[data-baseweb="select"] ul {
-                background: rgba(30, 60, 114, 0.95) !important;
-                color: #E0F7FA !important;
+                background: var(--card-bg) !important;
+                border: 1px solid var(--border-color) !important;
+                border-radius: 8px !important;
+            }
+            div[data-baseweb="select"] li {
+                background: transparent !important;
+                color: var(--text-primary) !important;
             }
             div[data-baseweb="select"] li:hover {
-                background: #2A5298 !important;
-                color: #FFFFFF !important;
+                background: color-mix(in srgb, var(--card-bg) 80%, black) !important;
+                color: var(--text-primary) !important;
+            }
+            div[data-baseweb="select"] span, 
+            div[data-baseweb="select"] svg {
+                color: var(--text-primary) !important;
+                fill: var(--text-primary) !important;
             }
 
-            /* BUTTON */
+            /* ===== BUTTON ===== */
             div.stButton > button {
-                background: linear-gradient(to bottom right, #1E3C72, #2A5298) !important;
-                color: #E0F7FA !important;
-                border: 1px solid #2A5298 !important;
+                background: var(--card-bg) !important;
+                color: var(--text-primary) !important;
+                border: 1px solid var(--border-color) !important;
                 border-radius: 10px !important;
                 padding: 10px 20px !important;
                 font-size: 16px !important;
                 font-weight: bold !important;
+                transition: all 0.3s ease-in-out !important;
             }
             div.stButton > button:hover {
-                background: linear-gradient(to bottom right, #2A5298, #1E3C72) !important;
-                color: #FFFFFF !important;
-                border: 1px solid #FFFFFF !important;
+                background: color-mix(in srgb, var(--card-bg) 80%, black) !important;
+                color: var(--text-primary) !important;
+                border: 1px solid var(--accent-color) !important;
             }
 
-            /* METRICS */
+            /* ===== METRICS ===== */
             div[data-testid="stMetricValue"] {
-                color: #E6DFB2 !important;
+                color: var(--highlight-color) !important;
                 font-weight: bold !important;
                 font-size: 22px !important;
             }
-            div[data-testid="stMetric"] {
-                background: rgba(30, 60, 114, 0.7) !important;
-                border: 2px solid #E6DFB2 !important;
-                border-radius: 12px !important;
-                padding: 12px !important;
-                color: #E0F7FA !important;
-            }
 
-            /* SPINNER */
+            /* ===== SPINNER ===== */
             .stSpinner > div {
-                text-align: center;
-                color: linear-gradient(45deg, #1E3C72, #2A5298) !important;
+                color: var(--text-primary) !important;
                 font-size: 18px !important;
                 font-weight: bold !important;
             }
 
-            /* DROPDOWN STYLING */
-            .dropdown-header {
-                cursor: pointer;
-                padding: 10px;
-                background: linear-gradient(45deg, #1E3C72, #2A5298);
+            /* ===== CUSTOM DROPDOWN ===== */
+            .dropdown-header, .dropdown-content {
+                background: var(--card-bg);
                 border-radius: 8px;
-                margin: 5px 0;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .dropdown-content {
                 padding: 10px;
-                background: linear-gradient(45deg, #1E3C72, #2A5298);
-                border-radius: 8px;
                 margin: 5px 0;
+                color: var(--text-primary) !important;
             }
-
             .match-row {
                 display: flex;
                 justify-content: space-between;
                 padding: 8px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                border-bottom: 1px solid var(--border-color);
             }
-
             .match-time {
                 font-weight: bold;
-                color: #E6DFB2;
+                color: var(--highlight-color);
+            }
+
+            /* ===== FORCE ALL TEXT VISIBLE ===== */
+            * {
+                color: var(--text-primary) !important;
+            }
+
+            /* ===== DARK/LIGHT THEME VARIABLES ===== */
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --background-color: #0E1A2B;
+                    --text-color: #E0F7FA;
+                }
+            }
+
+            @media (prefers-color-scheme: light) {
+                :root {
+                    --background-color: #F0F8FF;
+                    --text-color: #1E3C72;
+                }
             }
             </style>
         """, unsafe_allow_html=True)
@@ -319,18 +339,17 @@ class FootballXApp:
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
-                justify-content: flex-start;
                 gap: 15px;
                 padding: 10px 0;
             }}
             .header-logo {{
-                width: 80px;  /* dimensiunea logo-ului */
+                width: 80px;
                 height: auto;
             }}
             .header-title {{
-                font-size: 42px;   /* dimensiunea titlului */
+                font-size: 42px;
                 font-weight: bold;
-                color: #E6DFB2;    /* auriu */
+                color: var(--highlight-color);
                 margin: 0;
             }}
             </style>
