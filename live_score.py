@@ -43,7 +43,7 @@ class LiveScoreService:
                 'Greece': 'Super League',
                 'Austria': 'Bundesliga',
                 'Switzerland': 'Super League',
-                'Romania': 'Superliga',
+                'Romania': 'Liga I',
                 'Czech-Republic': 'First League',
                 'Croatia': 'First Football League',
                 'Serbia': 'Super Liga',
