@@ -54,7 +54,7 @@ class LiveScoreService:
                 'Poland': 'Ekstraklasa'
             }
 
-            uefa_competitions = {'Champions League', 'Europa League', 'Europa Conference League'}
+            uefa_competitions = {'UEFA Champions League', 'UEFA Europa League', 'UEFA Europa Conference League'}
 
             live_matches = []
             for fixture in data.get('response', []):
