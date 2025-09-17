@@ -319,7 +319,7 @@ class FootballXApp:
             .stMarkdown h1 {
                 color: var(--highlight-color) !important;
                 font-size: 36px !important;
-                font-family: Comic Sans MS, Comic Sans, cursive;
+                font-family: Lucida Console, Monospace;
             }
             .stDataFrame th {
                 background-color: var(--card-bg) !important;
