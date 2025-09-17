@@ -641,9 +641,9 @@ class FootballXApp:
             # Manual team input
             col1, col2 = st.columns(2)
             with col1:
-                home_team = st.text_input("Home Team", placeholder="Enter home team name").strip().lower()
+                home_team = st.text_input("Home Team", placeholder="Enter home team name")
             with col2:
-                away_team = st.text_input("Away Team", placeholder="Enter away team name").strip().lower()
+                away_team = st.text_input("Away Team", placeholder="Enter away team name")
 
             if st.button("Predict Match"):
                 if not home_team or not away_team:
