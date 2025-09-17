@@ -1,17 +1,18 @@
 from datetime import datetime
 import requests
 import os
+import streamlit as st
 from dotenv import load_dotenv
 
 load_dotenv()  # încarcă variabilele din .env
 
 class LiveScoreService:
     def __init__(self):
-        self.api_key = os.getenv("API_FOOTBALL_KEY")  # citește cheia din .env
+        # Citește cheia mai întâi din st.secrets, apoi din .env
+        self.api_key = st.secrets.get("API_FOOTBALL_KEY", os.getenv("API_FOOTBALL_KEY"))
         self.base_url = "https://v3.football.api-sports.io"
 
     def get_today_live_matches(self):
-        """Get only main leagues from each country"""
         try:
             today = datetime.now().strftime('%Y-%m-%d')
 
@@ -23,7 +24,9 @@ class LiveScoreService:
             }
 
             response = requests.get(url, params=params, headers=headers, timeout=15)
+
             if response.status_code != 200:
+                st.write("⚠️ API Error:", response.status_code, response.text)
                 return []
 
             data = response.json()

@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1d783be-35d3-40be-957c-233e03c3179c" name="Changes" comment="New commit: Changed css styling to match with system's appearance!">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live_score.py" beforeDir="false" afterPath="$PROJECT_DIR$/live_score.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/match_predictor.py" beforeDir="false" afterPath="$PROJECT_DIR$/match_predictor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/predictions_log.csv" beforeDir="false" afterPath="$PROJECT_DIR$/predictions_log.csv" afterDir="false" />
-    </list>
+    <list default="true" id="a1d783be-35d3-40be-957c-233e03c3179c" name="Changes" comment="New commit: Changed css styling to match with system's appearance!" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -174,23 +168,7 @@
       <option name="presentableId" value="Default" />
       <updated>1757587934563</updated>
       <workItem from="1757587935617" duration="31987000" />
-      <workItem from="1757717387636" duration="148191000" />
-    </task>
-    <task id="LOCAL-00004" summary="Second commit: Requirements file was added including all the">
-      <option name="closed" value="true" />
-      <created>1757595286929</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1757595286929</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Second commit: Requirements file was added including all the">
-      <option name="closed" value="true" />
-      <created>1757595480343</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1757595480343</updated>
+      <workItem from="1757717387636" duration="148624000" />
     </task>
     <task id="LOCAL-00006" summary="Second commit: Requirements file was added including all the">
       <option name="closed" value="true" />
@@ -568,7 +546,23 @@
       <option name="project" value="LOCAL" />
       <updated>1757963474297</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="New commit: Changed css styling to match with system's appearance!">
+      <option name="closed" value="true" />
+      <created>1758092322629</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1758092322629</updated>
+    </task>
+    <task id="LOCAL-00054" summary="New commit: Changed css styling to match with system's appearance!">
+      <option name="closed" value="true" />
+      <created>1758092522079</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1758092522079</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
