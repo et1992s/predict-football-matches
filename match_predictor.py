@@ -276,58 +276,58 @@ class FootballMatchPredictor:
         'stats': predictions}
 
 
-def _get_team_stats(self, team_name):
-    # comparăm case-insensitive
-    team_matches = self.df[self.df["Team"].str.lower() == team_name]
-    if team_matches.empty:
-        return None
-    return team_matches.iloc[-1].to_dict()
-
-
-def _prepare_prediction_features(self, team_stats, opponent_stats, team_name, opponent_name, perspective):
-    try:
-        features = {}
-
-        features['win_rate_global'] = team_stats.get('win_rate_global', 0.5)
-        features['win_rate_lastN'] = team_stats.get('win_rate_lastN', 0.5)
-
-        if perspective == 'home':
-            features['home_win_rate'] = team_stats.get('home_win_rate', 0.5)
-            features['away_win_rate'] = opponent_stats.get('away_win_rate', 0.5)
-            features['Home_encoded'] = 1
-        else:
-            features['home_win_rate'] = opponent_stats.get('home_win_rate', 0.5)
-            features['away_win_rate'] = team_stats.get('away_win_rate', 0.5)
-            features['Home_encoded'] = 0
-
-        # comparații case-insensitive
-        h2h_matches = self.df[
-            ((self.df["Team"].str.lower() == team_name) & (self.df["Opponent"].str.lower() == opponent_name)) |
-            ((self.df["Team"].str.lower() == opponent_name) & (self.df["Opponent"].str.lower() == team_name))
-        ]
-        features['h2h_win_rate'] = h2h_matches['h2h_win_rate'].mean() if not h2h_matches.empty else 0.5
-        features['form_score'] = team_stats.get('form_score', 0.5)
-        features['goal_diff_win_rate'] = team_stats.get('goal_diff_win_rate', 0)
-        features['weighted_outcome'] = team_stats.get('weighted_outcome', 0.5)
-        features['team_goals'] = team_stats.get('team_goals', 1)
-        features['opponent_goals'] = opponent_stats.get('team_goals', 1)
-        features['Rank'] = team_stats.get('Rank', 10)
-        features['opponent_rank'] = opponent_stats.get('Rank', 10)
-
-        for stat_feature in self.stat_features:
+    def _get_team_stats(self, team_name):
+        # comparăm case-insensitive
+        team_matches = self.df[self.df["Team"].str.lower() == team_name]
+        if team_matches.empty:
+            return None
+        return team_matches.iloc[-1].to_dict()
+    
+    
+    def _prepare_prediction_features(self, team_stats, opponent_stats, team_name, opponent_name, perspective):
+        try:
+            features = {}
+    
+            features['win_rate_global'] = team_stats.get('win_rate_global', 0.5)
+            features['win_rate_lastN'] = team_stats.get('win_rate_lastN', 0.5)
+    
             if perspective == 'home':
-                features[stat_feature] = team_stats.get(stat_feature, 0)
+                features['home_win_rate'] = team_stats.get('home_win_rate', 0.5)
+                features['away_win_rate'] = opponent_stats.get('away_win_rate', 0.5)
+                features['Home_encoded'] = 1
             else:
-                stat_feature_away = (stat_feature.replace('_team','_opponent')) \
-                    if '_team' in stat_feature else stat_feature.replace('_opponent', '_team')
-                features[stat_feature] = team_stats.get(stat_feature_away, 0)
-
-        X_new = pd.DataFrame([features])
-
-        available_features = [f for f in self.all_features if f in self.df.columns]
-        X_new = X_new[available_features]
-
-        return X_new
-
-    except Exception:
-        return None
+                features['home_win_rate'] = opponent_stats.get('home_win_rate', 0.5)
+                features['away_win_rate'] = team_stats.get('away_win_rate', 0.5)
+                features['Home_encoded'] = 0
+    
+            # comparații case-insensitive
+            h2h_matches = self.df[
+                ((self.df["Team"].str.lower() == team_name) & (self.df["Opponent"].str.lower() == opponent_name)) |
+                ((self.df["Team"].str.lower() == opponent_name) & (self.df["Opponent"].str.lower() == team_name))
+            ]
+            features['h2h_win_rate'] = h2h_matches['h2h_win_rate'].mean() if not h2h_matches.empty else 0.5
+            features['form_score'] = team_stats.get('form_score', 0.5)
+            features['goal_diff_win_rate'] = team_stats.get('goal_diff_win_rate', 0)
+            features['weighted_outcome'] = team_stats.get('weighted_outcome', 0.5)
+            features['team_goals'] = team_stats.get('team_goals', 1)
+            features['opponent_goals'] = opponent_stats.get('team_goals', 1)
+            features['Rank'] = team_stats.get('Rank', 10)
+            features['opponent_rank'] = opponent_stats.get('Rank', 10)
+    
+            for stat_feature in self.stat_features:
+                if perspective == 'home':
+                    features[stat_feature] = team_stats.get(stat_feature, 0)
+                else:
+                    stat_feature_away = (stat_feature.replace('_team','_opponent')) \
+                        if '_team' in stat_feature else stat_feature.replace('_opponent', '_team')
+                    features[stat_feature] = team_stats.get(stat_feature_away, 0)
+    
+            X_new = pd.DataFrame([features])
+    
+            available_features = [f for f in self.all_features if f in self.df.columns]
+            X_new = X_new[available_features]
+    
+            return X_new
+    
+        except Exception:
+            return None
