@@ -740,7 +740,7 @@ class FootballXApp:
                     st.warning("Please enter both home and away team names")
                     return
 
-                with st.spinner("Generating predictions... This may take a few moments!"):
+                with st.spinner("Predicting..."):
                     try:
                         predictor = FootballMatchPredictor(winrate_files)
                         predictor.train_models()
