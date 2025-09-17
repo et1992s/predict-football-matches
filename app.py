@@ -72,7 +72,7 @@ class FootballXApp:
                 --card-bg: color-mix(in srgb, var(--bg-primary) 85%, transparent);
                 --border-color: color-mix(in srgb, var(--text-primary) 20%, transparent);
                 --accent-color: #A8D5BA;
-                --highlight-color: #E6DFB2;
+                --highlight-color: #DF4E5D;
                 --success-color: #27ae60;
                 --warning-color: #f39c12;
                 --danger-color: #e74c3c;
@@ -98,7 +98,7 @@ class FootballXApp:
             .stats-row {
                 display: flex;
                 justify-content: space-between;
-                gap: 5px;
+                gap: 150px;
                 flex-wrap: nowrap;
             }
             
@@ -110,11 +110,11 @@ class FootballXApp:
             }
             
             .stat-label {
-                font-size: 11px;
+                font-size: 14px;
                 color: var(--text-primary);
                 opacity: 0.8;
                 margin-bottom: 4px;
-                font-weight: 500;
+                font-weight: bold;
                 line-height: 1.2;
             }
             
@@ -123,14 +123,6 @@ class FootballXApp:
                 font-weight: bold;
                 color: var(--highlight-color);
                 margin: 4px 0;
-                line-height: 1.2;
-            }
-            
-            .stat-percentage {
-                font-size: 10px;
-                color: var(--text-primary);
-                opacity: 0.7;
-                margin-top: 2px;
                 line-height: 1.2;
             }
             
@@ -144,57 +136,56 @@ class FootballXApp:
             .stat-bar {
                 flex: 1;
                 height: 10px;
-                background: color-mix(in srgb, var(--border-color) 30%, transparent);
+                background: color-mix(in srgb, var(--border-color) 60%, transparent);
+                border-radius: 3px;
+                overflow: hidden;
+            }
+            .stat-bar.reverse {
+                display: flex;
+                justify-content: flex-end;
+                height: 10px;
+                background: color-mix(in srgb, var(--border-color) 60%, transparent);
                 border-radius: 3px;
                 overflow: hidden;
             }
             
             .stat-bar-fill {
                 height: 100%;
-                background: var(--accent-color);
+                background: var(--highlight-color);
                 border-radius: 3px;
                 transition: width 0.3s ease;
-            }
-            
-            .stat-percentage {
-                font-size: 11px;
-                color: var(--text-primary);
-                opacity: 0.7;
-                min-width: 35px;
-                text-align: center;
             }
             
             /* ===== TODAY'S MATCHES STYLING ===== */
             .todays-matches-container {
                 background: var(--card-bg) !important;
-                border: 0px solid var(--border-color) !important;
-                border-radius: 50px !important;
-                padding: 20px;
-                margin: 0px;
-                margin-top: -20px;
-                box-shadow: 0 4px 4px rgba(0,0,0,1.9);
+                border: 1px solid var(--border-color) !important;
+                padding: 10px;
+                margin: -5px;
+                margin-top: -15px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.9);
             }
             .league-header {
                 display: flex;
-                align-items: center;
-                gap: 5px;
-                margin-top: -20px;
-                margin-bottom: 5px;
+                align-items: baseline;
+                gap: 0px;
+                margin-top: -10px;
+                margin-bottom: -10px;
                 padding-bottom: 0px;
-                border-bottom: 0px solid var(--border-color);
+                border-bottom: 7px solid var(--border-color);
             }
             .league-title {
                 font-size: 18px;
                 font-weight: bold;
-                color: var(--accent-color);
+                color: var(--text-primary);
                 margin: 0;
             }
             .match-card {
                 background: color-mix(in srgb, var(--card-bg) 95%, transparent) !important;
                 border: 1px solid var(--border-color) !important;
-                border-radius: 100px !important;
-                padding: 14px;
-                margin-bottom: 12px;
+                border-radius: 0px !important;
+                padding: 0px;
+                margin-bottom: 0px;
                 transition: all 0.3s ease;
             }
             .match-card:hover {
@@ -329,15 +320,18 @@ class FootballXApp:
                 font-size: 22px !important;
             }
             .stMarkdown h3 {
-                color: var(--accent-color) !important;
-                font-weight: 100 !important;
+                color: var(--text-primary) !important;
+                font-weight: bold !important;
                 font-size: 16px !important;
                 font-family: sans-serif;
+                padding: 1 5px;
+                margin-top; 10px;
             }
             .stMarkdown h1 {
                 color: var(--highlight-color) !important;
-                font-size: 36px !important;
-                font-family: Lucida Console, Monospace;
+                font-size: 50px !important;
+                font-family: sans-serif;
+                font-weight: bolder !important;
             }
             .stDataFrame th {
                 background-color: var(--card-bg) !important;
@@ -429,7 +423,7 @@ class FootballXApp:
             /* ===== RESPONSIVE DESIGN IMPROVEMENTS ===== */
             @media (max-width: 480px) {
                 .stats-row {
-                    gap: 3px;
+                    gap: 15px;
                 }
                 
                 .stat-item {
@@ -438,15 +432,11 @@ class FootballXApp:
                 }
                 
                 .stat-label {
-                    font-size: 10px;
+                    font-size: 13px;
                 }
                 
                 .stat-value {
-                    font-size: 12px;
-                }
-                
-                .stat-percentage {
-                    font-size: 9px;
+                    font-size: 13px;
                 }
                 
                 .stat-comparison {
@@ -462,16 +452,13 @@ class FootballXApp:
                 }
                 
                 .stat-label {
-                    font-size: 9px;
+                    font-size: 13px;
                 }
                 
                 .stat-value {
-                    font-size: 11px;
+                    font-size: 13px;
                 }
                 
-                .stat-percentage {
-                    font-size: 8px;
-                }
             }
             </style>
 
@@ -545,8 +532,8 @@ class FootballXApp:
     def display_todays_matches(self):
         """Display today's matches with dropdowns by league"""
         st.markdown(
-            f'<div class="league-subheading" style="font-size: 24px; color: var(--accent-color); '
-            f'margin-bottom: 20px; font-weight: bold;">{"Today\'s Matches"}</div>',
+            f'<div class="league-subheading" style="font-size: 24px; text-align:center; padding: 5px; color: var(--text-primary); '
+            f'margin-bottom: 22px; font-weight: bold;">{"Today\'s Matches"}</div>',
             unsafe_allow_html=True)
 
         # Group matches by league
@@ -688,7 +675,7 @@ class FootballXApp:
         pred_score = predictions['score']
         stats = predictions['stats']
 
-        st.subheader("📊 Prediction Details")
+        st.subheader("Prediction Details")
 
         # Outcome prediction
         outcome_mapping = {1: f"{home_team} Win", 2: f"{away_team} Win", 0: "Draw"}
@@ -743,7 +730,7 @@ class FootballXApp:
             'yellow_cards': 'Yellows'
         }
 
-        st.subheader("📈 Match Statistics Comparison")
+        st.subheader("Predicted Statistics")
 
         # Create responsive stats comparison
         st.markdown("""<div class="stats-grid-container">""", unsafe_allow_html=True)
@@ -783,27 +770,23 @@ class FootballXApp:
                     <div class="stat-item">
                         <div class="stat-label">{home_team}</div>
                         <div class="stat-value">{home_display}</div>
-                        <div class="stat-percentage">{home_percent:.0f}%</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-label">{display_names[key]}</div>
                         <div class="stat-value">VS</div>
-                        <div class="stat-label">Comparison</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-label">{away_team}</div>
                         <div class="stat-value">{away_display}</div>
-                        <div class="stat-percentage">{away_percent:.0f}%</div>
                     </div>
             """, unsafe_allow_html=True)
 
             # Afișează bara de comparație separat
             st.markdown(f"""
                         <div class="stat-comparison">
-                            <div class="stat-bar">
+                            <div class="stat-bar reverse">
                                 <div class="stat-bar-fill" style="width: {home_percent}%"></div>
                             </div>
-                            <div class="stat-percentage">{home_percent:.0f}% - {away_percent:.0f}%</div>
                             <div class="stat-bar">
                                 <div class="stat-bar-fill" style="width: {away_percent}%"></div>
                             </div>
