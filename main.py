@@ -26,11 +26,11 @@ def scrape_and_save_matches(matches_url, filename):
     for i, m_id in enumerate(match_ids):
         try:
             match_url = f"https://www.flashscore.com/match/{m_id}/#/match-summary"
-            print(f"⏳ Scraping match {i + 1}/{len(match_ids)} -> {match_url}")
+            print(f"Scraping match {i + 1}/{len(match_ids)} -> {match_url}")
             match_detail = scraper.open_match_and_extract(match_url)
             matches_data.append(match_detail.to_dict())
         except Exception as e:
-            print(f"❌ Error scraping match {i + 1}: {e}")
+            print(f"Error scraping match {i + 1}: {e}")
 
     scraper.stop()
 
@@ -51,11 +51,11 @@ def scrape_and_save_fixtures(fixtures_url, filename):
     for i, m_id in enumerate(fixtures_ids):
         try:
             fixture_url = f"https://www.flashscore.com/match/{m_id}/#/match-summary"
-            print(f"⏳ Scraping match {i + 1}/{len(fixtures_ids)} -> {fixture_url}")
+            print(f"Scraping match {i + 1}/{len(fixtures_ids)} -> {fixture_url}")
             match_detail = scraper.open_match_and_extract(fixture_url)
             fixtures_data.append(match_detail.to_dict())
         except Exception as e:
-            print(f"❌ Error scraping match {i + 1}: {e}")
+            print(f"Error scraping match {i + 1}: {e}")
 
     scraper.stop()
 
@@ -242,7 +242,7 @@ def main():
         home_team = input("Echipa gazdă: ").strip()
         away_team = input("Echipa oaspete: ").strip()
 
-        predictions = predictor.predict_future_match(date, time, home_team, away_team)
+        predictions = predictor.predict_future_match(home_team, away_team)
         if predictions:
             print("\nRezultatele au fost salvate și în predictions_log.csv")
 

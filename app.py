@@ -11,6 +11,7 @@ from match_predictor import FootballMatchPredictor
 
 class FootballXApp:
     def __init__(self):
+        self.live_score_service = LiveScoreService()
         self.leagues = {
             "jupiler-pro-league-2025-2026": {
                 "name": "Belgium Jupiler Pro League",
@@ -59,7 +60,7 @@ class FootballXApp:
         self.display_header()
 
     def setup_page_config(self):
-        st.set_page_config(page_title="FootballX", layout="wide")
+        st.set_page_config(page_title="FootballX", layout="centered")
 
     def setup_css(self):
         st.markdown("""
@@ -77,73 +78,90 @@ class FootballXApp:
                 --danger-color: #e74c3c;
             }
             
-            /* ===== STATS CARDS ===== */
-            .stats-card {
+            /* ===== PREDICTED MATCH STATS GRID - IMPROVED FOR MOBILE ===== */
+            .stats-grid-container {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
+            }
+            
+            .stats-team-header {
+                text-align: center;
+                font-size: 16px;
+                font-weight: bold;
+                margin-bottom: 10px;
+                color: var(--accent-color);
+            }
+            
+            /* Improve the stats display */
+            .stats-row {
+                display: flex;
+                justify-content: space-between;
+                gap: 5px;
+                flex-wrap: nowrap;
+            }
+            
+            .stat-item {
+                flex: 1;
+                min-width: 90px;
                 background: var(--card-bg) !important;
-                border: 1px solid var(--border-color) !important;
-                padding: 5px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                text-align: left;
-                min-width: 0;
+                text-align: center;
             }
-            .stats-label {
-                font-size: 14px;
+            
+            .stat-label {
+                font-size: 11px;
                 color: var(--text-primary);
-                opacity: 0.9;
-                margin-bottom: 8px;
+                opacity: 0.8;
+                margin-bottom: 4px;
                 font-weight: 500;
+                line-height: 1.2;
             }
-            .stats-value {
-                font-size: 24px;
+            
+            .stat-value {
+                font-size: 14px;
                 font-weight: bold;
                 color: var(--highlight-color);
-                margin: 8px 0;
+                margin: 4px 0;
+                line-height: 1.2;
             }
             
-            /* ===== PROGRESS BARS ===== */
-            .progress-container {
-                height: 8px;
-                background: color-mix(in srgb, var(--border-color) 50%, transparent);
-                border-radius: 4px;
-                margin: 10px 0;
+            .stat-percentage {
+                font-size: 10px;
+                color: var(--text-primary);
+                opacity: 0.7;
+                margin-top: 2px;
+                line-height: 1.2;
+            }
+            
+            .stat-comparison {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin: 8px 0 15px 0;
+            }
+            
+            .stat-bar {
+                flex: 1;
+                height: 10px;
+                background: color-mix(in srgb, var(--border-color) 30%, transparent);
+                border-radius: 3px;
                 overflow: hidden;
             }
-            .progress-container.reverse {
-                display: flex;
-                justify-content: flex-end;
-            }
-            .progress-fill {
+            
+            .stat-bar-fill {
                 height: 100%;
                 background: var(--accent-color);
-                border-radius: 4px;
+                border-radius: 3px;
+                transition: width 0.3s ease;
             }
             
-            /* ===== PREDICTED MATCH STATS GRID ===== */
-            .stats-grid {
-                display: flex !important;
-                gap: 20px;
-                justify-content: space-between;
-                flex-wrap: nowrap; /* menține două coloane principale */
-            }
-            .stats-grid > div {
-                flex: 1 1 48%;
-                min-width: 150px;
-                display: flex;
-                flex-wrap: wrap;
-                gap: 12px;
-            }
-            .stats-grid > div:nth-child(2) .stats-card {
-                text-align: right; /* cardurile echipei away */
-            }
-            .stats-card {
-                flex: 1 1 48%; /* două carduri pe rând */
-                min-width: 120px;
-                margin-bottom: 12px;
-                padding: 5px;
-                background: var(--card-bg) !important;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                border-radius: 8px;
-                text-align: left;
+            .stat-percentage {
+                font-size: 11px;
+                color: var(--text-primary);
+                opacity: 0.7;
+                min-width: 35px;
+                text-align: center;
             }
             
             /* ===== TODAY'S MATCHES STYLING ===== */
@@ -408,30 +426,52 @@ class FootballXApp:
                 }
             }
             
-            /* ===== RESPONSIVE DESIGN ===== */
-            @media (max-width: 768px) {
-                .stats-grid { flex-wrap: wrap; gap: 10px; justify-content: space-between; }
-                .team-home, .team-away, .live-team-home, .live-team-away { text-align: center; }
-                .stats-card { flex: 1 1 45%; min-width: 140px; font-size: 13px; }
-                .stats-label { font-size: 13px !important; }
-                .stats-value { font-size: 20px !important; }
-            }
+            /* ===== RESPONSIVE DESIGN IMPROVEMENTS ===== */
             @media (max-width: 480px) {
-                .todays-matches-container, .live-match-container { padding: 0px; }
-                .match-card, .live-match-card { padding: 10px; }
-                .team-name, .live-team-name { font-size: 11px; }
-                .match-score, .live-match-score { font-size: 14px; }
-                .stats-card { flex: 1 1 45%; min-width: 140px; }
-                .stats-label { font-size: 12px !important; }
-                .stats-value { font-size: 18px !important; }
+                .stats-row {
+                    gap: 3px;
+                }
+                
+                .stat-item {
+                    min-width: 80px;
+                    padding: 6px;
+                }
+                
+                .stat-label {
+                    font-size: 10px;
+                }
+                
+                .stat-value {
+                    font-size: 12px;
+                }
+                
+                .stat-percentage {
+                    font-size: 9px;
+                }
+                
+                .stat-comparison {
+                    gap: 5px;
+                    margin: 6px 0 12px 0;
+                }
             }
-            @media (min-width: 300px) {
-                .stats-grid { flex-wrap: wrap; gap: 10px; justify-content: space-between; }
-                .stats-card { flex: 1 1 45%; min-width: 140px; }
-                .stats-label { font-size: 11px !important; }
-                .stats-value { font-size: 16px !important; }
-                .match-card, .live-match-card { padding: 8px !important; }
-                .team-name, .live-team-name { font-size: 11px !important; }
+            
+            @media (max-width: 340px) {
+                .stat-item {
+                    min-width: 70px;
+                    padding: 4px;
+                }
+                
+                .stat-label {
+                    font-size: 9px;
+                }
+                
+                .stat-value {
+                    font-size: 11px;
+                }
+                
+                .stat-percentage {
+                    font-size: 8px;
+                }
             }
             </style>
 
@@ -466,123 +506,6 @@ class FootballXApp:
             <div class="header-container">
                 <img src="data:image/png;base64,{logo_base64}" class="header-logo">
                 <h1 class="header-title">FootballX</h1>
-            </div>
-        """, unsafe_allow_html=True)
-
-    def display_live_scores_from_api(self):
-        """Display live scores from API-Football"""
-        st.markdown(f'<div class="league-subheading">{"⚽ Live Scores Today"}</div>', unsafe_allow_html=True)
-        try:
-            # Inițializează serviciul
-            live_service = LiveScoreService()
-            live_matches = live_service.get_today_live_matches()
-
-            if not live_matches:
-                st.info("📺 No live matches at the moment")
-                return
-
-            # Grupează meciurile pe ligi
-            matches_by_league = {}
-            for match in live_matches:
-                league_name = f"{match['country']} - {match['league']}"
-                if league_name not in matches_by_league:
-                    matches_by_league[league_name] = []
-                matches_by_league[league_name].append(match)
-
-            # Afișează meciurile grupate pe ligi
-            for league_name, matches in matches_by_league.items():
-                with st.expander(f"🏆 {league_name} ({len(matches)} matches)", expanded=False):
-                    for match in matches:
-                        self._display_api_match(match)
-
-        except Exception as e:
-            st.error(f"❌ Error loading live scores: {e}")
-
-    def _display_api_match(self, match):
-        """Display a single match from API with mapped statuses"""
-        status = match['status']
-        home_goals = match['home_goals']
-        away_goals = match['away_goals']
-        fixture_time = match.get('time')
-        elapsed = match.get('elapsed')
-
-        # Gestionează scorurile None
-        if home_goals is None or away_goals is None:
-            score_display = "-"
-            score_style = "font-weight: bold; font-size: 16px; color: #95a5a6;"
-        else:
-            score_display = f"{home_goals} - {away_goals}"
-            score_style = "font-weight: bold; font-size: 18px; color: #FFFFFF;"
-
-        # Mapare statusuri API → text și stil
-        def map_status(status, elapsed, fixture_time):
-            if status in ("TBD", "NS"):
-                return f"{fixture_time}", "#3498db", "rgba(52, 152, 219, 0.1)"
-            elif status == "1H":
-                return f"LIVE {elapsed}'", "white", "linear-gradient(45deg, #ff6b6b, #ee5a24)"
-            elif status == "HT":
-                return "⏸HALF TIME", "white", "linear-gradient(45deg, #f39c12, #d35400)"
-            elif status == "2H":
-                return f"LIVE {elapsed}'", "white", "linear-gradient(45deg, #ff6b6b, #ee5a24)"
-            elif status == "ET":
-                return f"ET {elapsed}'", "white", "linear-gradient(45deg, #8e44ad, #9b59b6)"
-            elif status == "BT":
-                return "⏸BREAK", "#f39c12", "rgba(243, 156, 18, 0.2)"
-            elif status == "P":
-                return f"PEN {elapsed}'", "white", "linear-gradient(45deg, #2c3e50, #34495e)"
-            elif status == "FT":
-                return "FINAL", "#27ae60", "rgba(46, 204, 113, 0.15)"
-            elif status == "AET":
-                return "AET FINAL", "#27ae60", "rgba(46, 204, 113, 0.15)"
-            elif status == "PEN":
-                return "PEN FINAL", "#27ae60", "rgba(46, 204, 113, 0.15)"
-            elif status == "SUSP":
-                return "⏸SUSPENDED", "#7f8c8d", "rgba(149, 165, 166, 0.2)"
-            elif status == "INT":
-                return "⏸INTERRUPTED", "#7f8c8d", "rgba(149, 165, 166, 0.2)"
-            elif status == "PST":
-                return "POSTPONED", "#7f8c8d", "rgba(149, 165, 166, 0.2)"
-            elif status == "CANC":
-                return "CANCELED", "#7f8c8d", "rgba(149, 165, 166, 0.2)"
-            elif status == "ABD":
-                return "ABANDONED", "#7f8c8d", "rgba(149, 165, 166, 0.2)"
-            elif status == "AWD":
-                return "AWARDED", "#c0392b", "rgba(231, 76, 60, 0.2)"
-            elif status == "WO":
-                return "WALKOVER", "#c0392b", "rgba(231, 76, 60, 0.2)"
-            elif status == "LIVE":
-                return f"LIVE {elapsed}'", "white", "linear-gradient(45deg, #ff6b6b, #ee5a24)"
-            else:
-                return f"{fixture_time}", "#3498db", "rgba(52, 152, 219, 0.1)"
-
-        status_text, text_color, bg_color = map_status(status, elapsed, fixture_time)
-        team_style = "font-weight: bold; font-size: 13px;"
-
-        # Render în Streamlit
-        st.markdown(f"""
-            <div style="
-                background: {bg_color};
-                color: {text_color};
-                padding: 10px;
-                border-radius: 8px;
-                margin: 6px 0;
-                border-left: 4px solid {text_color};
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            ">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div style="flex: 2; {team_style}; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        {match['home']}
-                    </div>
-                    <div style="flex: 1; {score_style}; text-align: center; padding: 0 5px;">
-                        {score_display}
-                    </div>
-                    <div style="flex: 2; {team_style}; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        {match['away']}
-                    </div>
-                </div>
-                <div style="text-align: center; font-size: 11px; color: white; margin-top: 4px;">
-                    {status_text} • {match.get('round', '')}
-                </div>
             </div>
         """, unsafe_allow_html=True)
 
@@ -623,7 +546,7 @@ class FootballXApp:
         """Display today's matches with dropdowns by league"""
         st.markdown(
             f'<div class="league-subheading" style="font-size: 24px; color: var(--accent-color); '
-            f'margin-bottom: 20px; font-weight: bold;">{"📅 Today\'s Matches"}</div>',
+            f'margin-bottom: 20px; font-weight: bold;">{"Today\'s Matches"}</div>',
             unsafe_allow_html=True)
 
         # Group matches by league
@@ -634,7 +557,7 @@ class FootballXApp:
                 league_matches[league_key] = matches
 
         if not league_matches:
-            st.info("📋 No matches scheduled for today")
+            st.info("No matches scheduled for today")
             return
 
         # Display matches in styled containers by league
@@ -723,7 +646,7 @@ class FootballXApp:
 
     def display_prediction_section(self, winrate_files):
         """Display prediction section with combined datasets"""
-        with st.expander("⚽ Predict Future Match", expanded=True):
+        with st.expander("Predict Future Match", expanded=True):
             if not winrate_files:
                 st.warning("No prediction data available. Please process data first.")
                 return
@@ -758,7 +681,7 @@ class FootballXApp:
                         st.error(f"Prediction failed: {str(e)}")
 
     def _display_prediction_results(self, home_team, away_team, predictions):
-        """Display prediction results"""
+        """Display prediction results - optimized for mobile"""
         # Extract prediction data
         pred_outcome, proba_outcome = predictions['outcome']
         pred_goals = predictions['goals']
@@ -766,26 +689,33 @@ class FootballXApp:
         stats = predictions['stats']
 
         st.subheader("📊 Prediction Details")
+
         # Outcome prediction
         outcome_mapping = {1: f"{home_team} Win", 2: f"{away_team} Win", 0: "Draw"}
         predicted_outcome = outcome_mapping.get(pred_outcome, "Unknown")
 
+        # Use columns for outcome probabilities
         col1, col2, col3 = st.columns(3)
         with col1:
-            st.metric(f"{home_team} Win Probability", f"{proba_outcome[1] * 100:.1f}%")
+            st.metric(f"{home_team} Win", f"{proba_outcome[1] * 100:.1f}%")
         with col2:
-            st.metric("Draw Probability", f"{proba_outcome[0] * 100:.1f}%")
+            st.metric("Draw", f"{proba_outcome[0] * 100:.1f}%")
         with col3:
-            st.metric(f"{away_team} Win Probability", f"{proba_outcome[2] * 100:.1f}%")
+            st.metric(f"{away_team} Win", f"{proba_outcome[2] * 100:.1f}%")
 
-        st.metric("Predicted Outcome", predicted_outcome)
-        st.metric("Predicted Total Goals", pred_goals)
-        st.metric("Most Likely Score", pred_score)
+        # Other predictions
+        col4, col5, col6 = st.columns(3)
+        with col4:
+            st.metric("Predicted Outcome", predicted_outcome)
+        with col5:
+            st.metric("Total Goals", pred_goals)
+        with col6:
+            st.metric("Likely Score", pred_score)
 
-        # Valorile Home / Away din stats
+        # Stats data
         home_stats = {
             'expected_goals': stats['home']['xg'],
-            'ball_possession': stats['home']['possession'] * 100,  # procent
+            'ball_possession': stats['home']['possession'] * 100,  # Convert to percentage
             'total_shots': stats['home']['shots_total'],
             'shots_on_target': stats['home']['shots_on_target'],
             'fouls': stats['home']['fouls'],
@@ -795,7 +725,7 @@ class FootballXApp:
 
         away_stats = {
             'expected_goals': stats['away']['xg'],
-            'ball_possession': stats['away']['possession'] * 100,
+            'ball_possession': stats['away']['possession'] * 100,  # Convert to percentage
             'total_shots': stats['away']['shots_total'],
             'shots_on_target': stats['away']['shots_on_target'],
             'fouls': stats['away']['fouls'],
@@ -804,90 +734,78 @@ class FootballXApp:
         }
 
         display_names = {
-            'expected_goals': 'Expected Goals (xG)',
-            'ball_possession': 'Ball Possession',
-            'total_shots': 'Total Shots',
-            'shots_on_target': 'Shots on Target',
-            'fouls': 'Total Fouls',
-            'corner_kicks': 'Corner Kicks',
-            'yellow_cards': 'Yellow Cards'
+            'expected_goals': 'xG',
+            'ball_possession': 'Possession',
+            'total_shots': 'Shots',
+            'shots_on_target': 'On Target',
+            'fouls': 'Fouls',
+            'corner_kicks': 'Corners',
+            'yellow_cards': 'Yellows'
         }
 
-        st.subheader("📈 Predicted Match Statistics")
-        col1, col2 = st.columns(2)
+        st.subheader("📈 Match Statistics Comparison")
 
-        # Home column
-        with col1:
-            st.markdown(f"""<div class="stats-card">
-                                <div>
-                                    <h4 style='text-align:left'>{home_team}</h4>""", unsafe_allow_html=True)
-            for key in display_names:
-                value = home_stats[key]
-                if key == 'ball_possession':
-                    st.markdown(f"""
-                        <div class="stats-card">
-                            <div class="stat-label">{display_names[key]}</div>
-                            <div class="stat-value">{value:.0f}%</div>
-                            <div class="progress-container reverse">
-                                <div class="progress-fill" style="width: {value:.0f}%"></div>
-                            </div>
-                        </div>
-                    """, unsafe_allow_html=True)
-                elif key == 'expected_goals':
-                    st.markdown(f"""
-                            <div class="stats-card">
-                                <div class="stats-label">{display_names[key]}</div>
-                                <div class="stats-value">{value:.2f}</div>
-                                <div class="progress-container reverse">
-                                    <div class="progress-fill" style="width: {value:.0f}%"></div>
-                                </div>
-                            </div>
-                        """, unsafe_allow_html=True)
-                else:
-                    st.markdown(f"""
-                        <div class="stats-card">
-                            <div class="stats-label">{display_names[key]}</div>
-                            <div class="stats-value">{value}</div>
-                            <div class="progress-container reverse">
-                                <div class="progress-fill" style="width: {value:.0f}%"></div>
-                            </div>
-                        </div>
-                    """, unsafe_allow_html=True)
+        # Create responsive stats comparison
+        st.markdown("""<div class="stats-grid-container">""", unsafe_allow_html=True)
 
-        # Away column
-        with col2:
-            st.markdown(f"""<div class="stats-card">
-                                <div>
-                                    <h4 style='text-align:right'>{away_team}</h4>""", unsafe_allow_html=True)
-            for key in display_names:
-                value = away_stats[key]
-                if key == 'ball_possession':
-                    st.markdown(f"""
-                        <div class="stats-card" style='text-align: right;'>
-                            <div class="stats-label" style='text-align: right;'>{display_names[key]}</div>
-                            <div class="stats-value" style='text-align: right;'>{value:.0f}%</div>
-                            <div class="progress-container">
-                                <div class="progress-fill" style="width: {value:.0f}%"></div>
-                            </div>
-                        </div>
-                    """, unsafe_allow_html=True)
-                elif key == 'expected_goals':
-                    st.markdown(f"""
-                            <div class="stats-card" style='text-align: right;'>
-                                <div class="stats-label" style='text-align: right;'>{display_names[key]}</div>
-                                <div class="stats-value" style='text-align: right;'>{value:.2f}</div>
-                                <div class="progress-container">
-                                    <div class="progress-fill" style="width: {value:.0f}%"></div>
-                                </div>
-                            </div>
-                        """, unsafe_allow_html=True)
+        # Stats comparison rows
+        stats_keys = list(display_names.keys())
+
+        for key in stats_keys:
+            home_val = home_stats[key]
+            away_val = away_stats[key]
+
+            # Special handling for possession (it's already a percentage)
+            if key == 'ball_possession':
+                home_percent = home_val
+                away_percent = away_val
+                home_display = f"{home_val:.0f}%"
+                away_display = f"{away_val:.0f}%"
+            else:
+                # For other stats, calculate percentages for comparison
+                total = home_val + away_val
+                if total > 0:
+                    home_percent = (home_val / total) * 100
+                    away_percent = (away_val / total) * 100
                 else:
-                    st.markdown(f"""
-                        <div class="stats-card" style='text-align: right;'>
-                            <div class="stats-label" style='text-align: right;'>{display_names[key]}</div>
-                            <div class="stats-value" style='text-align: right;'>{value}</div>
-                            <div class="progress-container">
-                                <div class="progress-fill" style="width: {value:.0f}%"></div>
+                    home_percent = away_percent = 50
+
+                # Format display values
+                if isinstance(home_val, float):
+                    home_display = f"{home_val:.1f}"
+                    away_display = f"{away_val:.1f}"
+                else:
+                    home_display = str(home_val)
+                    away_display = str(away_val)
+
+            st.markdown(f"""
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-label">{home_team}</div>
+                        <div class="stat-value">{home_display}</div>
+                        <div class="stat-percentage">{home_percent:.0f}%</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">{display_names[key]}</div>
+                        <div class="stat-value">VS</div>
+                        <div class="stat-label">Comparison</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">{away_team}</div>
+                        <div class="stat-value">{away_display}</div>
+                        <div class="stat-percentage">{away_percent:.0f}%</div>
+                    </div>
+            """, unsafe_allow_html=True)
+
+            # Afișează bara de comparație separat
+            st.markdown(f"""
+                        <div class="stat-comparison">
+                            <div class="stat-bar">
+                                <div class="stat-bar-fill" style="width: {home_percent}%"></div>
+                            </div>
+                            <div class="stat-percentage">{home_percent:.0f}% - {away_percent:.0f}%</div>
+                            <div class="stat-bar">
+                                <div class="stat-bar-fill" style="width: {away_percent}%"></div>
                             </div>
                         </div>
                     """, unsafe_allow_html=True)
@@ -897,7 +815,7 @@ class FootballXApp:
         # Display today's matches
         self.display_todays_matches()
         # Display live scores from API
-        self.display_live_scores_from_api()
+        self.live_score_service.display_live_scores_from_api()
         winrate_files = self.get_all_winrate_files()
         # Display prediction section with combined datasets
         self.display_prediction_section(winrate_files)
