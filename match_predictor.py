@@ -218,70 +218,79 @@ class FootballMatchPredictor:
         return df_results
 
     def predict_future_match(self, home_team, away_team):
+    # Normalize input (case-insensitive)
+    home_team = home_team.strip().lower()
+    away_team = away_team.strip().lower()
 
-        if home_team not in self.team_encoder.classes_ or away_team not in self.team_encoder.classes_:
-            print("Una dintre echipe nu există în dataset.")
-            return None
+    # Normalize encoder classes to lowercase
+    encoder_classes = [t.lower() for t in self.team_encoder.classes_]
 
-        home_stats = self._get_team_stats(home_team)
-        away_stats = self._get_team_stats(away_team)
+    if home_team not in encoder_classes or away_team not in encoder_classes:
+        print("Una dintre echipe nu există în dataset.")
+        return None
 
-        if not home_stats or not away_stats:
-            return None
+    home_stats = self._get_team_stats(home_team)
+    away_stats = self._get_team_stats(away_team)
 
-        X_new_home = self._prepare_prediction_features(home_stats, away_stats, home_team, away_team, 'home')
-        X_new_away = self._prepare_prediction_features(away_stats, home_stats, away_team, home_team, 'away')
+    if not home_stats or not away_stats:
+        return None
 
-        if X_new_home is None or X_new_away is None:
-            return None
+    X_new_home = self._prepare_prediction_features(home_stats, away_stats, home_team, away_team, 'home')
+    X_new_away = self._prepare_prediction_features(away_stats, home_stats, away_team, home_team, 'away')
 
-        predictions = {'home': {}, 'away': {}}
+    if X_new_home is None or X_new_away is None:
+        return None
 
-        pred_outcome = self.models['outcome'].predict(X_new_home)[0]
-        proba_outcome = self.models['outcome'].predict_proba(X_new_home)[0]
+    predictions = {'home': {}, 'away': {}}
 
-        pred_goals = self.models['goals'].predict(X_new_home)[0]
-        pred_score = self.models['score'].predict(X_new_home)[0]
-        stat_targets = ['corners', 'shots_on_target', 'possession', 'yellow_cards',
-                        'fouls', 'tackles', 'passes', 'shots_total', 'xg']
+    pred_outcome = self.models['outcome'].predict(X_new_home)[0]
+    proba_outcome = self.models['outcome'].predict_proba(X_new_home)[0]
 
-        for target in stat_targets:
-            home_key = f"{target}_home"
-            if home_key in self.models:
-                X_scaled = self.scalers[home_key].transform(X_new_home)
-                predictions['home'][target] = self.models[home_key].predict(X_scaled)[0]
+    pred_goals = self.models['goals'].predict(X_new_home)[0]
+    pred_score = self.models['score'].predict(X_new_home)[0]
+    stat_targets = ['corners', 'shots_on_target', 'possession', 'yellow_cards',
+                    'fouls', 'tackles', 'passes', 'shots_total', 'xg']
 
-            away_key = f"{target}_away"
-            if away_key in self.models:
-                X_scaled = self.scalers[away_key].transform(X_new_away)
-                predictions['away'][target] = self.models[away_key].predict(X_scaled)[0]
+    for target in stat_targets:
+        home_key = f"{target}_home"
+        if home_key in self.models:
+            X_scaled = self.scalers[home_key].transform(X_new_home)
+            predictions['home'][target] = self.models[home_key].predict(X_scaled)[0]
 
-        self._save_prediction_to_csv(home_team, away_team, {
-            'outcome': (pred_outcome, proba_outcome),
-            'goals': pred_goals,
-            'score': pred_score,
-            'stats': predictions})
+        away_key = f"{target}_away"
+        if away_key in self.models:
+            X_scaled = self.scalers[away_key].transform(X_new_away)
+            predictions['away'][target] = self.models[away_key].predict(X_scaled)[0]
 
-        return {
-            'outcome': (pred_outcome, proba_outcome),
-            'goals': pred_goals,
-            'score': pred_score,
-            'stats': predictions}
+    # Salvăm frumos cu titluri (Barcelona, Real Madrid)
+    self._save_prediction_to_csv(home_team.title(), away_team.title(), {
+        'outcome': (pred_outcome, proba_outcome),
+        'goals': pred_goals,
+        'score': pred_score,
+        'stats': predictions})
+
+    return {
+        'outcome': (pred_outcome, proba_outcome),
+        'goals': pred_goals,
+        'score': pred_score,
+        'stats': predictions}
+
 
     def _get_team_stats(self, team_name):
-        team_matches = self.df[self.df["Team"] == team_name]
+        # comparăm case-insensitive
+        team_matches = self.df[self.df["Team"].str.lower() == team_name]
         if team_matches.empty:
             return None
-
         return team_matches.iloc[-1].to_dict()
-
+    
+    
     def _prepare_prediction_features(self, team_stats, opponent_stats, team_name, opponent_name, perspective):
         try:
             features = {}
-
+    
             features['win_rate_global'] = team_stats.get('win_rate_global', 0.5)
             features['win_rate_lastN'] = team_stats.get('win_rate_lastN', 0.5)
-
+    
             if perspective == 'home':
                 features['home_win_rate'] = team_stats.get('home_win_rate', 0.5)
                 features['away_win_rate'] = opponent_stats.get('away_win_rate', 0.5)
@@ -290,10 +299,12 @@ class FootballMatchPredictor:
                 features['home_win_rate'] = opponent_stats.get('home_win_rate', 0.5)
                 features['away_win_rate'] = team_stats.get('away_win_rate', 0.5)
                 features['Home_encoded'] = 0
-
+    
+            # comparații case-insensitive
             h2h_matches = self.df[
-                ((self.df["Team"] == team_name) & (self.df["Opponent"] == opponent_name)) |
-                ((self.df["Team"] == opponent_name) & (self.df["Opponent"] == team_name))]
+                ((self.df["Team"].str.lower() == team_name) & (self.df["Opponent"].str.lower() == opponent_name)) |
+                ((self.df["Team"].str.lower() == opponent_name) & (self.df["Opponent"].str.lower() == team_name))
+            ]
             features['h2h_win_rate'] = h2h_matches['h2h_win_rate'].mean() if not h2h_matches.empty else 0.5
             features['form_score'] = team_stats.get('form_score', 0.5)
             features['goal_diff_win_rate'] = team_stats.get('goal_diff_win_rate', 0)
@@ -302,45 +313,21 @@ class FootballMatchPredictor:
             features['opponent_goals'] = opponent_stats.get('team_goals', 1)
             features['Rank'] = team_stats.get('Rank', 10)
             features['opponent_rank'] = opponent_stats.get('Rank', 10)
-
+    
             for stat_feature in self.stat_features:
                 if perspective == 'home':
                     features[stat_feature] = team_stats.get(stat_feature, 0)
                 else:
-                    stat_feature_away = (stat_feature
-                                         .replace('_team','_opponent')) \
+                    stat_feature_away = (stat_feature.replace('_team','_opponent')) \
                         if '_team' in stat_feature else stat_feature.replace('_opponent', '_team')
                     features[stat_feature] = team_stats.get(stat_feature_away, 0)
-
+    
             X_new = pd.DataFrame([features])
-
+    
             available_features = [f for f in self.all_features if f in self.df.columns]
             X_new = X_new[available_features]
-
+    
             return X_new
-
-        except Exception as e:
+    
+        except Exception:
             return None
-
-    def _save_prediction_to_csv(self, home_team, away_team, predictions, filename="predictions_log.csv"):
-        outcome_map = {0: "EGAL", 1: f"{home_team} CÂȘTIGĂ", 2: f"{away_team} CÂȘTIGĂ"}
-        pred_outcome, proba_outcome = predictions['outcome']
-
-        row = {
-            "Home_Team": home_team,
-            "Away_Team": away_team,
-            "Predicted_Outcome": outcome_map.get(pred_outcome, "NECUNOSCUT"),
-            "Proba_Home_Win": f"{proba_outcome[1]:.3f}",
-            "Proba_Draw": f"{proba_outcome[0]:.3f}",
-            "Proba_Away_Win": f"{proba_outcome[2]:.3f}",
-            "Predicted_Score": predictions['score'],
-            "Predicted_Goals": predictions['goals'],}
-
-        for side in ["home", "away"]:
-            for stat, val in predictions["stats"][side].items():
-                row[f"{stat}_{side}"] = round(val, 2)
-
-        df_row = pd.DataFrame([row])
-
-        file_exists = os.path.isfile(filename)
-        df_row.to_csv(filename, mode="a", header=not file_exists, index=False, encoding="utf-8-sig")
