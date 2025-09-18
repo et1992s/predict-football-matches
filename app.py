@@ -823,8 +823,8 @@ class FootballXApp:
         # Dropdown pentru selecția ligii
         selected_league = st.selectbox(
             "Select League",
-            options=list(self.leagues.keys()),
-            format_func=lambda x: self.leagues[x]['name']
+            options=list(self.live_leagues.keys()),
+            format_func=lambda x: self.live_leagues[x]['name']
         )
 
         # Afișare steag (opțional)
