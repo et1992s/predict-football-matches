@@ -850,7 +850,6 @@ class FootballXApp:
         # Display prediction section with combined datasets
         self.display_prediction_section(winrate_files)
 
-
 # Run the app
 if __name__ == "__main__":
     app = FootballXApp()
