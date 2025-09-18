@@ -806,35 +806,35 @@ class FootballXApp:
         self.display_todays_matches()
         # Display live scores from API
         # self.live_score_service.display_live_scores_from_api()
-        st.title("Live FootballX")
+        # st.title("Live FootballX")
 
-        # Dropdown pentru selecția ligii
-        selected_league = st.selectbox(
-            "Select League",
-            options=list(self.leagues.keys()),
-            format_func=lambda x: self.leagues[x]['name']
-        )
+        # # Dropdown pentru selecția ligii
+        # selected_league = st.selectbox(
+        #     "Select League",
+        #     options=list(self.leagues.keys()),
+        #     format_func=lambda x: self.leagues[x]['name']
+        # )
 
-        # Afișare steag (opțional)
-        st.image(self.leagues[selected_league]['flag'], width=60)
+        # # Afișare steag (opțional)
+        # st.image(self.leagues[selected_league]['flag'], width=60)
 
-        # Creează instanța serviciului
-        live_service = LiveScoreService()
+        # # Creează instanța serviciului
+        # live_service = LiveScoreService()
 
-        # Widget Games (meciurile zilei pentru liga selectată)
-        games_html = live_service.get_games_widget(
-            league_id=selected_league,
-            season="2025",
-            date=datetime.now().strftime("%Y-%m-%d")
-        )
-        live_service.display_widget(games_html, height=800)
+        # # Widget Games (meciurile zilei pentru liga selectată)
+        # games_html = live_service.get_games_widget(
+        #     league_id=selected_league,
+        #     season="2025",
+        #     date=datetime.now().strftime("%Y-%m-%d")
+        # )
+        # live_service.display_widget(games_html, height=800)
 
-        # Widget Standings (clasamentul ligii selectate)
-        standings_html = live_service.get_standings_widget(
-            league_id=selected_league,
-            season="2025"
-        )
-        live_service.display_widget(standings_html, height=800)
+        # # Widget Standings (clasamentul ligii selectate)
+        # standings_html = live_service.get_standings_widget(
+        #     league_id=selected_league,
+        #     season="2025"
+        # )
+        # live_service.display_widget(standings_html, height=800)
         winrate_files = self.get_all_winrate_files()
         # Display prediction section with combined datasets
         self.display_prediction_section(winrate_files)
