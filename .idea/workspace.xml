@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a1d783be-35d3-40be-957c-233e03c3179c" name="Changes" comment="New commit: Changed css, now we are finally happy with our new styling!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/live_score.py" beforeDir="false" afterPath="$PROJECT_DIR$/live_score.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,23 +172,7 @@
       <option name="presentableId" value="Default" />
       <updated>1757587934563</updated>
       <workItem from="1757587935617" duration="31987000" />
-      <workItem from="1757717387636" duration="169855000" />
-    </task>
-    <task id="LOCAL-00011" summary="Second commit: Requirements file was added including all the">
-      <option name="closed" value="true" />
-      <created>1757596741652</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1757596741652</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Second commit: Requirements file was added including all the">
-      <option name="closed" value="true" />
-      <created>1757596938846</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1757596938846</updated>
+      <workItem from="1757717387636" duration="170791000" />
     </task>
     <task id="LOCAL-00013" summary="Second commit: Requirements file was added including all the">
       <option name="closed" value="true" />
@@ -564,7 +550,23 @@
       <option name="project" value="LOCAL" />
       <updated>1758147451601</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="New commit: Changed css, now we are finally happy with our new styling!">
+      <option name="closed" value="true" />
+      <created>1758153475674</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1758153475674</updated>
+    </task>
+    <task id="LOCAL-00061" summary="New commit: Changed css, now we are finally happy with our new styling!">
+      <option name="closed" value="true" />
+      <created>1758153587638</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1758153587638</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
