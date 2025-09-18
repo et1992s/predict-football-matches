@@ -642,7 +642,7 @@ class FootballXApp:
             for file in winrate_files:
                 df = pd.read_csv(file)
                 if "Team" in df.columns:
-                    all_teams.update(df["team"].unique())
+                    all_teams.update(df["Team"].unique())
                     
             all_teams = sorted(list(all_teams))
             
