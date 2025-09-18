@@ -827,9 +827,6 @@ class FootballXApp:
             format_func=lambda x: self.live_leagues[x]['name']
         )
 
-        # Afișare steag (opțional)
-        st.image(self.live_leagues[selected_league]['flag'], width=60)
-
         # Creează instanța serviciului
         live_service = LiveScoreService()
 
