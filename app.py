@@ -638,12 +638,19 @@ class FootballXApp:
                 st.warning("No prediction data available. Please process data first.")
                 return
 
-            # Manual team input
+            all_teams = set()
+            for file in winrate_files:
+                df = pd.read_csv(file)
+                if "Team" in df.columns:
+                    all_teams.update(df["Team"].unique())
+                    
+            all_teams = sorted(list(all_teams))
+            
             col1, col2 = st.columns(2)
             with col1:
-                home_team = st.text_input("Home Team", placeholder="Enter home team name")
+                home_team = st.selectbox("Home Team", all_teams, index=0)
             with col2:
-                away_team = st.text_input("Away Team", placeholder="Enter away team name")
+                away_team = st.selectbox("Away Team", all_teams, index=1)
 
             if st.button("Predict Match"):
                 if not home_team or not away_team:
