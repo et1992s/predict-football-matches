@@ -65,7 +65,7 @@ class FootballXApp:
             "88": {"name": "Netherlands Eredivisie", "flag": "flags/netherlands.png"},
             "283": {"name": "Romania Superliga", "flag": "flags/romania.png"},
             "144": {"name": "Belgium Jupiler Pro League", "flag": "flags/belgium.png"},
-            "2": {"name": "Champions League", "flag": "flags/europe.png"}}
+            "2": {"name": "UEFA Champions League"}}
 
         self.setup_page_config()
         self.setup_css()
