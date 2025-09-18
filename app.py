@@ -805,7 +805,7 @@ class FootballXApp:
         # Display today's matches
         self.display_todays_matches()
         # Display live scores from API
-        # self.live_score_service.display_live_scores_from_api()
+        self.live_score_service.display_live_scores_from_api()
         winrate_files = self.get_all_winrate_files()
         # Display prediction section with combined datasets
         self.display_prediction_section(winrate_files)
