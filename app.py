@@ -56,15 +56,15 @@ class FootballXApp:
         }
         self.live_leagues = {
             "39": {"name": "England Premier League", "flag": "flags/england.png"},
-            "140": {"name": "Spain La Liga", "flag": "flags/spain.png"},
-            "135": {"name": "Italy Serie A", "flag": "flags/italy.png"},
-            "61": {"name": "France Ligue 1", "flag": "flags/france.png"},
-            "78": {"name": "Germany Bundesliga", "flag": "flags/germany.png"},
-            "94": {"name": "Portugal Liga", "flag": "flags/portugal.png"},
-            "88": {"name": "Netherlands Eredivisie", "flag": "flags/netherlands.png"},
-            "283": {"name": "Romania Superliga", "flag": "flags/romania.png"},
-            "144": {"name": "Belgium Jupiler Pro League", "flag": "flags/belgium.png"},
-            "2": {"name": "Champions League", "flag": "flags/europe.png"}}
+            "140": {"name": "Spain La Liga"},
+            "135": {"name": "Italy Serie A"},
+            "61": {"name": "France Ligue 1"},
+            "78": {"name": "Germany Bundesliga"},
+            "94": {"name": "Portugal Liga",},
+            "88": {"name": "Netherlands Eredivisie"},
+            "283": {"name": "Romania Superliga"},
+            "144": {"name": "Belgium Jupiler Pro League"},
+            "2": {"name": "UEFA Champions League"}}
 
         self.setup_page_config()
         self.setup_css()
