@@ -817,7 +817,7 @@ class FootballXApp:
         # Display today's matches
         self.display_todays_matches()
         # Display live scores from API
-        self.live_score_service.display_live_scores_from_api()
+        # self.live_score_service.display_live_scores_from_api()
         # st.title("Live FootballX")
 
         # # Dropdown pentru selecția ligii
