@@ -6,14 +6,12 @@ from glob import glob
 import pandas as pd
 import streamlit as st
 from live_score import LiveScoreService
-from scrape_live_score import LiveScoreScraper
 from match_predictor import FootballMatchPredictor
 
 
 class FootballXApp:
     def __init__(self):
         self.live_score_service = LiveScoreService()
-        self.scrape_live_scores = LiveScoreScraper()
         self.leagues = {
             "jupiler-pro-league-2025-2026": {"name": "Belgium Jupiler Pro League", "flag": "flags/belgium.png"},
             "premier-league-2025-2026": {"name": "England Premier League", "flag": "flags/england.png"},
@@ -342,14 +340,7 @@ class FootballXApp:
     def run(self):
         self.display_todays_matches()
         winrate_files = self.get_all_winrate_files()
-
-        live_service = LiveScoreScraper()  # LaLiga
-        live_service.run_service()
-
-        # # ✅ Doar noul serviciu cu scraping
-        # live_service = LiveScoreScraper()
-        # live_service.run_service()
-
+        self.live_score_service.display_live_scores_from_api()
         self.display_prediction_section(winrate_files)
 
 
