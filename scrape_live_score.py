@@ -42,8 +42,8 @@ class LiveScoreScraper:
 
         matches = data.get("matches", [])
 
-        # Auto-refresh logic
-        self._setup_auto_refresh()
+        # # Auto-refresh logic
+        # self._setup_auto_refresh()
 
         if not matches:
             st.info("""
@@ -62,22 +62,31 @@ class LiveScoreScraper:
         # Afișează info update
         self._display_update_info(data)
 
-    def _setup_auto_refresh(self):
-        """Configurează auto-refresh la fiecare 30s"""
-        if 'last_refresh' not in st.session_state:
-            st.session_state.last_refresh = time.time()
-
-        elapsed = time.time() - st.session_state.last_refresh
-        refresh_in = max(0, self.update_interval - elapsed)
-
-        # Progress bar pentru countdown
-        progress = elapsed / self.update_interval
-        st.progress(progress, text=f"🔄 Refreshing in {refresh_in:.0f}s")
-
-        # Auto-refresh
-        if elapsed >= self.update_interval:
-            st.session_state.last_refresh = time.time()
-            st.rerun()
+    # def _setup_auto_refresh(self):
+    #     """Configurează auto-refresh la fiecare 30s"""
+    #     current_time = time.time()
+    #
+    #     # Initializează sau resetează dacă este prea veche
+    #     if 'last_refresh' not in st.session_state:
+    #         st.session_state.last_refresh = current_time
+    #         st.session_state.init_time = current_time
+    #
+    #     # Resetează dacă sesiunea este prea veche (peste 1 oră)
+    #     if current_time - st.session_state.init_time > 3600:
+    #         st.session_state.last_refresh = current_time
+    #         st.session_state.init_time = current_time
+    #
+    #     elapsed = current_time - st.session_state.last_refresh
+    #
+    #     # Asigură-te că progress este între 0 și 1
+    #     progress = min(1.0, max(0.0, elapsed / self.update_interval))
+    #     refresh_in = max(0, self.update_interval - elapsed)
+    #
+    #     st.progress(progress, text=f"🔄 Refreshing in {refresh_in:.0f}s")
+    #
+    #     if elapsed >= self.update_interval:
+    #         st.session_state.last_refresh = current_time
+    #         st.rerun()
 
     def _display_update_info(self, data):
         """Afișează informații despre update"""
