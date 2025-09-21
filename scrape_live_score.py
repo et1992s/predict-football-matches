@@ -16,20 +16,38 @@ class LiveScoreScraper:
 
     @st.cache_data(ttl=30)
     def load_from_github(_self):
-        """Încarcă datele de pe GitHub"""
+        """Încarcă datele de pe GitHub cu mai multe verificări"""
+        global response
         try:
             response = requests.get(_self.github_url, timeout=10)
             response.raise_for_status()
-            return response.json()
-        except Exception as e:
-            st.error(f"❌ Error loading from GitHub: {e}")
-            # Fallback la fișierul local
+
+            # ✅ Verifică extra că răspunsul este JSON valid
+            content = response.text.strip()
+            if not content:
+                st.error("❌ Empty response from GitHub")
+                return {"matches": [], "last_update": "", "total_matches": 0}
+
+            # Încearcă să parsezi JSON-ul
+            data = response.json()
+
+            # Verifică structura așteptată
+            if not isinstance(data, dict) or "matches" not in data:
+                st.error("❌ Invalid JSON structure from GitHub")
+                return {"matches": [], "last_update": "", "total_matches": 0}
+
+            return data
+
+        except json.JSONDecodeError as e:
+            st.error(f"❌ Invalid JSON from GitHub: {e}")
+            # Afișează conținutul raw pentru debug
             try:
-                if os.path.exists("processed/today_matches.json"):
-                    with open("processed/today_matches.json", "r", encoding="utf-8") as f:
-                        return json.load(f)
+                st.code(f"Raw response: {response.text[:200]}...", language="text")
             except:
                 pass
+            return {"matches": [], "last_update": "", "total_matches": 0}
+        except Exception as e:
+            st.error(f"❌ Error loading from GitHub: {e}")
             return {"matches": [], "last_update": "", "total_matches": 0}
 
     def display_live_scores(self):
