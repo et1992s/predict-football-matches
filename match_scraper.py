@@ -67,34 +67,58 @@ class MatchScraper:
 
     # --- Scroll & click "Show more" until all matches are loaded ---
     def load_all_matches(self):
+        print("🔄 Loading all matches...")
         prev_count = 0
         stable_count = 0
-        while True:
-            matches = self.page.locator(".event__match")
+        max_attempts = 15
+
+        for attempt in range(max_attempts):
+            # Scroll down
+            self.page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+            time.sleep(2)
+
+            # Încearcă să găsești butonul "Show more"
+            show_more_selectors = [
+                "div:has-text('Show more matches')",
+                "button:has-text('Show more')",
+                "span:has-text('Show more')",
+                "[data-testid='show-more-button']"
+            ]
+
+            clicked = False
+            for selector in show_more_selectors:
+                try:
+                    btn = self.page.locator(selector)
+                    if btn.count() > 0:
+                        btn.first.click(timeout=3000)
+                        print("✅ Clicked 'Show more' button")
+                        clicked = True
+                        time.sleep(3)
+                        break
+                except:
+                    continue
+
+            # Verifică numărul de meciuri
+            matches = self.page.locator("[id^='g_']")
             count = matches.count()
 
-            # Click "Show more matches" if visible
-            try:
-                btn = self.page.locator("span:has-text('Show more matches')")
-                if btn.count() > 0:
-                    btn.first.click(timeout=10000)
-                    self.page.wait_for_timeout(10000)
-                    continue
-            except:
-                pass
+            if count > 0:
+                print(f"📊 After attempt {attempt + 1}: {count} matches found")
 
-            # Check if new matches loaded
             if count == prev_count:
                 stable_count += 1
-                if stable_count >= 3:  # stop if no new matches after 3 scrolls
+                if stable_count >= 3:
+                    print("⏹️ No new matches loaded, stopping...")
                     break
             else:
                 stable_count = 0
                 prev_count = count
 
-            # Scroll down to trigger lazy load
-            self.page.evaluate("window.scrollBy(0, document.body.scrollHeight)")
-            time.sleep(1)
+            if not clicked and stable_count > 1:
+                print("⏹️ No 'Show more' button found, stopping...")
+                break
+
+        print(f"✅ Finished loading. Total matches: {prev_count}")
 
     # --- Extract all match IDs ---
     def get_all_match_ids(self):
@@ -327,3 +351,93 @@ class MatchScraper:
             print(f"⚠️ Could not extract lineups: {e}")
 
         return match
+
+    def live_start(self):
+        self.playwright = sync_playwright().start()
+        self.browser = self.playwright.chromium.launch(headless=self.headless, slow_mo=200)
+        self.page = self.browser.new_page()
+
+        # Navighează direct pe pagina ligii
+        league_url = "https://www.flashscore.com/football/spain/laliga/#/vcm2MhGk/live-standings/"
+        self.page.goto(league_url, wait_until="domcontentloaded")
+        time.sleep(2)
+        self.accept_cookies()
+
+    def extract_today_matches(self, allowed_leagues):
+        """
+        Fast extraction of LIVE matches only
+        """
+        print("⏳ Fast extraction of matches...")
+
+        today_matches = []
+
+        try:
+            # Folosește evaluare directă pentru viteză maximă
+            matches_data = self.page.evaluate("""
+                () => {
+                    const matches = [];
+                    const matchElements = document.querySelectorAll('[id^="g_"]');
+
+                    for (const match of matchElements) {
+                        // Verifică dacă este meci live (are timp sau status)
+                        const timeBlock = match.querySelector('.event__stage--block');
+                        const statusElem = match.querySelector('.event__stage');
+
+                        // Skip meciuri programate (cu ore)
+                        if (timeBlock && timeBlock.textContent.includes(':')) continue;
+
+                        // Skip meciuri fără timp/status relevant
+                        if (!timeBlock && (!statusElem || !['Half', 'HT', 'Finished', 'FT'].some(s => statusElem.textContent.includes(s)))) continue;
+
+                        // Extrage datele
+                        const homeElem = match.querySelector('.event__homeParticipant [data-testid="wcl-scores-simple-text-01"]');
+                        const awayElem = match.querySelector('.event__awayParticipant [data-testid="wcl-scores-simple-text-01"]');
+                        const homeScore = match.querySelector('.event__score--home');
+                        const awayScore = match.querySelector('.event__score--away');
+
+                        const matchData = {
+                            time: timeBlock ? timeBlock.textContent.replace(/[\\s\\u00A0]/g, '') : '',
+                            status: statusElem ? statusElem.textContent.trim() : '',
+                            home: homeElem ? homeElem.textContent.trim() : 'Unknown',
+                            away: awayElem ? awayElem.textContent.trim() : 'Unknown',
+                            home_goals: homeScore ? homeScore.textContent.trim() : '',
+                            away_goals: awayScore ? awayScore.textContent.trim() : '',
+                            id: match.id.replace('g_', '')
+                        };
+
+                        matches.push(matchData);
+                    }
+                    return matches;
+                }
+            """)
+
+            # Procesează datele extrase
+            for match_data in matches_data:
+                # Determină display time
+                display_time = match_data['time']
+                if not display_time:
+                    if 'Half' in match_data['status'] or 'HT' in match_data['status']:
+                        display_time = 'HT'
+                    elif 'Finished' in match_data['status'] or 'FT' in match_data['status']:
+                        display_time = 'FT'
+
+                today_matches.append({
+                    'date': '',
+                    'time': display_time,
+                    'home': match_data['home'],
+                    'away': match_data['away'],
+                    'home_goals': match_data['home_goals'],
+                    'away_goals': match_data['away_goals'],
+                    'status': match_data['status'],
+                    'league': 'canadian-premier-league',
+                    'url': f'https://www.flashscore.com/match/{match_data["id"]}/#/match-summary'
+                })
+
+                print(
+                    f"✅ {match_data['home']} {match_data['home_goals']}-{match_data['away_goals']} {match_data['away']} | {display_time}")
+
+        except Exception as e:
+            print(f"⚠️ Error in fast extraction: {e}")
+
+        print(f"🔹 Extracted {len(today_matches)} matches in fast mode")
+        return today_matches
