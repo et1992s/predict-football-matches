@@ -8,14 +8,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Citește din env
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
-GITHUB_OWNER = os.getenv("GITHUB_OWNER")
-GITHUB_REPO = os.getenv("GITHUB_REPO")
-
-
 class GitHubUploader:
-    def __init__(self, token=None, repo_owner=None, repo_name=None, file_path="processed/live_matches.json"):
+    def __init__(self, token=None, repo_owner=None, repo_name=None, file_path="processed/today_matches.json"):
         # Folosește variabile de mediu sau parametri
         self.token = token or os.getenv('GITHUB_TOKEN')
         self.repo_owner = repo_owner or os.getenv('GITHUB_OWNER')
@@ -26,7 +20,7 @@ class GitHubUploader:
             raise ValueError(
                 "Missing GitHub configuration. Set GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO environment variables.")
 
-        self.api_url = f"https://api.github.com/repos/{self.repo_owner}/{self.repo_name}/contents/{self.file_path}"
+        self.github_url = f"https://api.github.com/repos/{self.repo_owner}/{self.repo_name}/contents/{self.file_path}"
 
     def upload_to_github(self, data):
         """Upload JSON data to GitHub"""
@@ -41,7 +35,7 @@ class GitHubUploader:
             }
 
             # Verifică dacă fișierul există deja
-            response = requests.get(self.api_url, headers=headers)
+            response = requests.get(self.github_url, headers=headers)
             sha = None
             if response.status_code == 200:
                 sha = response.json().get('sha')
@@ -54,7 +48,7 @@ class GitHubUploader:
             }
 
             # Upload
-            response = requests.put(self.api_url, headers=headers, json=payload)
+            response = requests.put(self.github_url, headers=headers, json=payload)
             response.raise_for_status()
 
             print(f"✅ Upload successful to GitHub!")
