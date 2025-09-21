@@ -10,10 +10,11 @@ from match_scraper import MatchScraper
 
 class LiveScoreScraper:
     def __init__(self):
-        self.github_url = "https://raw.githubusercontent.com/yourusername/yourrepo/main/processed/today_matches.json"
-        self.update_interval = 30  # secunde
+        # ✅ CORECT: Adaugă URL-ul GitHub
+        self.github_url = "https://raw.githubusercontent.com/TAUSERNAME/TAREPO/main/processed/today_matches.json"
+        self.update_interval = 30
 
-    @st.cache_data(ttl=30)  # Cache 30 de secunde
+    @st.cache_data(ttl=30)
     def load_from_github(_self):
         """Încarcă datele de pe GitHub"""
         try:
@@ -22,6 +23,13 @@ class LiveScoreScraper:
             return response.json()
         except Exception as e:
             st.error(f"❌ Error loading from GitHub: {e}")
+            # Fallback la fișierul local
+            try:
+                if os.path.exists("processed/today_matches.json"):
+                    with open("processed/today_matches.json", "r", encoding="utf-8") as f:
+                        return json.load(f)
+            except:
+                pass
             return {"matches": [], "last_update": "", "total_matches": 0}
 
     def display_live_scores(self):
