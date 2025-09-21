@@ -358,7 +358,7 @@ class MatchScraper:
         self.page = self.browser.new_page()
 
         # Navighează direct pe pagina ligii
-        league_url = "https://www.flashscore.com/football/colombia/primera-a/#/Oj4yELnn/live-standings/"
+        league_url = "https://www.flashscore.com/football/spain/laliga/#/vcm2MhGk/live-standings/"
         self.page.goto(league_url, wait_until="domcontentloaded")
         time.sleep(2)
         self.accept_cookies()
