@@ -8,7 +8,6 @@ import streamlit as st
 from live_score import LiveScoreService
 from scrape_live_score import LiveScoreScraper
 from match_predictor import FootballMatchPredictor
-from live_score_scraper_json import LiveScoreScraperJson
 
 
 class FootballXApp:
