@@ -11,7 +11,7 @@ from match_scraper import MatchScraper
 class LiveScoreScraper:
     def __init__(self):
         # ✅ CORECT: Adaugă URL-ul GitHub
-        self.github_url = "https://raw.githubusercontent.com/TAUSERNAME/TAREPO/main/processed/today_matches.json"
+        self.github_url = "https://github.com/et1992s/predict-football-matches/blob/9e4d921fa8610a7bb53d0f60f3ce007565858578/processed/today_matches.json"
         self.update_interval = 30
 
     @st.cache_data(ttl=30)
