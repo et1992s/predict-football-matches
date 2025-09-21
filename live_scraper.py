@@ -1,15 +1,17 @@
 import base64
 import json
 import os
-import requests
 from datetime import datetime
-from match_scraper import MatchScraper
 
-import os
+import requests
+from dotenv import load_dotenv
 
-os.environ['GITHUB_TOKEN'] = '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'
-os.environ['GITHUB_OWNER'] = 'https://github.com/et1992s'
-os.environ['GITHUB_REPO'] = 'https://github.com/et1992s/predict-football-matches'
+load_dotenv()
+
+# Citește din env
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+GITHUB_OWNER = os.getenv("GITHUB_OWNER")
+GITHUB_REPO = os.getenv("GITHUB_REPO")
 
 
 class GitHubUploader:
