@@ -8,6 +8,7 @@ import streamlit as st
 from live_score import LiveScoreService
 from scrape_live_score import LiveScoreScraper
 from match_predictor import FootballMatchPredictor
+from live_score_scraper_json import LiveScoreScraperJson
 
 
 class FootballXApp:
@@ -342,10 +343,13 @@ class FootballXApp:
     def run(self):
         self.display_todays_matches()
         winrate_files = self.get_all_winrate_files()
-    
-        # ✅ Doar noul serviciu cu scraping
-        live_service = LiveScoreScraper()
+
+        live_service = LiveScoreScraper()  # LaLiga
         live_service.run_service()
+
+        # # ✅ Doar noul serviciu cu scraping
+        # live_service = LiveScoreScraper()
+        # live_service.run_service()
 
         self.display_prediction_section(winrate_files)
 

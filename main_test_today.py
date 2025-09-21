@@ -6,11 +6,11 @@ from match_scraper import MatchScraper
 
 def main():
     # Folosește URL-ul specific ligii
-    league_url = "https://www.flashscore.com/football/colombia/primera-a/#/Oj4yELnn/live-standings/"
+    league_url = "https://www.flashscore.com/football/spain/laliga/#/vcm2MhGk/live-standings/"
     scraper = MatchScraper(league_url, headless=False)
     scraper.start()
 
-    print("🔎 Extracting matches from Canadian Premier League...")
+    print("🔎 Extracting matches...")
     matches_data = scraper.extract_today_matches([])
 
     # Verifică dacă există date invalide

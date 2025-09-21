@@ -429,7 +429,6 @@ class MatchScraper:
                     'home_goals': match_data['home_goals'],
                     'away_goals': match_data['away_goals'],
                     'status': match_data['status'],
-                    'league': 'canadian-premier-league',
                     'url': f'https://www.flashscore.com/match/{match_data["id"]}/#/match-summary'
                 })
 
