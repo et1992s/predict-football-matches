@@ -1,0 +1,26 @@
+{
+    "matches": [
+        {
+            "date": "",
+            "time": "HalfTime",
+            "home": "Dep. Pasto",
+            "away": "Santa Fe",
+            "home_goals": "0",
+            "away_goals": "0",
+            "status": "Half Time",
+            "league": "canadian-premier-league",
+            "url": "https://www.flashscore.com/match/1_MqzqhbPO/#/match-summary"
+        },
+        {
+            "date": "",
+            "time": "Awrd",
+            "home": "Atl. Nacional",
+            "away": "Bucaramanga",
+            "home_goals": "0",
+            "away_goals": "3",
+            "status": "Awrd",
+            "league": "canadian-premier-league",
+            "url": "https://www.flashscore.com/match/1_QZZ5jolK/#/match-summary"
+        }
+    ]
+}
