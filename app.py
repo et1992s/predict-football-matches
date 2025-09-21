@@ -342,11 +342,11 @@ class FootballXApp:
     def run(self):
         self.display_todays_matches()
         winrate_files = self.get_all_winrate_files()
-        # Initializează și rulează serviciul live scores
+    
+        # ✅ Doar noul serviciu cu scraping
         live_service = LiveScoreScraper()
         live_service.run_service()
 
-        self.live_score_service.display_live_scores_from_api()
         self.display_prediction_section(winrate_files)
 
 
