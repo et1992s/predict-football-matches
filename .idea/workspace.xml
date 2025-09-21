@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1d783be-35d3-40be-957c-233e03c3179c" name="Changes" comment="New commit: Changed css, now we are finally happy with our new styling!" />
+    <list default="true" id="a1d783be-35d3-40be-957c-233e03c3179c" name="Changes" comment="New commit: Changed css, now we are finally happy with our new styling!">
+      <change beforePath="$PROJECT_DIR$/scrape_live_score.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrape_live_score.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -235,23 +237,7 @@
       <option name="presentableId" value="Default" />
       <updated>1757587934563</updated>
       <workItem from="1757587935617" duration="31987000" />
-      <workItem from="1757717387636" duration="235928000" />
-    </task>
-    <task id="LOCAL-00023" summary="Second commit: Requirements file was added including all the">
-      <option name="closed" value="true" />
-      <created>1757598582107</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1757598582107</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Second commit: Requirements file was added including all the">
-      <option name="closed" value="true" />
-      <created>1757598609311</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1757598609311</updated>
+      <workItem from="1757717387636" duration="236285000" />
     </task>
     <task id="LOCAL-00025" summary="Second commit: Requirements file was added including all the">
       <option name="closed" value="true" />
@@ -629,7 +615,23 @@
       <option name="project" value="LOCAL" />
       <updated>1758457062169</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="New commit: Changed css, now we are finally happy with our new styling!">
+      <option name="closed" value="true" />
+      <created>1758457505456</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1758457505456</updated>
+    </task>
+    <task id="LOCAL-00073" summary="New commit: Changed css, now we are finally happy with our new styling!">
+      <option name="closed" value="true" />
+      <created>1758457604185</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1758457604185</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
