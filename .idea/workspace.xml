@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1d783be-35d3-40be-957c-233e03c3179c" name="Changes" comment="New commit: Changed css, now we are finally happy with our new styling!">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/concatenate_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/concatenate_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live_score.py" beforeDir="false" afterPath="$PROJECT_DIR$/live_score.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/match_preprocessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/match_preprocessor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/match_scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/match_scraper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/predictions_log.csv" beforeDir="false" afterPath="$PROJECT_DIR$/predictions_log.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/standings_scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/standings_scraper.py" afterDir="false" />
-    </list>
+    <list default="true" id="a1d783be-35d3-40be-957c-233e03c3179c" name="Changes" comment="New commit: Changed css, now we are finally happy with our new styling!" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -67,29 +57,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Python.app.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.main_test_today.executor": "Run",
-    "Python.match_predictor.executor": "Run",
-    "Python.match_scraper.executor": "Run",
-    "Python.scrape_live_score.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/S3B1TZ4/PycharmProjects/predict-football-matches/flags",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Python.app.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_test_today.executor&quot;: &quot;Run&quot;,
+    &quot;Python.match_predictor.executor&quot;: &quot;Run&quot;,
+    &quot;Python.match_scraper.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scrape_live_score.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/S3B1TZ4/PycharmProjects/predict-football-matches/flags&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\S3B1TZ4\PycharmProjects\predict-football-matches\flags" />
@@ -245,15 +235,7 @@
       <option name="presentableId" value="Default" />
       <updated>1757587934563</updated>
       <workItem from="1757587935617" duration="31987000" />
-      <workItem from="1757717387636" duration="231631000" />
-    </task>
-    <task id="LOCAL-00017" summary="Second commit: Requirements file was added including all the">
-      <option name="closed" value="true" />
-      <created>1757597724432</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1757597724432</updated>
+      <workItem from="1757717387636" duration="231990000" />
     </task>
     <task id="LOCAL-00018" summary="Second commit: Requirements file was added including all the">
       <option name="closed" value="true" />
@@ -639,7 +621,15 @@
       <option name="project" value="LOCAL" />
       <updated>1758202702854</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="New commit: Changed css, now we are finally happy with our new styling!">
+      <option name="closed" value="true" />
+      <created>1758446119885</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1758446119885</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
