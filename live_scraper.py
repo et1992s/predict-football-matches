@@ -8,12 +8,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Citește din env
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
-GITHUB_OWNER = os.getenv("GITHUB_OWNER")
-GITHUB_REPO = os.getenv("GITHUB_REPO")
-
-
 class GitHubUploader:
     def __init__(self, token=None, repo_owner=None, repo_name=None, file_path="processed/today_matches.json"):
         # Folosește variabile de mediu sau parametri
