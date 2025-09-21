@@ -10,7 +10,6 @@ from match_scraper import MatchScraper
 
 class LiveScoreScraper:
     def __init__(self):
-        self.github_url = "https://raw.githubusercontent.com/yourusername/yourrepo/main/processed/today_matches.json"
         self.update_interval = 30  # secunde
 
     @st.cache_data(ttl=30)  # Cache 30 de secunde

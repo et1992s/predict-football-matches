@@ -15,7 +15,6 @@ GITHUB_REPO = os.getenv("GITHUB_REPO")
 
 
 class GitHubUploader:
-    def __init__(self, token=None, repo_owner=None, repo_name=None, file_path="processed/today_matches.json"):
         # Folosește variabile de mediu sau parametri
         self.token = token or os.getenv('GITHUB_TOKEN')
         self.repo_owner = repo_owner or os.getenv('GITHUB_OWNER')
