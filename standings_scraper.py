@@ -68,4 +68,3 @@ class StandingsScraper:
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         with open(filename, "w", encoding="utf-8") as f:
             json.dump({"standings": data}, f, ensure_ascii=False, indent=4)
-        print(f"Standings saved to '{filename}'")

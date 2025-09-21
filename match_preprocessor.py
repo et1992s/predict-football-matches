@@ -33,14 +33,12 @@ class MatchPreprocessor:
                 int(x.split(":")[1]) if ":" in x else int(str(int(x))[2:])]))
             home_away.columns = ["team_total_goals_home", "team_total_goals_away"]
             self.df = pd.concat([self.df.drop(columns=["Goals"]), home_away], axis=1)
-            print("'Goals' a fost împărțit în home/away și eliminată coloana originală")
         return self
 
     def drop_zero_heavy_columns(self):
         zero_fraction = (self.df == 0).mean()
         cols_to_drop = zero_fraction[zero_fraction > self.zero_threshold].index.tolist()
         if cols_to_drop:
-            print(f"Eliminăm coloanele cu >{self.zero_threshold*100:.0f}% valori zero: {cols_to_drop}")
             self.df.drop(columns=cols_to_drop, inplace=True)
         return self
 
@@ -55,5 +53,4 @@ class MatchPreprocessor:
 
     def save_csv(self, output_file):
         self.df.to_csv(output_file, index=False)
-        print(f"CSV curățat salvat: '{output_file}'")
         return self

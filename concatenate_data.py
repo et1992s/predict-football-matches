@@ -118,5 +118,4 @@ class StandingsProcessor:
         if self.df is None:
             raise ValueError("Dataframe is empty. Nothing to save.")
         self.df.to_csv(output_csv, index=False, encoding="utf-8")
-        print(f"CSV salvat în {output_csv}")
         return self
