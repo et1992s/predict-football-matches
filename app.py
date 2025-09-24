@@ -22,8 +22,7 @@ class FootballXApp:
             "netherlands-eredivisie-2025-2026": {"name": "Netherlands Eredivisie", "flag": "flags/netherlands.png"},
             "romania-superliga-2025-2026": {"name": "Romania Superliga", "flag": "flags/romania.png"},
             "la-liga-2025-2026": {"name": "Spain La Liga", "flag": "flags/spain.png"},
-            "champions-league-2025-2026": {"name": "Champions League", "flag": "flags/europe.png"},
-        }
+            "champions-league-2025-2026": {"name": "Champions League", "flag": "flags/europe.png"}}
 
         self.setup_page_config()
         self.setup_css()
