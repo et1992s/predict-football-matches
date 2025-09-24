@@ -122,13 +122,13 @@ class LiveScoreService:
             elif status == "1H":
                 return f"LIVE {elapsed}'", "white", "linear-gradient(45deg, #ff6b6b, #ee5a24)"
             elif status == "HT":
-                return "⏸HALF TIME", "white", "linear-gradient(45deg, #f39c12, #d35400)"
+                return "HALF TIME", "white", "linear-gradient(45deg, #f39c12, #d35400)"
             elif status == "2H":
                 return f"LIVE {elapsed}'", "white", "linear-gradient(45deg, #ff6b6b, #ee5a24)"
             elif status == "ET":
                 return f"ET {elapsed}'", "white", "linear-gradient(45deg, #8e44ad, #9b59b6)"
             elif status == "BT":
-                return "⏸BREAK", "#f39c12", "rgba(243, 156, 18, 0.2)"
+                return "BREAK", "#f39c12", "rgba(243, 156, 18, 0.2)"
             elif status == "P":
                 return f"PEN {elapsed}'", "white", "linear-gradient(45deg, #2c3e50, #34495e)"
             elif status == "FT":
@@ -138,9 +138,9 @@ class LiveScoreService:
             elif status == "PEN":
                 return "PEN FINAL", "#27ae60", "rgba(46, 204, 113, 0.15)"
             elif status == "SUSP":
-                return "⏸SUSPENDED", "#7f8c8d", "rgba(149, 165, 166, 0.2)"
+                return "SUSPENDED", "#7f8c8d", "rgba(149, 165, 166, 0.2)"
             elif status == "INT":
-                return "⏸INTERRUPTED", "#7f8c8d", "rgba(149, 165, 166, 0.2)"
+                return "INTERRUPTED", "#7f8c8d", "rgba(149, 165, 166, 0.2)"
             elif status == "PST":
                 return "POSTPONED", "#7f8c8d", "rgba(149, 165, 166, 0.2)"
             elif status == "CANC":
