@@ -64,7 +64,8 @@ class StandingsScraper:
                 print(f"Skipping row {i}: {e}")
         return data
 
-    def save_json(self, data, filename):
+    @staticmethod
+    def save_json(data, filename):
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         with open(filename, "w", encoding="utf-8") as f:
             json.dump({"standings": data}, f, ensure_ascii=False, indent=4)

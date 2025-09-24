@@ -29,10 +29,12 @@ class FootballXApp:
         self.setup_css()
         self.display_header()
 
-    def setup_page_config(self):
+    @staticmethod
+    def setup_page_config():
         st.set_page_config(page_title="FootballX", layout="centered")
 
-    def setup_css(self):
+    @staticmethod
+    def setup_css():
         css_file = "static/style.css"
         if os.path.exists(css_file):
             with open(css_file) as f:
@@ -41,7 +43,8 @@ class FootballXApp:
         else:
             st.warning(f"CSS file {css_file} not found.")
 
-    def display_header(self):
+    @staticmethod
+    def display_header():
         logo_path = "footballXlogo.png"
         with open(logo_path, "rb") as f:
             logo_base64 = base64.b64encode(f.read()).decode()
@@ -84,7 +87,9 @@ class FootballXApp:
 
     def display_todays_matches(self):
         st.markdown(
-            f'<div class="league-subheading" style="font-size: 24px; text-align:center; padding: 5px; color: var(--text-primary); margin-bottom: 22px; font-weight: bold;">{"Today\'s Matches"}</div>',
+            f'<div class="league-subheading" style="font-size: 24px; '
+            f'text-align:center; padding: 5px; color: var(--text-primary); '
+            f'margin-bottom: 22px; font-weight: bold;">{"Today\'s Matches"}</div>',
             unsafe_allow_html=True)
 
         league_matches = {}
@@ -145,7 +150,8 @@ class FootballXApp:
 
             st.markdown("</div>", unsafe_allow_html=True)
 
-    def get_flag_base64(self, flag_path):
+    @staticmethod
+    def get_flag_base64(flag_path):
         try:
             if os.path.exists(flag_path):
                 with open(flag_path, "rb") as f:
@@ -155,7 +161,8 @@ class FootballXApp:
             print(f"Error loading flag {flag_path}: {e}")
             return ""
 
-    def get_all_winrate_files(self):
+    @staticmethod
+    def get_all_winrate_files():
         """Get all winrate CSV files from processed directory"""
         winrate_files = glob("processed/standings-with-winrate-features-*.csv")
         return winrate_files
@@ -171,7 +178,8 @@ class FootballXApp:
 
         return None, None, None, all_winrate_files
 
-    def get_future_matches(self):
+    @staticmethod
+    def get_future_matches():
         """Get future matches from all available data"""
         return pd.DataFrame()
 
@@ -211,8 +219,9 @@ class FootballXApp:
                     except Exception as e:
                         st.error(f"Prediction failed: {str(e)}")
 
-    def _display_prediction_results(self, home_team, away_team, predictions):
-        """Display prediction results - optimized for mobile"""
+    @staticmethod
+    def _display_prediction_results(home_team, away_team, predictions):
+        """Display prediction results"""
         # Extract prediction data
         pred_outcome, proba_outcome = predictions['outcome']
         pred_goals = predictions['goals']
@@ -225,7 +234,7 @@ class FootballXApp:
         outcome_mapping = {1: f"{home_team} Win", 2: f"{away_team} Win", 0: "Draw"}
         predicted_outcome = outcome_mapping.get(pred_outcome, "Unknown")
 
-        # Use columns for outcome probabilities
+        # Columns for outcome probabilities
         col1, col2, col3 = st.columns(3)
         with col1:
             st.metric(f"{home_team} Win", f"{proba_outcome[1] * 100:.1f}%")
@@ -246,7 +255,7 @@ class FootballXApp:
         # Stats data
         home_stats = {
             'expected_goals': stats['home']['xg'],
-            'ball_possession': stats['home']['possession'] * 100,  # Convert to percentage
+            'ball_possession': stats['home']['possession'] * 100,  # Converting to percentage
             'total_shots': stats['home']['shots_total'],
             'shots_on_target': stats['home']['shots_on_target'],
             'fouls': stats['home']['fouls'],
@@ -256,7 +265,7 @@ class FootballXApp:
 
         away_stats = {
             'expected_goals': stats['away']['xg'],
-            'ball_possession': stats['away']['possession'] * 100,  # Convert to percentage
+            'ball_possession': stats['away']['possession'] * 100,  # Converting to percentage
             'total_shots': stats['away']['shots_total'],
             'shots_on_target': stats['away']['shots_on_target'],
             'fouls': stats['away']['fouls'],
@@ -276,7 +285,7 @@ class FootballXApp:
 
         st.subheader("Predicted Statistics")
 
-        # Create responsive stats comparison
+        # This creates responsive stats comparison
         st.markdown("""<div class="stats-grid-container">""", unsafe_allow_html=True)
 
         # Stats comparison rows
@@ -286,14 +295,14 @@ class FootballXApp:
             home_val = home_stats[key]
             away_val = away_stats[key]
 
-            # Special handling for possession (it's already a percentage)
+            # Special handling for possession
             if key == 'ball_possession':
                 home_percent = home_val
                 away_percent = away_val
                 home_display = f"{home_val:.0f}%"
                 away_display = f"{away_val:.0f}%"
             else:
-                # For other stats, calculate percentages for comparison
+                # For other stats, this calculates percentages for comparison
                 total = home_val + away_val
                 if total > 0:
                     home_percent = (home_val / total) * 100
@@ -325,7 +334,7 @@ class FootballXApp:
                     </div>
             """, unsafe_allow_html=True)
 
-            # Afișează bara de comparație separat
+            # This displays the comparison bars for statistics
             st.markdown(f"""
                         <div class="stat-comparison">
                             <div class="stat-bar reverse">

@@ -65,7 +65,7 @@ class MatchScraper:
             except:
                 pass
 
-    # --- Scroll & click "Show more" until all matches are loaded ---
+    # --- Scrolling & clicking "Show more" until all matches are loaded ---
     def load_all_matches(self):
         print("Loading all matches...")
         prev_count = 0
@@ -73,17 +73,13 @@ class MatchScraper:
         max_attempts = 15
 
         for attempt in range(max_attempts):
-            # Scroll down
+            # Scrolling down
             self.page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
             time.sleep(2)
 
-            # Încearcă să găsești butonul "Show more"
-            show_more_selectors = [
-                "div:has-text('Show more matches')",
-                "button:has-text('Show more')",
-                "span:has-text('Show more')",
-                "[data-testid='show-more-button']"
-            ]
+            # Looking for "Show more" button
+            show_more_selectors = ["div:has-text('Show more matches')", "button:has-text('Show more')",
+                                   "span:has-text('Show more')", "[data-testid='show-more-button']"]
 
             clicked = False
             for selector in show_more_selectors:
@@ -98,7 +94,7 @@ class MatchScraper:
                 except:
                     continue
 
-            # Verifică numărul de meciuri
+            # Check the number of matches
             matches = self.page.locator("[id^='g_']")
             count = matches.count()
 
@@ -120,7 +116,7 @@ class MatchScraper:
 
         print(f"Finished loading. Total matches: {prev_count}")
 
-    # --- Extract all match IDs ---
+    # --- Extracting all match IDs ---
     def get_all_match_ids(self):
         self.load_all_matches()
         matches = self.page.locator(".event__match")
@@ -131,8 +127,9 @@ class MatchScraper:
                 match_ids.append(event_code.split("_")[-1])
         return match_ids
 
-    # --- Extraction helpers ---
-    def extract_summary(self, page):
+    # Scraping match summary
+    @staticmethod
+    def extract_summary(page):
         events = []
         page.wait_for_selector(".smv__participantRow", timeout=10000)
         rows = page.locator(".smv__participantRow")
@@ -161,7 +158,8 @@ class MatchScraper:
 
         return events
 
-    def extract_statistics(self, page):
+    @staticmethod
+    def extract_statistics(page):
         stats = []
         blocks = page.locator("div[data-testid='wcl-statistics']")
         for i in range(blocks.count()):
@@ -177,7 +175,7 @@ class MatchScraper:
                 })
         return stats
 
-    # --- Scrape upcoming fixtures (matches not yet played) ---
+    # Scraping upcoming fixtures (matches not yet played)
     def extract_fixtures(self):
         self.load_all_matches()
         matches = self.page.locator(".event__match")
@@ -201,7 +199,8 @@ class MatchScraper:
 
         return fixtures
 
-    def extract_formation(self, page):
+    @staticmethod
+    def extract_formation(page):
         formations = {"home_team": "", "away_team": ""}
         try:
             formation_div = page.locator("div[data-testid='wcl-headerSection-text']:has-text('Formation')")
@@ -214,7 +213,8 @@ class MatchScraper:
             pass
         return formations
 
-    def _extract_players_by_section(self, page, header_text):
+    @staticmethod
+    def _extract_players_by_section(page, header_text):
         players = {"home_team": [], "away_team": []}
         try:
             headers = page.locator(f"div[data-testid='wcl-headerSection-text']:has-text('{header_text}')")
@@ -277,7 +277,7 @@ class MatchScraper:
             pass
         return coaches
 
-    # --- Open match page and extract all data ---
+    # Opening match page and extracting all data
     def open_match_and_extract(self, match_url) -> MatchDetail:
         self.page.goto(match_url, wait_until="domcontentloaded")
         time.sleep(2)
@@ -313,7 +313,7 @@ class MatchScraper:
 
         match = MatchDetail(date_part, time_part, home, away, home_goals, away_goals, status)
 
-        # --- Summary tab ---
+        # Clicking on the summary tab
         try:
             tab_summary = self.page.locator("div[data-testid='wcl-tabs'] button:has-text('Summary')")
             if tab_summary.count():
@@ -323,7 +323,7 @@ class MatchScraper:
         except Exception as e:
             print(f"Could not extract summary: {e}")
 
-        # --- Statistics tab ---
+        # Clicking on the statistics tab
         try:
             tab_stats = self.page.locator("div[data-testid='wcl-tabs'] button:has-text('Stats')")
             if tab_stats.count():
@@ -333,7 +333,7 @@ class MatchScraper:
         except Exception as e:
             print(f"Could not extract statistics: {e}")
 
-        # --- Lineups ---
+        # Clicking on the lineups tab
         try:
             tab_lineups = self.page.locator("div[data-testid='wcl-tabs'] button:has-text('Lineups')")
             if tab_lineups.count():

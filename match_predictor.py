@@ -24,7 +24,7 @@ class FootballMatchPredictor:
                 continue
 
         if not dfs:
-            raise ValueError("Niciun fișier CSV nu a putut fi încărcat")
+            raise ValueError("Couldn't load the CSV")
 
         self.df = pd.concat(dfs, ignore_index=True)
 
@@ -32,24 +32,22 @@ class FootballMatchPredictor:
         self.scalers = {}
         self.models = {}
 
-        self.all_features = [
-            'win_rate_global', 'win_rate_lastN', 'home_win_rate', 'away_win_rate',
-            'h2h_win_rate', 'form_score', 'goal_diff_win_rate', 'weighted_outcome',
-            'team_goals', 'opponent_goals', 'Rank', 'opponent_rank', 'Home_encoded']
+        self.all_features = ['win_rate_global', 'win_rate_lastN', 'home_win_rate', 'away_win_rate',
+                             'h2h_win_rate', 'form_score', 'goal_diff_win_rate', 'weighted_outcome',
+                             'team_goals', 'opponent_goals', 'Rank', 'opponent_rank', 'Home_encoded']
 
-        self.stat_features = [
-            'stat_Expected_Goals_xG_team', 'stat_Expected_Goals_xG_opponent',
-            'stat_Ball_Possession_team', 'stat_Ball_Possession_opponent',
-            'stat_Total_shots_team', 'stat_Total_shots_opponent',
-            'stat_Shots_on_target_team', 'stat_Shots_on_target_opponent',
-            'stat_Corner_Kicks_team', 'stat_Corner_Kicks_opponent',
-            'stat_Yellow_Cards_team', 'stat_Yellow_Cards_opponent',
-            'stat_Red_Cards_team', 'stat_Red_Cards_opponent',
-            'stat_Passes_team', 'stat_Passes_opponent',
-            'stat_Fouls_team', 'stat_Fouls_opponent',
-            'stat_Tackles_team', 'stat_Tackles_opponent',
-            'Wins', 'Draws', 'Loses', 'Team_goals',
-            'Opponents_goals', 'Goal_difference', 'Points']
+        self.stat_features = ['stat_Expected_Goals_xG_team', 'stat_Expected_Goals_xG_opponent',
+                              'stat_Ball_Possession_team', 'stat_Ball_Possession_opponent',
+                              'stat_Total_shots_team', 'stat_Total_shots_opponent',
+                              'stat_Shots_on_target_team', 'stat_Shots_on_target_opponent',
+                              'stat_Corner_Kicks_team', 'stat_Corner_Kicks_opponent',
+                              'stat_Yellow_Cards_team', 'stat_Yellow_Cards_opponent',
+                              'stat_Red_Cards_team', 'stat_Red_Cards_opponent',
+                              'stat_Passes_team', 'stat_Passes_opponent',
+                              'stat_Fouls_team', 'stat_Fouls_opponent',
+                              'stat_Tackles_team', 'stat_Tackles_opponent',
+                              'Wins', 'Draws', 'Loses', 'Team_goals',
+                              'Opponents_goals', 'Goal_difference', 'Points']
 
         self.all_features.extend(self.stat_features)
         self.df['total_goals'] = self.df['team_goals'] + self.df['opponent_goals']
@@ -69,10 +67,8 @@ class FootballMatchPredictor:
         self.df["Team_encoded"] = self.team_encoder.transform(self.df["Team"])
         self.df["Opponent_encoded"] = self.team_encoder.transform(self.df["Opponent"])
 
-        self.df["Outcome_encoded"] = self.df.apply(
-            lambda row: 1 if row["team_goals"] > row["opponent_goals"]
-            else 2 if row["team_goals"] < row["opponent_goals"]
-            else 0, axis=1)
+        self.df["Outcome_encoded"] = self.df.apply(lambda row: 1 if row["team_goals"] > row["opponent_goals"]
+        else 2 if row["team_goals"] < row["opponent_goals"] else 0, axis=1)
 
         if 'Home_encoded' not in self.df.columns:
             self.df['Home_encoded'] = self.df['Home/Away'].apply(
@@ -101,21 +97,21 @@ class FootballMatchPredictor:
         elif target_type == 'score':
             y = self.df["score_class"]
         else:
-            stat_mapping = {
-                'corners': 'stat_Corner_Kicks_team' if for_team == 'home' else 'stat_Corner_Kicks_opponent',
-                'shots_on_target': 'stat_Shots_on_target_team' if for_team == 'home' else 'stat_Shots_on_target_opponent',
-                'possession': 'stat_Ball_Possession_team' if for_team == 'home' else 'stat_Ball_Possession_opponent',
-                'yellow_cards': 'stat_Yellow_Cards_team' if for_team == 'home' else 'stat_Yellow_Cards_opponent',
-                'fouls': 'stat_Fouls_team' if for_team == 'home' else 'stat_Fouls_opponent',
-                'tackles': 'stat_Tackles_team' if for_team == 'home' else 'stat_Tackles_opponent',
-                'passes': 'stat_Passes_team' if for_team == 'home' else 'stat_Passes_opponent',
-                'shots_total': 'stat_Total_shots_team' if for_team == 'home' else 'stat_Total_shots_opponent',
-                'xg': 'stat_Expected_Goals_xG_team' if for_team == 'home' else 'stat_Expected_Goals_xG_opponent'}
+            stat_mapping = {'corners': 'stat_Corner_Kicks_team' if for_team == 'home'
+            else 'stat_Corner_Kicks_opponent', 'shots_on_target': 'stat_Shots_on_target_team' if for_team == 'home'
+            else 'stat_Shots_on_target_opponent', 'possession': 'stat_Ball_Possession_team' if for_team == 'home'
+            else 'stat_Ball_Possession_opponent', 'yellow_cards': 'stat_Yellow_Cards_team' if for_team == 'home'
+            else 'stat_Yellow_Cards_opponent', 'fouls': 'stat_Fouls_team' if for_team == 'home'
+            else 'stat_Fouls_opponent', 'tackles': 'stat_Tackles_team' if for_team == 'home'
+            else 'stat_Tackles_opponent', 'passes': 'stat_Passes_team' if for_team == 'home'
+            else 'stat_Passes_opponent', 'shots_total': 'stat_Total_shots_team' if for_team == 'home'
+            else 'stat_Total_shots_opponent', 'xg': 'stat_Expected_Goals_xG_team' if for_team == 'home'
+            else 'stat_Expected_Goals_xG_opponent'}
 
             if target_type in stat_mapping:
                 y = self.df[stat_mapping[target_type]]
             else:
-                raise ValueError(f"Tip țintă necunoscut: {target_type}")
+                raise ValueError(f"Target unknown: {target_type}")
         return X, y
 
     def train_models(self):
@@ -126,8 +122,10 @@ class FootballMatchPredictor:
             'score': RandomForestClassifier(n_estimators=50, random_state=42),
         }
 
-        stat_targets = ['corners', 'shots_on_target', 'possession', 'yellow_cards',
-                        'fouls', 'tackles', 'passes', 'shots_total', 'xg']
+        stat_targets = ['corners', 'shots_on_target',
+                        'possession', 'yellow_cards',
+                        'fouls', 'tackles', 'passes',
+                        'shots_total', 'xg']
 
         for target in stat_targets:
             for team_type in ['home', 'away']:
@@ -172,24 +170,22 @@ class FootballMatchPredictor:
 
     def test_all_models_and_save(self, test_size=0.3, csv_path="all_predictions.csv"):
         """
-        Testează toate modelele și salvează rezultatele într-un CSV cu coloanele originale
-        și predicțiile corespunzătoare.
+        Testing all models and saving the results to a CSV file with original columns and corresponding predictions.
         """
 
         df_results = self.df.copy()
 
-        # Clasificare și regresie principale
+        # Main classifications and regressions
         for target_name in ['outcome', 'goals', 'score']:
             X, y = self.prepare_data(target_name)
             X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
 
             y_pred = self.models[target_name].predict(X_test)
 
-            # Salvează predicțiile în dataframe-ul final
+            # Saving the predictions in the final dataframe
             match_indices = y_test.index
             df_results.loc[match_indices, f"Predicted_{target_name}"] = y_pred
 
-        # Modele statistici LSTM / RandomForest pentru fiecare echipă
         stat_targets = ['corners', 'shots_on_target', 'possession', 'yellow_cards',
                         'fouls', 'tackles', 'passes', 'shots_total', 'xg']
 
@@ -200,16 +196,14 @@ class FootballMatchPredictor:
                     continue
 
                 X, y = self.prepare_data(target, team_type)
-                X_train, X_test, y_train, y_test = train_test_split(
-                    X, y, test_size=test_size, random_state=42
-                )
+                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
 
                 scaler = self.scalers[model_key]
                 X_test_scaled = scaler.transform(X_test)
 
                 y_pred = self.models[model_key].predict(X_test_scaled)
 
-                # Salvează predicțiile
+                # Saving predictions
                 match_indices = y_test.index
                 df_results.loc[match_indices, f"Predicted_{target}_{team_type}"] = y_pred
 
@@ -220,7 +214,7 @@ class FootballMatchPredictor:
     def predict_future_match(self, home_team, away_team):
 
         if home_team not in self.team_encoder.classes_ or away_team not in self.team_encoder.classes_:
-            print("Una dintre echipe nu există în dataset.")
+            print("One of the teams are not in the dataset.")
             return None
 
         home_stats = self._get_team_stats(home_team)
@@ -323,18 +317,16 @@ class FootballMatchPredictor:
             return None
 
     def _save_prediction_to_csv(self, home_team, away_team, predictions, filename="predictions_log.csv"):
-        outcome_map = {0: "EGAL", 1: f"{home_team} CÂȘTIGĂ", 2: f"{away_team} CÂȘTIGĂ"}
+        outcome_map = {0: "DRAW", 1: f"{home_team} WIN", 2: f"{away_team} WIN"}
         pred_outcome, proba_outcome = predictions['outcome']
 
-        row = {
-            "Home_Team": home_team,
-            "Away_Team": away_team,
-            "Predicted_Outcome": outcome_map.get(pred_outcome, "NECUNOSCUT"),
-            "Proba_Home_Win": f"{proba_outcome[1]:.3f}",
-            "Proba_Draw": f"{proba_outcome[0]:.3f}",
-            "Proba_Away_Win": f"{proba_outcome[2]:.3f}",
-            "Predicted_Score": predictions['score'],
-            "Predicted_Goals": predictions['goals'],}
+        row = {"Home_Team": home_team, "Away_Team": away_team,
+               "Predicted_Outcome": outcome_map.get(pred_outcome, "UNKNOWN"),
+               "Proba_Home_Win": f"{proba_outcome[1]:.3f}",
+               "Proba_Draw": f"{proba_outcome[0]:.3f}",
+               "Proba_Away_Win": f"{proba_outcome[2]:.3f}",
+               "Predicted_Score": predictions['score'],
+               "Predicted_Goals": predictions['goals'],}
 
         for side in ["home", "away"]:
             for stat, val in predictions["stats"][side].items():

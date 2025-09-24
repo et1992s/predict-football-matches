@@ -53,30 +53,17 @@ class StandingsProcessor:
                 except:
                     goals_for = goals_against = 0
 
-                row = {
-                    "Rank": team["rank"],
-                    "Team": team_name,
-                    "Wins": team["W"],
-                    "Draws": team["D"],
-                    "Loses": team["L"],
-                    "Team_goals": team["GF"],
-                    "Opponents_goals": team["GA"],
-                    "Goal_difference": team["GD"],
-                    "Points": team["Pts"],
-                    "Opponent": opponent,
-                    "opponent_rank": team_rank_map.get(opponent, ""),
-                    "Date": match.get("date", ""),
-                    "Time": match.get("time", ""),
-                    "Home/Away": "home" if is_home else "away",
-                    "team_goals": goals_for,
-                    "opponent_goals": goals_against,
-                    "Outcome": self.outcome(goals_for, goals_against),
-                    "Target_Winner": (
-                        "team" if goals_for > goals_against else
-                        "opponent" if goals_for < goals_against else
-                        "draw"
-                    )
-                }
+                row = {"Rank": team["rank"], "Team": team_name, "Wins": team["W"],
+                       "Draws": team["D"], "Loses": team["L"], "Team_goals": team["GF"],
+                       "Opponents_goals": team["GA"], "Goal_difference": team["GD"],
+                       "Points": team["Pts"], "Opponent": opponent,
+                       "opponent_rank": team_rank_map.get(opponent, ""),
+                       "Date": match.get("date", ""), "Time": match.get("time", ""),
+                       "Home/Away": "home" if is_home else "away", "team_goals": goals_for,
+                       "opponent_goals": goals_against,
+                       "Outcome": self.outcome(goals_for, goals_against),
+                       "Target_Winner": ("team" if goals_for > goals_against else
+                                         "opponent" if goals_for < goals_against else "draw")}
 
                 for stat in match.get("statistics", []):
                     stat_name = self.normalize_stat_name(stat["label"])
@@ -96,19 +83,13 @@ class StandingsProcessor:
 
     def clean_eda(self):
         if self.df is None:
-            raise ValueError("Dataframe is empty. Call flatten_to_long() first.")
+            raise ValueError("Dataframe is empty.")
         df_clean = self.df.copy()
 
         for col in df_clean.columns:
             if df_clean[col].astype(str).str.contains("%").any():
-                df_clean[col] = (
-                    df_clean[col]
-                    .astype(str)
-                    .str.replace(",", ".")
-                    .str.extract(r"(\d+\.?\d*)")
-                    .astype(float)
-                    / 100.0)
-
+                df_clean[col] = (df_clean[col].astype(str).str.replace(",", ".")
+                                 .str.extract(r"(\d+\.?\d*)").astype(float) / 100.0)
             df_clean[col] = pd.to_numeric(df_clean[col], errors="ignore")
 
         self.df = df_clean.fillna(0)

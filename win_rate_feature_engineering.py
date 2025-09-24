@@ -87,5 +87,5 @@ class FootballWinRateFeatures:
 
     def save_csv(self, output_path: str):
         self.df.to_csv(output_path, index=False, encoding='utf-8')
-        print(f"CSV cu win rate features salvat: {output_path}")
+        print(f"Winrate features saved to CSV: {output_path}")
         return self

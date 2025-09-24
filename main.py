@@ -65,7 +65,7 @@ def scrape_and_save_matches(matches_url, filename):
     print(f"Matches saved to {filename}")
 
 def main():
-    # Campionate: {"nume": (standings_url, results_url, fixtures_url)}
+    # Disctionary to hold the leagues: {"name": (standings_url, results_url, fixtures_url)}
     leagues = {
         "romania-superliga-2024-2025": (
             "https://www.flashscore.com/football/romania/superliga-2024-2025/standings/#/QkBSrPPD/standings/overall/",
@@ -167,18 +167,13 @@ def main():
             "https://www.flashscore.com/football/belgium/jupiler-pro-league/results/",
             "https://www.flashscore.com/football/belgium/jupiler-pro-league/fixtures/",
         ),
-        "live-england-premier-league-2025-2026": (
-            None,
-            "https://www.flashscore.com/football/england/premier-league/#/OEEq9Yvp/live-standings/",
-            None,
-        )
-        # poți adăuga și alte campionate aici
+        # More leagues can be added here
     }
 
     winrate_files = []
 
     for league, (standings_url, results_url, fixtures_url) in leagues.items():
-        #print(f"\n=== PIPELINE {league.upper()} ===")
+        print(f"\n=== PIPELINE {league.upper()} ===")
 
         standings_file = f"processed/standings-{league}.json"
         matches_file = f"processed/all-matches-{league}.json"
@@ -201,25 +196,25 @@ def main():
 
             continue
 
-        # 1. Scrape standings dacă nu există deja
+        # 1. Scraping standings if the files are not scraped yet
         if not os.path.exists(standings_file):
             scrape_and_save_standings(standings_url, standings_file)
 
-        # 1b. Scrape results dacă nu există deja
+        # 1b. Scraping results if the files are not scraped yet
         if not os.path.exists(matches_file):
             scrape_and_save_matches(results_url, matches_file)
 
-        # 1c. Scrape fixtures dacă există URL și nu există fișier
+        # 1c. Scraping fixtures if the URL is provided and if the files are not scraped yet
         if fixtures_url and not os.path.exists(fixtures_file):
             scrape_and_save_fixtures(fixtures_url, fixtures_file)
 
-        # 2. Flatten + clean
+        # 2. Flattening + cleaning
         processor = StandingsProcessor(standings_file, matches_file)
         processor.flatten_to_long().clean_eda()
         cleaned_csv = f"processed/standings-with-matches-{league}-clean.csv"
         processor.save_csv(cleaned_csv)
 
-        # 3. Preprocess
+        # 3. Preprocessing
         preprocessor = MatchPreprocessor(cleaned_csv)
         preprocessor.load_csv() \
             .fill_missing(0) \
@@ -230,37 +225,36 @@ def main():
             .save_csv(f"processed/standings-with-matches-{league}-cleaned.csv")
         preprocessed_csv = f"processed/standings-with-matches-{league}-clean.csv"
 
-        # 4. Winrate features
+        # 4. Creating winrate features
         ff = FootballWinRateFeatures(preprocessed_csv)
         ff.encode_columns().create_winrate_features(N_recent=5) \
             .save_csv(f"processed/standings-with-winrate-features-{league}.csv")
         winrate_files.append(f"processed/standings-with-winrate-features-{league}.csv")
 
-    # 5. Train modele
+    # 5. Training the models
     predictor = FootballMatchPredictor(winrate_files)
     predictor.train_models()
 
-    # 6. Testăm toate modelele și salvăm CSV cu y_test vs y_pred
+    # 6. Testing all models and saving the CSV containing y_test vs y_pred (Ground Truth)
     csv_test_path = "processed/all_predictions.csv"
     predictor.test_all_models_and_save(test_size=0.3, csv_path=csv_test_path)
-    print(f"\nCSV-ul cu predicții vs ground truth a fost salvat aici: {csv_test_path}")
+    print(f"\nThe ground truth CSV-ul with predictions is saved: {csv_test_path}")
 
-    # 7. Interactive prediction doar pentru sezonul curent 2025-2026
-    current_season = "romania-superliga-2025-2026"
-    print("\n=== PREDICȚIE MECI VIITOR - SEZON 2025-2026 ===")
+    # 7. Interactive prediction for the current season for manual testing purposes 2025-2026
+    print("\n=== PREDICT FUTURE MATCH - SEZON 2025-2026 ===")
     while True:
-        date = input("Data (YYYY-MM-DD): ").strip()
-        time = input("Ora (HH:MM): ").strip()
-        home_team = input("Echipa gazdă: ").strip()
-        away_team = input("Echipa oaspete: ").strip()
+        date = input("Date (YYYY-MM-DD): ").strip()
+        time = input("Time (HH:MM): ").strip()
+        home_team = input("Home Team: ").strip()
+        away_team = input("Away Team: ").strip()
 
         predictions = predictor.predict_future_match(home_team, away_team)
         if predictions:
-            print("\nRezultatele au fost salvate și în predictions_log.csv")
+            print("\nResults saved to predictions_log.csv")
 
-        cont = input("\nVrei să introduci alt meci? (da/nu): ").strip().lower()
-        if cont != 'da':
-            print("La revedere!")
+        cont = input("\nTry another match? (yes/no): ").strip().lower()
+        if cont != 'yes':
+            print("Goodbye!")
             break
 
 if __name__ == "__main__":

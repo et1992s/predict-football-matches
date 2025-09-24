@@ -4,11 +4,11 @@ import os
 import streamlit as st
 from dotenv import load_dotenv
 
-load_dotenv()  # încarcă variabilele din .env
+load_dotenv()  # Loading variables from .env
 
 class LiveScoreService:
     def __init__(self):
-        # Citește cheia mai întâi din st.secrets, apoi din .env
+        # Reading the key first from st.secrets, and then from .env
         self.api_key = os.getenv("API_FOOTBALL_KEY")
         self.base_url = "https://v3.football.api-sports.io"
 
@@ -18,44 +18,26 @@ class LiveScoreService:
 
             url = f"{self.base_url}/fixtures"
             params = {'date': today, 'timezone': 'Europe/London'}
-            headers = {
-                'x-rapidapi-key': self.api_key,
-                'x-rapidapi-host': 'v3.football.api-sports.io'
-            }
-
+            headers = {'x-rapidapi-key': self.api_key, 'x-rapidapi-host': 'v3.football.api-sports.io'}
             response = requests.get(url, params=params, headers=headers, timeout=15)
-
             if response.status_code != 200:
                 st.write("API Error:", response.status_code, response.text)
                 return []
 
             data = response.json()
 
-            # Ligile principale
-            main_leagues = {
-                'England': 'Premier League',
-                'Spain': 'La Liga',
-                'Germany': 'Bundesliga',
-                'Italy': 'Serie A',
-                'France': 'Ligue 1',
-                'Portugal': 'Primeira Liga',
-                'Netherlands': 'Eredivisie',
-                'Belgium': 'Jupiler Pro League',
-                'Scotland': 'Premiership',
-                'Turkey': 'Super Lig',
-                'Greece': 'Super League',
-                'Austria': 'Bundesliga',
-                'Switzerland': 'Super League',
-                'Romania': 'Liga I',
-                'Czech-Republic': 'First League',
-                'Croatia': 'First Football League',
-                'Serbia': 'Super Liga',
-                'Ukraine': 'Premier League',
-                'Denmark': 'Superliga',
-                'Sweden': 'Allsvenskan',
-                'Norway': 'Eliteserien',
-                'Poland': 'Ekstraklasa'
-            }
+            # Major Leagues Selected
+            main_leagues = {'England': 'Premier League', 'Spain': 'La Liga',
+                            'Germany': 'Bundesliga', 'Italy': 'Serie A',
+                            'France': 'Ligue 1', 'Portugal': 'Primeira Liga',
+                            'Netherlands': 'Eredivisie', 'Belgium': 'Jupiler Pro League',
+                            'Scotland': 'Premiership', 'Turkey': 'Super Lig',
+                            'Greece': 'Super League', 'Austria': 'Bundesliga',
+                            'Switzerland': 'Super League', 'Romania': 'Liga I',
+                            'Czech-Republic': 'First League', 'Croatia': 'First Football League',
+                            'Serbia': 'Super Liga', 'Ukraine': 'Premier League',
+                            'Denmark': 'Superliga', 'Sweden': 'Allsvenskan',
+                            'Norway': 'Eliteserien', 'Poland': 'Ekstraklasa'}
 
             uefa_competitions = {'UEFA Champions League', 'UEFA Europa League', 'UEFA Europa Conference League'}
 
@@ -73,19 +55,11 @@ class LiveScoreService:
                     teams_data = fixture['teams']
                     goals_data = fixture['goals']
 
-                    match_info = {
-                        'home': teams_data['home']['name'],
-                        'away': teams_data['away']['name'],
-                        'home_goals': goals_data['home'],
-                        'away_goals': goals_data['away'],
-                        'status': fixture_data['status']['short'],
-                        'elapsed': fixture_data['status']['elapsed'],
-                        'time': fixture_data['date'].split('T')[1][:5],
-                        'league': league_name,
-                        'country': country,
-                        'round': league_data['round'],
-                        'fixture_id': fixture_data['id']
-                    }
+                    match_info = {'home': teams_data['home']['name'], 'away': teams_data['away']['name'],
+                                  'home_goals': goals_data['home'], 'away_goals': goals_data['away'],
+                                  'status': fixture_data['status']['short'], 'elapsed': fixture_data['status']['elapsed'],
+                                  'time': fixture_data['date'].split('T')[1][:5], 'league': league_name,
+                                  'country': country, 'round': league_data['round'], 'fixture_id': fixture_data['id']}
                     live_matches.append(match_info)
 
             live_matches.sort(key=lambda x: x['country'])
@@ -96,10 +70,10 @@ class LiveScoreService:
             return []
 
     def display_live_scores_from_api(self):
-        """Display live scores from API-Football"""
+        """Displaying live scores from API-Football"""
         st.markdown(f'<div class="league-subheading">{"Live Scores Today"}</div>', unsafe_allow_html=True)
         try:
-            # Inițializează serviciul
+            # Initialising the service
             live_service = LiveScoreService()
             live_matches = live_service.get_today_live_matches()
 
@@ -107,7 +81,7 @@ class LiveScoreService:
                 st.info("Cannot display live scores today, come back tomorrow.")
                 return
 
-            # Grupează meciurile pe ligi
+            # Grouping the matches on the selected leagues using an empty dictionary
             matches_by_league = {}
             for match in live_matches:
                 league_name = f"{match['country']} - {match['league']}"
@@ -115,7 +89,7 @@ class LiveScoreService:
                     matches_by_league[league_name] = []
                 matches_by_league[league_name].append(match)
 
-            # Afișează meciurile grupate pe ligi
+            # Displaying matches grouped on leagues
             for league_name, matches in matches_by_league.items():
                 with st.expander(f"{league_name} ({len(matches)} matches)", expanded=False):
                     for match in matches:
@@ -126,14 +100,14 @@ class LiveScoreService:
 
     @staticmethod
     def _display_api_match(match):
-        """Display a single match from API with mapped statuses"""
+        """Displaying a single match from API with mapped statuses"""
         status = match['status']
         home_goals = match['home_goals']
         away_goals = match['away_goals']
         fixture_time = match.get('time')
         elapsed = match.get('elapsed')
 
-        # Gestionează scorurile None
+        # Handling the scores with NaN or None values
         if home_goals is None or away_goals is None:
             score_display = "-"
             score_style = "font-weight: bold; font-size: 16px; color: #95a5a6;"
@@ -141,7 +115,7 @@ class LiveScoreService:
             score_display = f"{home_goals} - {away_goals}"
             score_style = "font-weight: bold; font-size: 18px; color: #FFFFFF;"
 
-        # Mapare statusuri API → text și stil
+        # Mapping the status of the live matches
         def map_status(status, elapsed, fixture_time):
             if status in ("TBD", "NS"):
                 return f"{fixture_time}", "#3498db", "rgba(52, 152, 219, 0.1)"
@@ -185,30 +159,19 @@ class LiveScoreService:
         status_text, text_color, bg_color = map_status(status, elapsed, fixture_time)
         team_style = "font-weight: bold; font-size: 13px;"
 
-        # Render în Streamlit
-        st.markdown(f"""
-            <div style="
-                background: {bg_color};
-                color: {text_color};
-                padding: 10px;
-                border-radius: 8px;
-                margin: 6px 0;
-                border-left: 4px solid {text_color};
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            ">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div style="flex: 2; {team_style}; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        {match['home']}
+        # Rendering în Streamlit
+        st.markdown(f"""<div style=" background: {bg_color}; color: {text_color};
+        padding: 10px; border-radius: 8px; margin: 6px 0; border-left: 4px solid {text_color};
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);"> 
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 2; {team_style}; text-align: left; overflow: hidden; 
+        text-overflow: ellipsis; white-space: nowrap;"> {match['home']}
                     </div>
-                    <div style="flex: 1; {score_style}; text-align: center; padding: 0 5px;">
-                        {score_display}
-                    </div>
-                    <div style="flex: 2; {team_style}; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        {match['away']}
-                    </div>
-                </div>
+                    <div style="flex: 1; {score_style}; text-align: center; padding: 0 5px;"> {score_display}</div>
+                    <div style="flex: 2; {team_style}; text-align: right; overflow: hidden; text-overflow: ellipsis; 
+                    white-space: nowrap;">{match['away']}</div></div>
                 <div style="text-align: center; font-size: 11px; color: white; margin-top: 4px;">
-                    {status_text} • {match.get('round', '')}
+                    {status_text} - {match.get('round', '')}
                 </div>
             </div>
         """, unsafe_allow_html=True)
